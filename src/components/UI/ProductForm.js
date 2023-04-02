@@ -37,6 +37,7 @@ const ProductForm = () => {
         Authorization: appContext.token,
       },
     };
+    appContext.storeCartItems((prev) => [...prev, product]);
     try {
       if (mode === PRODUCT_OPERATIONS.ADD_PRODUCT) {
         const response = await ProductService.submitProductDetails(

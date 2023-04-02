@@ -46,7 +46,10 @@ const NotificationModal = (props) => {
                   </tr>
                 </thead>
 
-                <tbody className="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll w-full max-h-60">
+                <tbody
+                  className="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll w-full max-h-60"
+                  style={{ height: "400px" }}
+                >
                   {list.map((record, index) => (
                     <tr key={index} className="flex w-full  shadow-sm">
                       <td className="p-4 w-1/6">

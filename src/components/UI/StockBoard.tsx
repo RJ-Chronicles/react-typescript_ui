@@ -1,161 +1,82 @@
-import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
-import Card from "@mui/material/Card";
-interface DummyPayload {
-  name: string;
-  product_code: string;
-  ampere_sie: string;
-  available_quantity: string;
-}
-const StockBoard = () => {
-  const Dummy: DummyPayload[] = [
-    {
-      name: "AMARON",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-    {
-      name: "AMARON",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-    {
-      name: "AMARON",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-    {
-      name: "AMARON",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-    {
-      name: "EXIDE",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-    {
-      name: "EXIDE",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-    {
-      name: "EXIDE",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-    {
-      name: "EXIDE",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-    {
-      name: "EXIDE",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-    {
-      name: "AMARON",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-    {
-      name: "AMARON",
-      product_code: "SLKE024L3K",
-      ampere_sie: "2AMP",
-      available_quantity: "45",
-    },
-  ];
+import { useContext, useEffect, useState } from "react";
+import { Headers, StockElementsPayload } from "../../AppModel";
+import AuthContext from "../../context/appContext";
+import stockService from "../../services/StockService";
 
-  const BatteryIcon = () => {
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="blue"
-        className="w-10 h-10 mx-auto"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M21 10.5h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125H21M4.5 10.5h6.75V15H4.5v-4.5zM3.75 18h15A2.25 2.25 0 0021 15.75v-6a2.25 2.25 0 00-2.25-2.25h-15A2.25 2.25 0 001.5 9.75v6A2.25 2.25 0 003.75 18z"
-        />
-      </svg>
-    );
-  };
-  const RightCheck = () => {
-    return (
-      <span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="black"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      </span>
-    );
-  };
+const StockBoard = () => {
+  const appContext = useContext(AuthContext);
+  const token = appContext.token;
+  const [stockList, setStockList] = useState<StockElementsPayload>();
+
+  useEffect(() => {
+    const headers: Headers = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    const stockData = async () => {
+      const response = await stockService.fetchStockElements(headers);
+      setStockList(response.data);
+      console.log(response.data);
+    };
+    stockData();
+  }, [token]);
+
   return (
-    <div className="flex justify-center items-start flex-wrap bg-white">
-      {Dummy.map((rec: DummyPayload, index: any) => {
+    <div className="flex justify-left items-start flex-wrap bg-white">
+      {stockList?.list?.map((rec, index: any) => {
+        let animation =
+          rec.quantity < 30
+            ? "animate-pulse duration-300 bg-red-500 rounded-full"
+            : "bg-green-500 rounded-sm";
         return (
-          <div className="m-2 shadow-lg" key={index}>
-            <Card variant="outlined">
-              <div
-                key={index}
-                className="w-36 h-36 hover:scale-105 duration-300  text-left "
-              >
-                <div className=" h-8 w-full bg-slate-200">
-                  {/* <BatteryIcon /> */}
-                  {/* <span className="shadow-lg rounded-full w-6 h-6 text-center bg-blue-900 text-white">
-                    {rec.ampere_sie}
-                  </span> */}
-                  <hr />
+          <div
+            key={index}
+            className="flex mx-2 flex-col my-2 space-y-6 md:space-y-0 md:space-x-6 md:flex-row"
+          >
+            <div className="bg-slate-700 rounded-xl text-white">
+              <div className="p-2 mx-2 mt-2 rounded-t-xl bg-slate-800">
+                <div className="text-center uppercase text-sm">
+                  {rec.battery_name}
                 </div>
-                <div className="p-2 group hover:bg-gradient-to-r from-cyan-500 to-blue-500">
-                  <h1 className="text-base font-semibold text-slate-600 font-serif group-hover:text-white">
-                    {rec.name}
-                  </h1>
-                  <h2 className="text-sm group-hover:text-white text-slate-500 font-sans">
-                    {rec.product_code}
-                  </h2>
-                  <div className="flex justify-between items-center my-1 space-x-4">
-                    <p className="flex flex-row space-x-1 group-hover:text-white">
-                      <span>{rec.ampere_sie}</span>
-                      <span>
-                        <RightCheck />
-                      </span>
-                    </p>
-                    <p className="flex flex-row space-x-1 group-hover:text-white">
-                      <span>{rec.available_quantity}</span>
-                      <span>
-                        <RightCheck />
-                      </span>
-                    </p>
-                  </div>
-                  <button className="text-sm">Add</button>
+                <h2 className="font-serif text-base text-center">
+                  {rec.product_code}
+                </h2>
+                <h3 className="mt-2 text-center text-sm">{rec.amphere_size}</h3>
+                <div className="flex justify-center">
+                  <button className="inline-block px-4 py-2 my-2 text-center border border-violet-600 rounded-lg duration-200 hover:bg-violet-800 hover:border-violet-800">
+                    Add to Stock
+                  </button>
                 </div>
               </div>
-            </Card>
+
+              <div className="border-t border-slate-700"></div>
+
+              <div className="p-4 mx-2 mb-2 rounded-b-xl bg-slate-800">
+                <div className="flex flex-col space-y-2">
+                  <div className="flex justify-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className={"w-6 h-6 " + animation}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4.5 12.75l6 6 9-13.5"
+                      />
+                    </svg>
+
+                    <span className="text-sm ml-1">
+                      {rec.quantity} items in stock
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         );
       })}
@@ -164,3 +85,38 @@ const StockBoard = () => {
 };
 
 export default StockBoard;
+
+/* <Card variant="outlined">
+              <div
+                key={index}
+                className="w-36 h-36 hover:scale-105 duration-300  text-left "
+              >
+                <div className=" h-8 w-full bg-slate-200">
+
+                  <hr />
+                </div>
+                <div className="p-2 group hover:bg-gradient-to-r from-cyan-500 to-blue-500">
+                  <h1 className="text-base font-semibold text-slate-600 font-serif group-hover:text-white">
+                    {rec.battery_name}
+                  </h1>
+                  <h2 className="text-sm group-hover:text-white text-slate-500 font-sans">
+                    {rec.product_code}
+                  </h2>
+                  <div className="flex justify-between items-center my-1 space-x-4">
+                    <p className="flex flex-row space-x-1 group-hover:text-white">
+                      <span>{rec.amphere_size}</span>
+                      <span>
+                        <RightCheck />
+                      </span>
+                    </p>
+                    <p className="flex flex-row space-x-1 group-hover:text-white">
+                      <span>{rec.quantity}</span>
+                      <span>
+                        <RightCheck />
+                      </span>
+                    </p>
+                  </div>
+                  <button className="text-sm">Add</button>
+                </div>
+              </div>
+</Card> */

@@ -6,6 +6,8 @@ import { filteredList, sortedList } from "../helper/helperFunctions";
 import { CUSTOMER_BASE_URL } from "../static/api";
 import { CUSTOMER_TABLE_COLUMN } from "../static/table_headers";
 import { CUSTOMER_OPERATIONS, TABLE_SELECTION } from "../static/operations";
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
 
 import CustomerTable from "../UI/CustomerTable";
 import Table from "../UI/Table";
@@ -78,11 +80,40 @@ const CustomerList = () => {
     appContext.setFormProps({ initial_data, mode, title });
     appContext.setModalVisible(true);
   };
+
+  const exportToCSV = (csvData, fileName) => {
+    const fileType =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    const fileExtension = ".xlsx";
+    const ws = XLSX.utils.json_to_sheet(csvData);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, fileName + fileExtension);
+  };
   const toggleModal = appContext.isModalVisible;
   const toggleDeleteModal = appContext.isDeleteModalVisible;
   return (
     <div className="mx-6">
-      <h1 className="text-center my-6 font-bold text-4xl"> Custome Details</h1>
+      <h1 className="text-center my-6 font-bold text-4xl uppercase">
+        {" "}
+        Customer Details
+      </h1>
+      <div className="flex justify-end items-end">
+        <button
+          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+          onClick={(e) => exportToCSV(userList.customerList, "customerList")}
+        >
+          <svg
+            className="fill-current w-4 h-4 mr-2"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
+            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+          </svg>
+          <span>Export to Excel</span>
+        </button>
+      </div>
       <div className="flex justify-between items-center">
         <button
           onClick={handleModalVisibility}

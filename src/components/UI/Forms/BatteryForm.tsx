@@ -1,21 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import batteryService from "../../../services/BatteryService";
+import AuthContext from "../../../context/appContext";
+import { Headers, Battery } from "../../../AppModel";
 interface propsType {
-  title: string;
   initialData: {
     name: string;
+    id: string;
   };
   closeModal: () => void;
+  action: string;
 }
 const BatteryForm = (props: propsType) => {
-  const { title, initialData, closeModal } = props;
+  const { initialData, closeModal, action } = props;
+  const appContext = useContext(AuthContext);
+  const authToken = appContext.token;
+  const headers: Headers = {
+    headers: {
+      Authorization: authToken,
+    },
+  };
 
   const [name, setName] = useState(initialData.name);
-  const handleFormSubmit = () => {
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const battery: Battery = {
+      name,
+    };
+    if (action === "ADD") {
+      const response = await batteryService.submitBatteryDetails(
+        battery,
+        headers
+      );
+    }
+    if (action === "UPDATE") {
+      const response = await batteryService.updateCustomerById(
+        battery,
+        initialData.id,
+        headers
+      );
+    }
+    appContext.refreshData();
     closeModal();
   };
   return (
     <div className="w-full mx-auto   py-10 px-5 rounded-lg -none">
-      <h1 className="text-2xl font-semibold">{title}</h1>
+      <h1 className="text-2xl font-semibold">
+        {action === "ADD" ? "Add new Recoard" : "Update Recoard"}
+      </h1>
       <form
         className="px-8 md:px-16 pt-6 pb-4 bg-white rounded shadow-md"
         onSubmit={handleFormSubmit}

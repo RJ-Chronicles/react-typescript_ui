@@ -4,7 +4,7 @@ import * as React from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Button from "@mui/material/Button";
 
-import BatteryForm from "../UI/Forms/BatteryForm";
+import StockElementForm from "../UI/Forms/StockElementForm";
 import StockBoard from "../UI/StockBoard";
 const Stock = () => {
   const [open, setOpen] = React.useState(false);
@@ -64,7 +64,7 @@ const Stock = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className="max-h-screen  mx-auto my-4 md:my-20 max-w-2xl">
+        <div className="min-h-screen  mx-auto max-w-2xl">
           <div className="bg-white">
             <div className="flex justify-end pr-10 pt-10 ">
               <button className="hover:bg-slate-100 p-2" onClick={handleClose}>
@@ -84,10 +84,17 @@ const Stock = () => {
                 </svg>
               </button>
             </div>
-            <BatteryForm
-              title="Add new Recoard"
-              initialData={{ name: "Jena" }}
+            <StockElementForm
+              initialData={{
+                battery_name: "",
+                product_code: "",
+                amphere_size: "",
+                quantity: "0",
+                mrp: "0",
+                id: "",
+              }}
               closeModal={handleClose}
+              action={"ADD"}
             />
             <div className="flex justify-end pr-10 pb-10">
               <Button variant="outlined" color="error" onClick={handleClose}>

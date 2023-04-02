@@ -12,6 +12,8 @@ import Battery from "./components/pages/battery.page";
 import AuthContext from "./context/appContext";
 import UserList from "./components/pages/UserList";
 import CustomerSpecificBatteryList from "./components/pages/customer.specific.battery.list.page";
+import Payment from "./components/pages/payment.page";
+import Settings from "./components/pages/setting.page";
 function App() {
   const authContext = useContext(AuthContext);
   return (
@@ -36,6 +38,11 @@ function App() {
           />
           <Route path="/admin-dashboard/stock" element={<Stock />} />
           <Route path="/admin-dashboard/battery" element={<Battery />} />
+          <Route
+            path="/admin-dashboard/:customerId/payment"
+            element={<Payment />}
+          />
+          <Route path="/admin-dashboard/settings" element={<Settings />} />
         </Route>
       </Routes>
     </div>

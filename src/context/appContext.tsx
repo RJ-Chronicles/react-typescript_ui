@@ -14,6 +14,7 @@ const AuthContext = React.createContext<any | null>({
   setDeleteModalVisible: () => {},
   setModalVisible: () => {},
   setFormProps: () => {},
+  storeCartItems: () => {},
   setDeleteModalFormProps: () => {},
   user: {},
   login: () => {},
@@ -63,6 +64,7 @@ export const AuthContextProvider = (props: any) => {
   const [token, setToken] = useState(initialToken);
   const [user, setUser] = useState(initialUser);
   const [formPropsData, setFormPropsData] = useState({});
+  const [cartItems, setCartItems] = useState([]);
   const [deleteModalFormProps, setDeleteModalFormProps] = useState({});
   const [isModalShow, setIsModalVisible] = useState(false);
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -118,8 +120,9 @@ export const AuthContextProvider = (props: any) => {
     refreshEffect: refreshEffect,
     user: user,
     setFormProps: setFormPropsData,
-
+    storeCartItems: setCartItems,
     formProps: formPropsData,
+    cartItems: cartItems,
     deleteModalFormProps: deleteModalFormProps,
     setModalVisible: setShowModalHandler,
     isModalVisible: isModalShow,

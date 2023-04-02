@@ -35,7 +35,7 @@ const SideNav = () => {
     setNotificationsModal(!notificationsModal);
   };
   return (
-    <div className="flex flex-col h-screen p-3 bg-white shadow w-60">
+    <div className="flex flex-col h-screen p-3 bg-gradient-to-r from-blue-800 to-indigo-900 text-white shadow w-60">
       {notificationsModal && (
         <NotificationModal
           toggleNotification={notificationsTableHandler}
@@ -197,7 +197,7 @@ const SideNav = () => {
 
             <li className="rounded-sm">
               <NavLink
-                to="#"
+                to="/admin-dashboard/settings"
                 className="flex items-center p-2 space-x-3 rounded-md"
               >
                 <svg
