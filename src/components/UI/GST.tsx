@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 
 import AuthContext from "../../context/appContext";
-import { Headers, AmpherePayload } from "../../AppModel";
+import { Headers, GSTPayload } from "../../AppModel";
 
-import AmphereForm from "../UI/Forms/AmpereForm";
+import GSTForm from "./Forms/GSTForm";
 import { getFormatedDate } from "../helper/helperFunctions";
 import * as React from "react";
 import Button from "@mui/material/Button";
@@ -12,12 +12,12 @@ import DialogActions from "@mui/material/DialogActions";
 import Modal from "@mui/material/Modal";
 import DialogTitle from "@mui/material/DialogTitle";
 
-import amprService from "../../services/AmphereService";
-const Amphere = () => {
+import GstService from "../../services/GSTService";
+const GST = () => {
   const appContext = useContext(AuthContext);
   const authToken = appContext.token;
   const refreshEffect = appContext.refreshEffect;
-  const [amphere, setAmphere] = useState<AmpherePayload>();
+  const [gstValues, setGSTValue] = useState<GSTPayload>();
   const [open, setOpen] = React.useState(false);
   const [action, setAction] = React.useState("ADD");
   const [id, setId] = React.useState("");
@@ -30,11 +30,15 @@ const Amphere = () => {
       },
     };
 
-    const fetchSizeList = async () => {
-      const response = await amprService.getListOfAvailableSize(headers);
-      setAmphere(response.data);
+    const fetchGSTList = async () => {
+      try {
+        const response = await GstService.getGstList(headers);
+        setGSTValue(response.data);
+      } catch (error) {
+        throw new Error("something went wrong!");
+      }
     };
-    fetchSizeList();
+    fetchGSTList();
   }, [authToken, refreshEffect]);
 
   const handleClose = () => {
@@ -42,7 +46,6 @@ const Amphere = () => {
   };
   const deleteButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const id = event.currentTarget.name;
-    console.log(id);
     setOpen(true);
     setId(id);
   };
@@ -53,8 +56,12 @@ const Amphere = () => {
           Authorization: authToken,
         },
       };
-      await amprService.deleteSizeById(id, headers);
-      appContext.refreshData();
+      try {
+        await GstService.deleteGSTItemById(id, headers);
+        appContext.refreshData();
+      } catch (error: any) {
+        throw new Error("something went wrong!");
+      }
     }
     setOpen(false);
   };
@@ -68,7 +75,7 @@ const Amphere = () => {
   return (
     <div className="md:min-h-screen shadow-md w-full">
       <h1 className="text-center text-2xl font-bold border-b-2 pb-4 m-3">
-        List Of Available Ampere size{" "}
+        List Of Available GST values{" "}
       </h1>
       <div className="flex justify-end items-end mr-10 mt-5">
         <button
@@ -97,7 +104,7 @@ const Amphere = () => {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Size in Amphere
+                GST
               </th>
               <th scope="col" className="px-6 py-3">
                 Created At
@@ -108,14 +115,14 @@ const Amphere = () => {
             </tr>
           </thead>
           <tbody className="overflow-y-scroll w-full max-h-60">
-            {amphere?.list.map((obj, index) => {
+            {gstValues?.list.map((obj, index) => {
               return (
                 <tr
                   key={index}
                   className="bg-white border-b text-sm dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <td className="px-6 py-4   text-gray-900 whitespace-nowrap dark:text-white">
-                    {obj.size}
+                    {obj.gst} {" %"}
                   </td>
                   <td className="px-6 py-4">
                     {getFormatedDate(obj.createdAt)}
@@ -190,8 +197,8 @@ const Amphere = () => {
                 </svg>
               </button>
             </div>
-            <AmphereForm
-              initialData={{ size: "", id: "" }}
+            <GSTForm
+              initialData={{ gst: "", id: "" }}
               closeModal={handleCloseModal}
               action={action}
             />
@@ -210,4 +217,4 @@ const Amphere = () => {
     </div>
   );
 };
-export default Amphere;
+export default GST;

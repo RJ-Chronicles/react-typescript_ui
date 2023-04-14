@@ -1,12 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/appContext";
 import ProductService from "../../services/ProductService";
 import { PRODUCT_OPERATIONS } from "../static/operations";
+import amprService from "../../services/AmphereService";
+import btryService from "../../services/BatteryService";
 
 const ProductForm = () => {
   const appContext = useContext(AuthContext);
-
+  const authToken = appContext.token;
   const { mode, initial_data } = appContext.formProps;
+  console.log(initial_data);
+  const [batteryList, setBatteryList] = useState();
+  const [amphere, setAmphere] = useState();
   const {
     name,
     type,
@@ -52,6 +57,25 @@ const ProductForm = () => {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    const headers = {
+      headers: {
+        Authorization: authToken,
+      },
+    };
+    const fetchBatteryList = async () => {
+      const response = await btryService.getListOfBatteries(headers);
+      setBatteryList(response.data);
+      console.log(response.data);
+    };
+    const fetchSizeList = async () => {
+      const response = await amprService.getListOfAvailableSize(headers);
+      setAmphere(response.data);
+    };
+    fetchSizeList();
+    fetchBatteryList();
+  }, [authToken]);
   return (
     <div className="w-full  bg-white px-5 rounded-lg lg:rounded-l-none">
       <form
@@ -62,15 +86,12 @@ const ProductForm = () => {
           <div className="mb-4 md:mr-2 md:mb-0">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="name"
+              htmlFor="role"
             >
               Battery Name
             </label>
-            <input
+            <select
               className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="name"
-              type="text"
-              placeholder="Battery Name"
               onChange={(e) =>
                 setProduct((prev) => ({
                   ...prev,
@@ -78,21 +99,28 @@ const ProductForm = () => {
                 }))
               }
               value={product.name}
-              required
-            />
+              id="role"
+            >
+              <option value="DEFAULT">Choose battery name</option>
+              {batteryList?.list.map((data, index) => {
+                return (
+                  <option key={index} value={data.name}>
+                    {data.name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
           <div className="md:ml-2">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="type"
+              htmlFor="role"
             >
-              Battery Type
+              Amphere Size
             </label>
-            <input
+            <select
               className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="type"
-              type="text"
-              placeholder="Battery Type"
+              id="size"
               onChange={(e) =>
                 setProduct((prev) => ({
                   ...prev,
@@ -100,8 +128,16 @@ const ProductForm = () => {
                 }))
               }
               value={product.type}
-              required
-            />
+            >
+              <option value="DEFAULT">Choose battery size</option>
+              {amphere?.list.map((data, index) => {
+                return (
+                  <option key={index} value={data.size}>
+                    {data.size}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
         <div className="mb-4">

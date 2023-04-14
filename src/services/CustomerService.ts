@@ -3,7 +3,8 @@ const CUSTOMER_BASE_URL = "http://localhost:3001/customer/";
 
 class CustomerService {
   getListOfCustomer(headers: any) {
-    return axios.get(CUSTOMER_BASE_URL + "get-list", headers);
+    console.log("inside");
+    return axios.get(CUSTOMER_BASE_URL + "customer-all", headers);
   }
 
   getCustomerById(id: string, headers: any) {

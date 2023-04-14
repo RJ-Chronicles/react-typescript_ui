@@ -1,71 +1,48 @@
-import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 
 import AuthContext from "../../context/appContext";
 import { filteredList, sortedList } from "../helper/helperFunctions";
-import { CUSTOMER_BASE_URL } from "../static/api";
+
 import { CUSTOMER_TABLE_COLUMN } from "../static/table_headers";
 import { CUSTOMER_OPERATIONS, TABLE_SELECTION } from "../static/operations";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
-
-import CustomerTable from "../UI/CustomerTable";
+import cstmerService from "../../services/CustomerService";
 import Table from "../UI/Table";
 
 import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
 const CustomerList = () => {
-  const [userList, setUserList] = useState({});
+  const [userList, setUserList] = useState([]);
   const appContext = useContext(AuthContext);
-  const [sortByValue, setSortBy] = useState("updatedAt");
+  const [sortByValue, setSortBy] = useState("createdAt");
   const refreshEffect = appContext.refreshEffect;
-
-  const [paginationValues, setPaginationValues] = useState({
-    page: 0,
-    sort: "desc",
-    sortBy: "updatedAt",
-    start: 1,
-    to: 4,
-    total: 10,
-    incrementDecrementBy: 4,
-    findBy: "",
-  });
-
-  const { sort, sortBy, page, findBy } = paginationValues;
   const authToken = appContext.token;
   useEffect(() => {
     const fetchCustomeDetails = async () => {
       try {
-        console.log("Loading");
-        const response = await axios.get(`${CUSTOMER_BASE_URL}/customer-all`, {
+        const headers = {
           headers: {
             Authorization: authToken,
           },
-        });
-        if (response.status === 200) {
-          const data = response.data;
-          setUserList(data);
-          console.log(data.customerList);
-          setPaginationValues((prev) => ({
-            ...prev,
-            total: data.count,
-          }));
-        }
+        };
+        const responses = await cstmerService.getListOfCustomer(headers);
+        const data = responses.data.customerList;
+        setUserList(data);
       } catch (e) {
-        console.log(e);
-        console.log("Error occured");
+        console.log("Error occured", e);
       }
     };
     fetchCustomeDetails();
-  }, [sort, sortBy, page, authToken, refreshEffect, findBy]);
+  }, [authToken, refreshEffect]);
 
-  const [storeData, setStoreData] = useState([]);
   useEffect(() => {
-    if (userList.customerList) {
-      setStoreData(sortedList(userList.customerList, sortByValue));
-      console.log(storeData);
+    if (userList) {
+      console.log("sortByValue, ", sortByValue);
+      const tempSort = sortedList(userList, sortByValue);
+      setUserList(tempSort);
     }
-  }, [sortByValue, userList, storeData]);
+  }, [sortByValue, userList]);
 
   const handleModalVisibility = () => {
     const initial_data = {
@@ -146,12 +123,12 @@ const CustomerList = () => {
               id="sort_value"
               type="text"
               placeholder="Sort value"
-              onChange={(e) =>
-                setPaginationValues((prev) => ({
-                  ...prev,
-                  findBy: e.target.value,
-                }))
-              }
+              // onChange={(e) =>
+              //   setPaginationValues((prev) => ({
+              //     ...prev,
+              //     findBy: e.target.value,
+              //   }))
+              // }
             />
           </div>
         </div>
@@ -160,20 +137,14 @@ const CustomerList = () => {
       {toggleModal && <Modal />}
       {toggleDeleteModal && <DeleteModal />}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        {userList.customerList !== undefined && (
+        {userList !== undefined && (
           <Table
-            list={userList.customerList}
+            list={userList}
             column={CUSTOMER_TABLE_COLUMN}
             mode={TABLE_SELECTION.CUSTOMER_TABLE}
           />
         )}
       </div>
-
-      {/* <div className="mt-24 relative overflow-x-auto shadow-md sm:rounded-lg">
-        {userList.customerList !== undefined && (
-          <CustomerTable customerList={userList.customerList} />
-        )}
-      </div> */}
     </div>
   );
 };
@@ -181,3 +152,18 @@ const CustomerList = () => {
 export default CustomerList;
 
 //`${CUSTOMER_BASE_URL}/customer-all?sort=${sort}&sortBy=${sortBy}&page=${page}&findBy=${findBy}`,
+
+// const response = await axios.get(`${CUSTOMER_BASE_URL}/customer-all`, {
+//   headers: {
+//     Authorization: authToken,
+//   },
+// });
+// if (response.status === 200) {
+//   const data = response.data;
+//   setUserList(data);
+//   console.log(data.customerList);
+//   setPaginationValues((prev) => ({
+//     ...prev,
+//     total: data.count,
+//   }));
+// }

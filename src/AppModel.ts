@@ -61,3 +61,19 @@ export interface StockElementsPayload {
 export interface Amphere {
   size: string;
 }
+
+export interface GSTPayload {
+  message: string;
+  list: [
+    {
+      gst: number;
+      _id: string;
+      createdAt: string;
+      updatedAt: string;
+      __v: number;
+    }
+  ];
+}
+export interface GST {
+  gst: number;
+}

@@ -26,7 +26,7 @@ const StockElementForm = (props: propsType) => {
   const { initialData, closeModal, action } = props;
   const appContext = useContext(AuthContext);
   const authToken = appContext.token;
-
+  console.log(initialData);
   const headers: Headers = {
     headers: {
       Authorization: authToken,
@@ -35,7 +35,7 @@ const StockElementForm = (props: propsType) => {
 
   const [batteryName, setBatteryName] = useState(initialData.battery_name);
   const [productCode, setProductCode] = useState(initialData.product_code);
-  const [amhereSize, setAmphereSize] = useState(initialData.amphere_size);
+  const [amphereSize, setAmphereSize] = useState(initialData.amphere_size);
   const [quantity, setQuantity] = useState(initialData.quantity);
   const [MRP, setMRP] = useState(initialData.mrp);
   const [batteryList, setBatteryList] = useState<BatteryPayload>();
@@ -45,7 +45,7 @@ const StockElementForm = (props: propsType) => {
     const stockElementDetails: Stock = {
       battery_name: batteryName,
       product_code: productCode,
-      amphere_size: amhereSize,
+      amphere_size: amphereSize,
       quantity: parseInt(quantity),
       mrp: parseInt(MRP),
     };
@@ -81,7 +81,7 @@ const StockElementForm = (props: propsType) => {
     };
     fetchSizeList();
     fetchBatteryList();
-  }, []);
+  }, [authToken]);
 
   return (
     <div className="w-full mx-auto px-5 rounded-lg -none">
@@ -120,12 +120,16 @@ const StockElementForm = (props: propsType) => {
           <select
             className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             onChange={(e) => setBatteryName(e.target.value)}
-            defaultValue={initialData.battery_name}
+            value={batteryName}
             id="role"
           >
-            <option value="">Choose battery name</option>
+            <option value="DEFAULT">Choose battery name</option>
             {batteryList?.list.map((data, index) => {
-              return <option key={index}>{data.name}</option>;
+              return (
+                <option key={index} value={data.name}>
+                  {data.name}
+                </option>
+              );
             })}
           </select>
         </div>
@@ -140,12 +144,16 @@ const StockElementForm = (props: propsType) => {
           <select
             className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             id="size"
-            defaultValue={initialData.battery_name}
+            value={amphereSize}
             onChange={(e) => setAmphereSize(e.target.value)}
           >
-            <option value="">Choose battery size</option>
+            <option value="DEFAULT">Choose battery size</option>
             {amphere?.list.map((data, index) => {
-              return <option key={index}>{data.size}</option>;
+              return (
+                <option key={index} value={data.size}>
+                  {data.size}
+                </option>
+              );
             })}
           </select>
         </div>
@@ -164,6 +172,7 @@ const StockElementForm = (props: propsType) => {
             onChange={(e) => setQuantity(e.target.value)}
             id="name"
             placeholder="Product code"
+            value={quantity}
           />
         </div>
 
@@ -181,6 +190,7 @@ const StockElementForm = (props: propsType) => {
             onChange={(e) => setMRP(e.target.value)}
             id="name"
             placeholder="Product code"
+            value={MRP}
           />
         </div>
         <button

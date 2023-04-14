@@ -119,7 +119,7 @@ const BatteryNames = () => {
                   <td className="px-6 py-4">
                     {getFormatedDate(obj.createdAt)}
                   </td>
-                  <td className="px-6 py-4 text-right">
+                  <td className="px-6 py-4 text-left">
                     <button
                       name={obj._id}
                       className="font-medium text-blue-600 dark:text-red-500 hover:underline mr-1"

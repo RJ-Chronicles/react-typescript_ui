@@ -4,6 +4,7 @@ import AuthContext from "../../../context/appContext";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
+import { getFormatedDate } from "../../helper/helperFunctions";
 const CustomerTablePartial = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -67,7 +68,9 @@ const CustomerTablePartial = (props) => {
               <td className="px-3 py-4">{customer.address}</td>
               <td className="px-3 py-4">{customer.email}</td>
               <td className="px-3 py-4">{customer.contact}</td>
-
+              <td className="px-3 py-4">
+                {getFormatedDate(customer.createdAt)}
+              </td>
               <td className="flex items-center px-3 py-4 space-x-3">
                 <button
                   onClick={handleAddUpdateFormVisibility}

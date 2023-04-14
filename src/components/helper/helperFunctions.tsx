@@ -32,9 +32,10 @@ const GreetingMessage = () => {
   return greeting;
 };
 
-const sortedList = (list: any, sortBy: string, type = "asc"): any => {
+const sortedList = (list: any, sortBy: string, type = "desc"): any => {
   let sorted;
   if (type === "asc") {
+    console.log("ascending sort");
     sorted = list.sort((a: any, b: any) => {
       if (a[sortBy] > b[sortBy]) {
         return 1;

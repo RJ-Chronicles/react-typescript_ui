@@ -3,6 +3,7 @@ const CUSTOMER_TABLE_COLUMN = [
   "CUSTOMER ADDRESS",
   "EMAIL",
   "CONTACT",
+  "REGISTERED",
   "ACTION",
 ];
 

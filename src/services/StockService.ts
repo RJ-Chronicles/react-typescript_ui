@@ -10,7 +10,8 @@ class StockService {
   getSizeById(id: string, headers: Headers) {
     return axios.get(STOCK_BASE_URL + "seleted/" + id, headers);
   }
-  deleteSizeById(id: string, headers: Headers) {
+  deleteStockElementById(id: string, headers: Headers) {
+    console.log("delete clicked");
     return axios.delete(STOCK_BASE_URL + "delete/" + id, headers);
   }
   updateSizeById(stock: Stock, id: string, headers: any) {
