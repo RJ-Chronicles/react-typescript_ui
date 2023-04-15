@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Headers, Battery, BatteryPayload } from "../AppModel";
-const BATTERY_BASE_URL = "http://localhost:3001/battery-type/";
+const BATTERY_BASE_URL =
+  "https://kallyankar-api-service.onrender.com/battery-type/"; // "http://localhost:3001/battery-type/";
 
 class BatteryServices {
   getListOfBatteries(headers: any) {

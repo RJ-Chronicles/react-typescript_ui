@@ -3,11 +3,11 @@ import CustomerTablePartial from "./partials/CustomerTablePartial";
 import ProductTablePartial from "./partials/ProductTablePartial";
 import UserTablePartial from "./partials/UserTablePartial";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sortedList } from "../helper/helperFunctions";
 const Table = (props) => {
   const { column, mode, list } = props;
-
+  console.log(list);
   const [sortDirection, setSortDirection] = useState("asc");
   const [sortedData, setSortedData] = useState(list);
   const handleClick = (e) => {
@@ -25,6 +25,9 @@ const Table = (props) => {
     console.log(data);
     setSortedData(data);
   };
+  useEffect(() => {
+    setSortedData(list);
+  }, [list]);
   return (
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const NOTIFICATION_BASE_URL = "http://localhost:3001/inquiry/";
+const NOTIFICATION_BASE_URL =
+  "https://kallyankar-api-service.onrender.com/inquiry/"; // "http://localhost:3001/inquiry/";
 
 class NotificationService {
   sendNotifiction(notification: any) {

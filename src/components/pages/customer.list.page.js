@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 
 import AuthContext from "../../context/appContext";
-import { filteredList, sortedList } from "../helper/helperFunctions";
 
 import { CUSTOMER_TABLE_COLUMN } from "../static/table_headers";
 import { CUSTOMER_OPERATIONS, TABLE_SELECTION } from "../static/operations";
@@ -15,7 +14,7 @@ import DeleteModal from "../UI/DeleteModal";
 const CustomerList = () => {
   const [userList, setUserList] = useState([]);
   const appContext = useContext(AuthContext);
-  const [sortByValue, setSortBy] = useState("createdAt");
+  //const [sortByValue, setSortBy] = useState("createdAt");
   const refreshEffect = appContext.refreshEffect;
   const authToken = appContext.token;
   useEffect(() => {
@@ -36,13 +35,13 @@ const CustomerList = () => {
     fetchCustomeDetails();
   }, [authToken, refreshEffect]);
 
-  useEffect(() => {
-    if (userList) {
-      console.log("sortByValue, ", sortByValue);
-      const tempSort = sortedList(userList, sortByValue);
-      setUserList(tempSort);
-    }
-  }, [sortByValue, userList]);
+  // useEffect(() => {
+  //   if (userList) {
+  //     console.log("sortByValue, ", sortByValue);
+  //     const tempSort = sortedList(userList, sortByValue);
+  //     setUserList(tempSort);
+  //   }
+  // }, [sortByValue, userList]);
 
   const handleModalVisibility = () => {
     const initial_data = {
@@ -109,7 +108,7 @@ const CustomerList = () => {
             <select
               className="w-full md:w-48 px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="sort_by"
-              onChange={(e) => setSortBy(e.target.value)}
+              // onChange={(e) => setSortBy(e.target.value)}
             >
               <option value="DEFAULT">Choose a role</option>
               <option value="name">Name</option>

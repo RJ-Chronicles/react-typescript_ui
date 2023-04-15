@@ -17,7 +17,7 @@ const CustomerSpecificBatteryList = () => {
   const appContext = useContext(AuthContext);
   const [productList, setProductList] = useState({});
   const [customer, setCustomer] = useState({});
-  const [cartItems, setCartItems] = useState(appContext.cartItems);
+  //const [cartItems, setCartItems] = useState(appContext.cartItems);
   const token = appContext.token;
   const refreshEffect = appContext.refreshEffect;
   useEffect(() => {
@@ -29,11 +29,12 @@ const CustomerSpecificBatteryList = () => {
 
     const fetchCusterDetailsById = async () => {
       try {
-        const userById = await CustomerService.getCustomerById(
+        const response = await CustomerService.getCustomerById(
           customerId,
           headers
         );
-        setCustomer(userById.data);
+        setCustomer(response.data);
+        appContext.refreshData();
       } catch (e) {
         console.log("Error : ", e);
       }
@@ -41,13 +42,13 @@ const CustomerSpecificBatteryList = () => {
 
     const fetchProductListByCustomerId = async () => {
       try {
-        const products = await ProductService.getProductListBasedOnCustomerId(
+        const response = await ProductService.getProductListBasedOnCustomerId(
           customerId,
           headers
         );
-        setProductList(products.data);
+        setProductList(response.data);
       } catch (e) {
-        console.log(e);
+        console.log("Error occured", e);
       }
     };
 

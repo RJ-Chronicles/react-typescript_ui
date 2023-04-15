@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const ADMIN_BASE_URL = "http://localhost:3001/admin/";
+//const ADMIN_BASE_URL = "http://localhost:3001/admin/";
+const ADMIN_BASE_URL = "https://kallyankar-api-service.onrender.com/admin/";
 // interface userType {
 
 // }
@@ -18,6 +19,9 @@ class AdminServices {
   deleteUserById(id: string, headers: any) {
     console.log("inside the delete");
     return axios.delete(ADMIN_BASE_URL + "delete/" + id, headers);
+  }
+  getUserList(headers: any) {
+    return axios.get(ADMIN_BASE_URL + "user_list", headers);
   }
 }
 const admService = new AdminServices();

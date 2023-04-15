@@ -1,8 +1,6 @@
-import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "../../context/appContext";
 
-import { ADMIN_BASE_URL } from "../static/api";
 import { USER_TABLE_COLUMN } from "../static/table_headers";
 
 import Table from "../UI/Table";
@@ -10,7 +8,7 @@ import Table from "../UI/Table";
 import { TABLE_SELECTION, USER_OPERATIONS } from "../static/operations";
 import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
-
+import admService from "../../services/AdminService";
 const UserList = () => {
   const [userList, setUserList] = useState({});
   const appContext = useContext(AuthContext);
@@ -21,15 +19,16 @@ const UserList = () => {
   useEffect(() => {
     const fetchCustomeDetails = async () => {
       try {
-        const response = await axios.get(`${ADMIN_BASE_URL}/user_list`, {
+        const headers = {
           headers: {
             Authorization: authToken,
           },
-        });
-        if (response.status === 200) {
-          const data = response.data;
-          setUserList(data);
-        }
+        };
+        const response = await admService.getUserList(headers);
+        //const response = await axios.get(`${ADMIN_BASE_URL}/user_list`, );
+        const data = response.data;
+        console.log(data);
+        setUserList(data);
       } catch (e) {
         console.log("Error occured");
       }

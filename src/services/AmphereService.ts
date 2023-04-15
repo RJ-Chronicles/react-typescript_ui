@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Headers, Amphere, AmpherePayload } from "../AppModel";
-const AMPHERE_BASE_URL = "http://localhost:3001/amphere/";
+const AMPHERE_BASE_URL = "https://kallyankar-api-service.onrender.com/amphere/"; // "http://localhost:3001/amphere/";
 
 class AmpherService {
   getListOfAvailableSize(headers: any) {

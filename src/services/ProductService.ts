@@ -1,5 +1,5 @@
 import axios from "axios";
-const PRODUCT_BASE_URL = "http://localhost:3001/product/";
+const PRODUCT_BASE_URL = "https://kallyankar-api-service.onrender.com/product/"; // "http://localhost:3001/product/";
 
 class ProductService {
   getListOfProducts(headers: any) {

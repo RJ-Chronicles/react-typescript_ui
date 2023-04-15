@@ -21,7 +21,7 @@ const CustomerTablePartial = (props) => {
   const appContext = useContext(AuthContext);
   const navigate = useNavigate();
   const { customerList } = props;
-
+  console.log(customerList);
   const handleAddUpdateFormVisibility = (e) => {
     const id = e.target.name;
     const cust = customerList.find((el) => el._id === id);
