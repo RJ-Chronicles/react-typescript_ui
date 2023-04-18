@@ -60,6 +60,9 @@ const filteredList = (list: any, filterString: any, filterBy: any) => {
   let transformedList;
   let filteredCustomers;
 
+  if (filterString === "") {
+    return list;
+  }
   if (filterBy === "contact") {
     transformedList = list.map((obj: any) => {
       return { ...obj, contact: obj.contact.toString() };

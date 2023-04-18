@@ -7,11 +7,12 @@ import { useEffect, useState } from "react";
 import { sortedList } from "../helper/helperFunctions";
 const Table = (props) => {
   const { column, mode, list } = props;
-  console.log(list);
   const [sortDirection, setSortDirection] = useState("asc");
   const [sortedData, setSortedData] = useState(list);
+  console.log(list);
   const handleClick = (e) => {
     let sortColumn = e.target.name.toLowerCase();
+
     sortColumn =
       sortColumn === "customer name"
         ? "name"
@@ -22,12 +23,11 @@ const Table = (props) => {
     const data = sortedList(list, sortColumn, sortDirection);
     const toggleDirection = sortDirection === "asc" ? "desc" : "asc";
     setSortDirection(toggleDirection);
-    console.log(data);
     setSortedData(data);
   };
   useEffect(() => {
-    setSortedData(list);
-  }, [list]);
+    if (mode === TABLE_SELECTION.CUSTOMER_TABLE) setSortedData(list);
+  }, [list, mode]);
   return (
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

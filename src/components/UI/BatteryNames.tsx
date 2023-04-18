@@ -66,7 +66,7 @@ const BatteryNames = () => {
     setOpenModal(true);
   };
   return (
-    <div className="md:min-h-screen shadow-md w-full">
+    <div className="md:min-h-screen  w-full">
       <h1 className="text-center text-2xl font-bold border-b-2 pb-4 m-3">
         List Of Available Batteries
       </h1>

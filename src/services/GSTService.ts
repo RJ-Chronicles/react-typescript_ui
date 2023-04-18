@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Headers, GST, GSTPayload } from "../AppModel";
-const GST_BASE_URL = "https://kallyankar-api-service.onrender.com/gst/"; // "http://localhost:3001/gst/";
-
+//const GST_BASE_URL = "http://localhost:3001/gst/";
+const GST_BASE_URL = "https://kallyankar-api-service.onrender.com/gst/";
 class GSTService {
   getGstList(headers: any) {
     return axios.get<GSTPayload>(GST_BASE_URL + "list", headers);
