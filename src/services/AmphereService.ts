@@ -4,7 +4,6 @@ import { Headers, Amphere, AmpherePayload } from "../AppModel";
 const AMPHERE_BASE_URL = "https://kallyankar-api-service.onrender.com/amphere/";
 class AmpherService {
   getListOfAvailableSize(headers: any) {
-    console.log("gel list ");
     return axios.get<AmpherePayload>(AMPHERE_BASE_URL + "list", headers);
   }
 

@@ -22,6 +22,10 @@ const Amphere = () => {
   const [action, setAction] = React.useState("ADD");
   const [id, setId] = React.useState("");
   const [openModal, setOpenModal] = React.useState(false);
+  const [initial_data, setInitialData] = React.useState({
+    size: "",
+    id: "",
+  });
 
   useEffect(() => {
     const headers: Headers = {
@@ -42,7 +46,6 @@ const Amphere = () => {
   };
   const deleteButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const id = event.currentTarget.name;
-    console.log(id);
     setOpen(true);
     setId(id);
   };
@@ -62,6 +65,16 @@ const Amphere = () => {
   const handleCloseModal = () => setOpenModal(false);
   const handleOpenModal = () => {
     setAction("ADD");
+    setInitialData({ size: "", id: "" });
+    setOpenModal(true);
+  };
+
+  const updateButtonHandler = (e: any) => {
+    const id = e.target.name;
+    const ampr = amphere?.list.find((el) => el._id === id);
+    const size = ampr?.size || "";
+    setInitialData({ size, id });
+    setAction("UPDATE");
     setOpenModal(true);
   };
 
@@ -123,6 +136,7 @@ const Amphere = () => {
                   <td className="px-6 py-4 text-left">
                     <button
                       name={obj._id}
+                      onClick={updateButtonHandler}
                       className="font-medium text-blue-600 dark:text-red-500 hover:underline mr-1"
                     >
                       Edit
@@ -130,7 +144,7 @@ const Amphere = () => {
 
                     <button
                       name={obj._id}
-                      className="font-medium text-red-600 dark:text-red-500 hover:underline ml-1"
+                      className="font-medium text-red-600 dark:text-red-500 hover:underline md:ml-1"
                       onClick={deleteButtonHandler}
                     >
                       Delete
@@ -191,7 +205,7 @@ const Amphere = () => {
               </button>
             </div>
             <AmphereForm
-              initialData={{ size: "", id: "" }}
+              initialData={{ size: initial_data.size, id: initial_data.id }}
               closeModal={handleCloseModal}
               action={action}
             />

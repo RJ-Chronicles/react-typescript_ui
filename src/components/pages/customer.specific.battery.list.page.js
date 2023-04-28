@@ -16,6 +16,7 @@ const CustomerSpecificBatteryList = () => {
   const appContext = useContext(AuthContext);
   const [productList, setProductList] = useState({});
   const token = appContext.token;
+  const refreshEffect = appContext.refreshEffect;
 
   useEffect(() => {
     const headers = {
@@ -37,7 +38,7 @@ const CustomerSpecificBatteryList = () => {
     };
 
     fetchProductListByCustomerId();
-  }, [token]);
+  }, [token, refreshEffect]);
 
   const handleModalVisibility = () => {
     const initial_data = {
@@ -122,11 +123,14 @@ const CustomerSpecificBatteryList = () => {
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     >
                       <td className="px-3 py-4">{product.name}</td>
+                      <td className="px-3 py-4">
+                        {product.vehicle_name} {product.vehicle_number}
+                      </td>
                       <td className="px-3 py-4">{product.type}</td>
                       <td className="px-3 py-4">{product.serial_number}</td>
 
                       <td className="px-3 py-4">{product.price}</td>
-
+                      <td className="px-3 py-4">{product.GST}%</td>
                       <td className="flex items-center px-6 py-4 space-x-3">
                         <button
                           onClick={handleAddUpdateFormVisibility}

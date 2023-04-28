@@ -20,6 +20,7 @@ interface UpdateRecord {
 const StockBoard = () => {
   const appContext = useContext(AuthContext);
   const token = appContext.token;
+  const refreshEffect = appContext.refreshEffect;
   const [stockList, setStockList] = useState<StockElementsPayload>();
   const [id, setId] = useState("");
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -45,7 +46,7 @@ const StockBoard = () => {
       console.log(response.data);
     };
     stockData();
-  }, [token]);
+  }, [token, refreshEffect]);
 
   const itemDeleteHandler = async () => {
     if (id.length > 0) {
@@ -89,7 +90,7 @@ const StockBoard = () => {
   };
   return (
     <div className="relative  shadow-md sm:rounded-lg m-10">
-      <table className="w-full text-base text-left text-gray-500 dark:text-gray-400">
+      <table className="w-full text-sm  text-left text-gray-500 dark:text-gray-400">
         <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">

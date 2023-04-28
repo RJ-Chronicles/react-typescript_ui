@@ -5,7 +5,6 @@ const BATTERY_BASE_URL =
   "https://kallyankar-api-service.onrender.com/battery-type/";
 class BatteryServices {
   getListOfBatteries(headers: any) {
-    //<BatteryPayload>
     return axios.get<BatteryPayload>(BATTERY_BASE_URL + "list", headers);
   }
 

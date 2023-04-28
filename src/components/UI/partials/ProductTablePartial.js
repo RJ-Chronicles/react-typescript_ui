@@ -36,7 +36,6 @@ const ProductTablePartial = (props) => {
           <td className="px-3 py-4">{product.serial_number}</td>
 
           <td className="px-3 py-4">{product.price}</td>
-
           <td className="flex items-center px-6 py-4 space-x-3">
             <button
               onClick={handleAddUpdateFormVisibility}

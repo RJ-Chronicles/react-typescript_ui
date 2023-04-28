@@ -9,7 +9,7 @@ class ProductService {
     return axios.delete(PRODUCT_BASE_URL + "delete/" + id, header);
   }
   updateProductById(product: any, id: string, headers: any) {
-    return axios.put(PRODUCT_BASE_URL + id + "/", product, headers);
+    return axios.patch(PRODUCT_BASE_URL + "update/" + id, product, headers);
   }
   submitProductDetails(product: any, headers: any) {
     return axios.post(PRODUCT_BASE_URL + "post", product, headers);

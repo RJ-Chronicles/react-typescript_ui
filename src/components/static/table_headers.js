@@ -9,9 +9,11 @@ const CUSTOMER_TABLE_COLUMN = [
 
 const BATTERY_TABLE_COLUMN = [
   "NAME",
+  "VEHICLE",
   "TYPE",
   "SERIAL NUMBER",
   "PRICE",
+  "GST",
   "ACTION",
 ];
 

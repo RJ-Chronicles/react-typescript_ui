@@ -22,7 +22,10 @@ const GST = () => {
   const [action, setAction] = React.useState("ADD");
   const [id, setId] = React.useState("");
   const [openModal, setOpenModal] = React.useState(false);
-
+  const [initial_data, setInitialData] = React.useState({
+    gst: "",
+    id: "",
+  });
   useEffect(() => {
     const headers: Headers = {
       headers: {
@@ -69,6 +72,17 @@ const GST = () => {
   const handleCloseModal = () => setOpenModal(false);
   const handleOpenModal = () => {
     setAction("ADD");
+    setInitialData({ gst: "", id: "" });
+    setOpenModal(true);
+  };
+
+  const updateButtonHandler = (e: any) => {
+    const id = e.target.name;
+    const gstVal = gstValues?.list.find((el) => el._id === id);
+    let gst = gstVal?.gst || "";
+    gst = typeof gst === "number" ? gst.toString() : "";
+    setInitialData({ gst, id });
+    setAction("UPDATE");
     setOpenModal(true);
   };
 
@@ -130,6 +144,7 @@ const GST = () => {
                   <td className="px-6 py-4 text-left">
                     <button
                       name={obj._id}
+                      onClick={updateButtonHandler}
                       className="font-medium text-blue-600 dark:text-red-500 hover:underline mr-1"
                     >
                       Edit
@@ -198,7 +213,7 @@ const GST = () => {
               </button>
             </div>
             <GSTForm
-              initialData={{ gst: "", id: "" }}
+              initialData={{ gst: initial_data.gst, id: initial_data.id }}
               closeModal={handleCloseModal}
               action={action}
             />

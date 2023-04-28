@@ -23,6 +23,11 @@ const BatteryNames = () => {
   const [openModal, setOpenModal] = React.useState(false);
   const [action, setAction] = React.useState("ADD");
   const [id, setId] = React.useState("");
+  const [initial_data, setInitialData] = React.useState({
+    name: "",
+    id: "",
+  });
+
   useEffect(() => {
     const headers: Headers = {
       headers: {
@@ -63,6 +68,16 @@ const BatteryNames = () => {
   const handleCloseModal = () => setOpenModal(false);
   const handleOpenModal = () => {
     setAction("ADD");
+    setInitialData({ name: "", id: "" });
+    setOpenModal(true);
+  };
+
+  const updateButtonHandler = (e: any) => {
+    const id = e.target.name;
+    const btr = battery?.list.find((el) => el._id === id);
+    const name = btr?.name || "";
+    setInitialData({ name, id });
+    setAction("UPDATE");
     setOpenModal(true);
   };
   return (
@@ -122,6 +137,7 @@ const BatteryNames = () => {
                   <td className="px-6 py-4 text-left">
                     <button
                       name={obj._id}
+                      onClick={updateButtonHandler}
                       className="font-medium text-blue-600 dark:text-red-500 hover:underline mr-1"
                     >
                       Edit
@@ -190,7 +206,7 @@ const BatteryNames = () => {
               </button>
             </div>
             <BatteryForm
-              initialData={{ name: "", id: "" }}
+              initialData={{ name: initial_data.name, id: initial_data.id }}
               closeModal={handleCloseModal}
               action={action}
             />

@@ -4,6 +4,7 @@ import ProductService from "../../services/ProductService";
 import { PRODUCT_OPERATIONS } from "../static/operations";
 import amprService from "../../services/AmphereService";
 import btryService from "../../services/BatteryService";
+import GstService from "../../services/GSTService";
 
 const ProductForm = () => {
   const appContext = useContext(AuthContext);
@@ -12,6 +13,8 @@ const ProductForm = () => {
   console.log(initial_data);
   const [batteryList, setBatteryList] = useState();
   const [amphere, setAmphere] = useState();
+  const [gstList, setGstList] = useState();
+
   const {
     name,
     type,
@@ -21,6 +24,7 @@ const ProductForm = () => {
     customer,
     GST,
     price,
+    _id,
   } = initial_data;
   const [product, setProduct] = useState({
     name,
@@ -34,8 +38,6 @@ const ProductForm = () => {
   });
   const formSubmitHandler = async (e) => {
     e.preventDefault();
-    product.GST = 18;
-    product.price = 50000;
     console.log(product);
     const headers = {
       headers: {
@@ -47,6 +49,13 @@ const ProductForm = () => {
       if (mode === PRODUCT_OPERATIONS.ADD_PRODUCT) {
         const response = await ProductService.submitProductDetails(
           { ...product },
+          headers
+        );
+        console.log("record Save!", response);
+      } else {
+        const response = await ProductService.updateProductById(
+          product,
+          _id,
           headers
         );
         console.log("record Save!", response);
@@ -73,6 +82,11 @@ const ProductForm = () => {
       const response = await amprService.getListOfAvailableSize(headers);
       setAmphere(response.data);
     };
+    const fetchGSTList = async () => {
+      const response = await GstService.getGstList(headers);
+      setGstList(response.data);
+    };
+    fetchGSTList();
     fetchSizeList();
     fetchBatteryList();
   }, [authToken]);
@@ -91,7 +105,7 @@ const ProductForm = () => {
               Battery Name
             </label>
             <select
-              className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              className="w-full px-6 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               onChange={(e) =>
                 setProduct((prev) => ({
                   ...prev,
@@ -119,7 +133,7 @@ const ProductForm = () => {
               Amphere Size
             </label>
             <select
-              className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              className="w-full px-9 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="size"
               onChange={(e) =>
                 setProduct((prev) => ({
@@ -162,6 +176,60 @@ const ProductForm = () => {
             required
           />
         </div>
+
+        <div className="mb-4 md:flex md:justify-between">
+          <div className="mb-4 md:mr-2 md:mb-0">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="role"
+            >
+              Battery Name
+            </label>
+            <select
+              className="w-full px-9 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              onChange={(e) =>
+                setProduct((prev) => ({
+                  ...prev,
+                  GST: e.target.value,
+                }))
+              }
+              value={product.GST}
+              id="role"
+            >
+              <option value="DEFAULT">Choose GST value</option>
+              {gstList?.list.map((data, index) => {
+                return (
+                  <option key={index} value={data.gst}>
+                    {data.gst}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="md:ml-2">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="v_number"
+            >
+              Price
+            </label>
+            <input
+              className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="v_number"
+              type="text"
+              placeholder="Price"
+              onChange={(e) =>
+                setProduct((prev) => ({
+                  ...prev,
+                  price: e.target.value,
+                }))
+              }
+              value={product.price}
+              required
+            />
+          </div>
+        </div>
+
         <div className="mb-4 md:flex md:justify-between">
           <div className="mb-4 md:mr-2 md:mb-0">
             <label
