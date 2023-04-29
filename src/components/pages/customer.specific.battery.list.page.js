@@ -1,20 +1,21 @@
 import { PRODUCT_OPERATIONS } from "../static/operations";
 
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import { BATTERY_TABLE_COLUMN } from "../static/table_headers";
-//import Table from "../UI/Table";
 import ProductService from "../../services/ProductService";
 import HeaderCartButton from "../UI/cart/HeaderCartButton";
 import AuthContext from "../../context/appContext";
 import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
+import CartItems from "../UI/cart/CartItems";
 import { useParams } from "react-router-dom";
 
 const CustomerSpecificBatteryList = () => {
   let { customerId } = useParams();
-
+  customerId = customerId ? customerId : "";
   const appContext = useContext(AuthContext);
   const [productList, setProductList] = useState({});
+  const [shoCartModal, setShowCartModal] = useState(false);
   const token = appContext.token;
   const refreshEffect = appContext.refreshEffect;
 
@@ -40,7 +41,7 @@ const CustomerSpecificBatteryList = () => {
     fetchProductListByCustomerId();
   }, [token, refreshEffect]);
 
-  const handleModalVisibility = () => {
+  const handleModalVisibility = useCallback(() => {
     const initial_data = {
       name: "",
       type: "",
@@ -55,7 +56,7 @@ const CustomerSpecificBatteryList = () => {
     const title = "Fill Battery Details";
     appContext.setFormProps({ initial_data, mode, title });
     appContext.setModalVisible(true);
-  };
+  }, [appContext, customerId]);
 
   const handleAddUpdateFormVisibility = (e) => {
     const id = e.target.name;
@@ -77,9 +78,13 @@ const CustomerSpecificBatteryList = () => {
     appContext.setDeleteModalVisible(true);
   };
 
-  // const handleCartOnclick = () => {
-  //   console.log("clicked!");
-  // };
+  const handleShowCartModal = useCallback(() => {
+    setShowCartModal(true);
+  }, []);
+
+  const handleHideCartModal = useCallback(() => {
+    setShowCartModal(false);
+  }, []);
   const toggleModal = appContext.isModalVisible;
   const toggleDeleteModal = appContext.isDeleteModalVisible;
   return (
@@ -98,8 +103,16 @@ const CustomerSpecificBatteryList = () => {
             Add New Product
           </button>
           {appContext.cartItems.length > 0 && (
-            <HeaderCartButton numberOfCartItems={appContext.cartItems.length} />
+            <HeaderCartButton
+              numberOfCartItems={appContext.cartItems.length}
+              onClick={handleShowCartModal}
+            />
           )}
+          <CartItems
+            open={shoCartModal}
+            closeCartHandler={handleHideCartModal}
+            customerId={customerId}
+          />
         </div>
         {toggleModal && <Modal />}
         {toggleDeleteModal && <DeleteModal />}
