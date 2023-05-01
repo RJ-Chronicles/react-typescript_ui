@@ -38,27 +38,17 @@ const ProductForm = () => {
   });
   const formSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(product);
     const headers = {
       headers: {
         Authorization: appContext.token,
       },
     };
-    appContext.storeCartItems((prev) => [...prev, product]);
+
     try {
       if (mode === PRODUCT_OPERATIONS.ADD_PRODUCT) {
-        const response = await ProductService.submitProductDetails(
-          { ...product },
-          headers
-        );
-        console.log("record Save!", response);
+        appContext.storeCartItems((prev) => [...prev, product]);
       } else {
-        const response = await ProductService.updateProductById(
-          product,
-          _id,
-          headers
-        );
-        console.log("record Save!", response);
+        await ProductService.updateProductById(product, _id, headers);
       }
       appContext.refreshData();
       appContext.setModalVisible(false);

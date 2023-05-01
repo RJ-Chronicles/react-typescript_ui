@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Headers, Stock, StockElementsPayload } from "../AppModel";
-//const STOCK_BASE_URL = "http://localhost:3001/stock/";
-const STOCK_BASE_URL = "https://kallyankar-api-service.onrender.com/stock/";
+const STOCK_BASE_URL = "http://localhost:3001/stock/";
+//const STOCK_BASE_URL = "https://kallyankar-api-service.onrender.com/stock/";
 class StockService {
   fetchStockElements(headers: any) {
     return axios.get<StockElementsPayload>(STOCK_BASE_URL + "list", headers);

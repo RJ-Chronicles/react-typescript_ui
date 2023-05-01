@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import AppContext from "../../../context/appContext";
 import Button from "@mui/material/Button";
 import cstmerService from "../../../services/CustomerService";
-
+import ProductService from "../../../services/ProductService";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -41,7 +41,7 @@ const CartItems = (props: CIProps) => {
   const [customer, setCustomer] = React.useState<CDProps>();
   const [billStatus, setBillStatus] = React.useState("Paid");
   const [totalAmount, setTotalAmount] = React.useState(0);
-
+  const [inputFieldAmount, setInputAmount] = React.useState("");
   React.useEffect(() => {
     const fetchCustomerDetails = async () => {
       const headers = {
@@ -75,13 +75,17 @@ const CartItems = (props: CIProps) => {
       (item: any) => item.serial_number !== serial_number
     );
     appContext.storeCartItems((prev: any) => [...data]);
-    calCulateTotalAmount();
+    if (data.length > 0) {
+      calCulateTotalAmount();
+    } else {
+      props.closeCartHandler();
+    }
   };
 
   React.useEffect(() => {
     calCulateTotalAmount();
   });
-  console.log(appContext.cartItems);
+
   const calCulateTotalAmount = () => {
     var price = 0;
     appContext.cartItems.forEach((item: any) => {
@@ -137,6 +141,16 @@ const CartItems = (props: CIProps) => {
     </table>
   );
 
+  const handleAmountValueChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const inputAmount = e.target.value;
+    if (parseInt(inputAmount) > totalAmount) {
+      setInputAmount((prev) => prev);
+    } else {
+      setInputAmount((prev) => inputAmount);
+    }
+  };
   const PaymentStatus = () => (
     <RadioGroup
       row
@@ -149,7 +163,29 @@ const CartItems = (props: CIProps) => {
       <FormControlLabel value="Unpaid" control={<Radio />} label="Unpaid" />
     </RadioGroup>
   );
-  const handlePrintInvoice = async () => {};
+  const handlePrintInvoice = async () => {
+    try {
+      const headers = {
+        headers: {
+          Authorization: appContext.token,
+        },
+      };
+      appContext.cartItems.forEach(async (product: any) => {
+        await ProductService.submitProductDetails({ ...product }, headers);
+      });
+      if (billStatus === "Unpaid") {
+        await cstmerService.updateCustomerBillingStatusById(
+          { bill_status: "Unpaid", unpaid_amount: inputFieldAmount },
+          customerId,
+          headers
+        );
+      }
+      appContext.refreshData();
+      props.closeCartHandler();
+    } catch (err) {
+      console.log("eeror while saving record");
+    }
+  };
   return (
     <Modal
       open={open}
@@ -185,8 +221,12 @@ const CartItems = (props: CIProps) => {
           <ItemList />
         </div>
         <div className="text-left flex justify-between mt-6">
-          <div>
-            <span>Total Amount</span> <span>{totalAmount}</span>
+          <div className="bg-slate-700 text-white py-4 px-6  font-bold rounded-sm">
+            <span>Total Amount</span>
+            {": "}
+            <span className="border-b-4 border-red-400 px-1">
+              {totalAmount}
+            </span>
           </div>
           <div className="flex justify-between">
             <PaymentStatus />
@@ -194,8 +234,12 @@ const CartItems = (props: CIProps) => {
               <TextField
                 label="Amount In INR"
                 id="outlined-size-small"
-                defaultValue={totalAmount}
                 size="small"
+                onChange={handleAmountValueChange}
+                type="number"
+                value={
+                  inputFieldAmount.length > 0 ? inputFieldAmount : totalAmount
+                }
               />
             )}
           </div>

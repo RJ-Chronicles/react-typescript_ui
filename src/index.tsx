@@ -5,6 +5,8 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./context/appContext";
 import reportWebVitals from "./reportWebVitals";
+// import Invoice from "./components/UI/Invoice";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

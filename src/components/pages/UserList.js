@@ -9,6 +9,7 @@ import { TABLE_SELECTION, USER_OPERATIONS } from "../static/operations";
 import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
 import admService from "../../services/AdminService";
+import Heading from "../UI/Heading";
 const UserList = () => {
   const [userList, setUserList] = useState({});
   const appContext = useContext(AuthContext);
@@ -54,8 +55,14 @@ const UserList = () => {
   const toggleDeleteModal = appContext.isDeleteModalVisible;
 
   return (
-    <div className="mx-6">
-      <h1 className="text-center my-6 font-bold text-4xl"> User Details</h1>
+    <div className="md:min-h-screen  w-full">
+      <Heading>
+        <h1 className="text-center text-2xl font-bold uppercase">
+          User Details 
+        </h1>
+      </Heading>
+
+      <h1 className="text-center my-6 font-bold text-4xl"> </h1>
       <button
         onClick={handleModalVisibility}
         className="flex bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded my-10 w-44"

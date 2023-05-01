@@ -12,8 +12,9 @@ const MainHeader = () => {
     setToggleNavBar(!toggleNavBar);
   };
   return (
-    <div className="bg-[#EEEEEE]">
-      <div className="flex justify-between items-center md:px-6 px-3 shadow-mg bg-[#2A2F4F] text-white py-4">
+    <div className="bg-[#EEEEEE] flex ">
+      <div className="flex shadow-mg bg-slate-200 text-slate-700 py-4">
+        {toggleNavBar && <SideNav />}
         <div>
           <button onClick={handleToggleNavBar}>
             {!toggleNavBar && (
@@ -50,7 +51,7 @@ const MainHeader = () => {
             )}
           </button>
         </div>
-        <div className="">
+        {/* <div className="">
           <div className="flex items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -72,10 +73,9 @@ const MainHeader = () => {
             {message + " "}
             {appContext.user.name.split(" ")[0]}
           </h2>
-        </div>
+        </div> */}
       </div>
-      <div className="flex">
-        {toggleNavBar && <SideNav />}
+      <div className="flex w-full min-h-screen overflow-y: scroll">
         <Outlet />
       </div>
     </div>

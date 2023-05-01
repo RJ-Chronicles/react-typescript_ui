@@ -11,6 +11,7 @@ import Table from "../UI/Table";
 import { filteredList } from "../helper/helperFunctions";
 import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
+import Heading from "../UI/Heading";
 const CustomerList = () => {
   const [userList, setUserList] = useState([]);
   const [globalUserList, setGlobalUserList] = useState([]);
@@ -78,11 +79,13 @@ const CustomerList = () => {
   const toggleModal = appContext.isModalVisible;
   const toggleDeleteModal = appContext.isDeleteModalVisible;
   return (
-    <div className="mx-6">
-      <h1 className="text-center my-6 font-bold text-4xl uppercase">
-        {" "}
-        Customer Details
-      </h1>
+    <div className="md:min-h-screen  w-full">
+      <Heading>
+        <h1 className="text-center text-2xl font-bold uppercase">
+          Customer Details 
+        </h1>
+      </Heading>
+
       <div className="flex justify-end items-end">
         <button
           className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
