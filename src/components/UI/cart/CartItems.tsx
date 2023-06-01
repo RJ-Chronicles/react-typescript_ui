@@ -87,10 +87,14 @@ const CartItems = (props: CIProps) => {
   });
 
   const calCulateTotalAmount = () => {
-    var price = 0;
+    let price = 0;
+    let gstAmount = 0;
     appContext.cartItems.forEach((item: any) => {
+      console.log(item);
+      gstAmount = (parseInt(item.price) * parseInt(item.GST)) / 100;
       price = price + parseInt(item.price);
     });
+    price += gstAmount;
     setTotalAmount(price);
     console.log(price);
   };

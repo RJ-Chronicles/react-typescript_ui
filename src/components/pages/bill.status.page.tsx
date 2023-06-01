@@ -7,13 +7,17 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { ReactComponent as Currency } from "../svg/CurrencySvg.svg";
 import Heading from "../UI/Heading";
+import TextField from "@mui/material/TextField";
+import PayUnpaidAmount from "../UI/Forms/PayUnpaidAmount";
+
 const BillingStatusPage = () => {
   const appContext = useContext(AuthContext);
   const [listByStatus, setListByStatus] = useState([]);
   const [billStatus, setBillStatus] = useState("Unpaid");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  const [dataToPassPayBill, setDataToPassPayBill] = useState({});
+  const [showPayModal, setShowPayModal] = useState(false);
   const token = appContext.token;
 
   useEffect(() => {
@@ -59,6 +63,21 @@ const BillingStatusPage = () => {
       <FormControlLabel value="Unpaid" control={<Radio />} label="Unpaid" />
     </RadioGroup>
   );
+
+  const updateUnpaidAmount = (event: any) => {
+    const recordId = event.target.name;
+    const data = listByStatus.find((element: any) => element._id === recordId);
+    console.log(data);
+    if (data) {
+      setDataToPassPayBill(data);
+    }
+    setShowPayModal(true);
+  };
+
+  const closePaymentOption = () => {
+    setShowPayModal(false);
+  };
+
   return (
     <div className="md:min-h-screen  w-full">
       <Heading>
@@ -118,9 +137,16 @@ const BillingStatusPage = () => {
                     </span>
                   </p>
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 text-green-600">
                   {" "}
-                  <button>Edit</button>{" "}
+                  <button
+                    onClick={
+                      row.unpaid_amount !== 0 ? updateUnpaidAmount : () => {}
+                    }
+                    name={row._id}
+                  >
+                    Pay
+                  </button>{" "}
                 </td>
               </tr>
             ))}
@@ -143,6 +169,13 @@ const BillingStatusPage = () => {
           </tfoot>
         </table>
       </div>
+      {dataToPassPayBill && (
+        <PayUnpaidAmount
+          open={showPayModal}
+          closePaymentOption={closePaymentOption}
+          dataToPassPayBill={dataToPassPayBill}
+        />
+      )}
     </div>
   );
 };

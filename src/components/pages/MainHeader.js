@@ -13,7 +13,7 @@ const MainHeader = () => {
   };
   return (
     <div className="bg-[#EEEEEE] flex ">
-      <div className="flex shadow-mg bg-slate-200 text-slate-700 py-4">
+      <div className="flex shadow-mg bg-slate-200 text-slate-700 ">
         {toggleNavBar && <SideNav />}
         <div>
           <button onClick={handleToggleNavBar}>
@@ -40,7 +40,7 @@ const MainHeader = () => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-14 h-10"
+                className="w-10 h-7"
               >
                 <path
                   strokeLinecap="round"
