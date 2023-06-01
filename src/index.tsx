@@ -7,7 +7,7 @@ import { AuthContextProvider } from "./context/appContext";
 import reportWebVitals from "./reportWebVitals";
 // import Invoice from "./components/UI/Invoice";
 import ReactGA from "react-ga4";
-ReactGA.initialize("G-5BQSCWVWBM");
+ReactGA.initialize("G-3N5FD42DM3"); //G-3N5FD42DM3  G-5BQSCWVWBM
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
