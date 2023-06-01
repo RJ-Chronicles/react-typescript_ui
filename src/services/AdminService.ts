@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const ADMIN_BASE_URL = "http://localhost:3001/admin/";
-//const ADMIN_BASE_URL = "https://kallyankar-api-service.onrender.com/admin/";
+//const ADMIN_BASE_URL = "http://localhost:3001/admin/";
+const ADMIN_BASE_URL = "https://kallyankar-api-service.onrender.com/admin/";
 
 class AdminServices {
   loginUser(username: string, password: string) {
