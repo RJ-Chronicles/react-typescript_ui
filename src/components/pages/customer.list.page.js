@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-
+import Spinner from "../UI/Spinner";
 import AuthContext from "../../context/appContext";
 
 import { CUSTOMER_TABLE_COLUMN } from "../static/table_headers";
@@ -16,6 +16,7 @@ const CustomerList = () => {
   const [userList, setUserList] = useState([]);
   const [globalUserList, setGlobalUserList] = useState([]);
   const appContext = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [filterOptions, setFilterOption] = useState({
     filterOption: "",
     filterString: "",
@@ -23,6 +24,7 @@ const CustomerList = () => {
   const refreshEffect = appContext.refreshEffect;
   const authToken = appContext.token;
   useEffect(() => {
+    setIsLoading(true);
     const fetchCustomeDetails = async () => {
       try {
         const headers = {
@@ -35,7 +37,9 @@ const CustomerList = () => {
         setUserList(data);
         setGlobalUserList(data);
         console.log(data);
+        setIsLoading(false);
       } catch (e) {
+        setIsLoading(false);
         console.log("Error occured", e);
       }
     };
@@ -151,6 +155,7 @@ const CustomerList = () => {
 
       {toggleModal && <Modal />}
       {toggleDeleteModal && <DeleteModal />}
+      {<Spinner visible={isLoading} height="120" width="120" />}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         {userList !== undefined && (
           <Table

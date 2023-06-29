@@ -9,7 +9,7 @@ import { ReactComponent as Currency } from "../svg/CurrencySvg.svg";
 import Heading from "../UI/Heading";
 import TextField from "@mui/material/TextField";
 import PayUnpaidAmount from "../UI/Forms/PayUnpaidAmount";
-
+import Spinner from "../UI/Spinner";
 const BillingStatusPage = () => {
   const appContext = useContext(AuthContext);
   const [listByStatus, setListByStatus] = useState([]);
@@ -18,6 +18,8 @@ const BillingStatusPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dataToPassPayBill, setDataToPassPayBill] = useState({});
   const [showPayModal, setShowPayModal] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
   const token = appContext.token;
 
   useEffect(() => {
@@ -27,12 +29,19 @@ const BillingStatusPage = () => {
       },
     };
     const fetchUnpaidBillList = async () => {
-      const response = await cstmerService.getCustomerListByBillingStatus(
-        billStatus,
-        headers
-      );
-      console.log(response.data);
-      setListByStatus(response.data.list);
+      try {
+        setIsLoading(true);
+        const response = await cstmerService.getCustomerListByBillingStatus(
+          billStatus,
+          headers
+        );
+        console.log(response.data);
+        setListByStatus(response.data.list);
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        console.log("Error " + err);
+      }
     };
     fetchUnpaidBillList();
   }, [token, billStatus]);
@@ -88,7 +97,7 @@ const BillingStatusPage = () => {
           <PaymentStatus />
         </div>
       </Heading>
-
+      {<Spinner visible={isLoading} height="120" width="120" />}
       <div className="relative  shadow-md sm:rounded-lg m-10">
         <table className="w-full text-sm text-left text-gray-700 tracking-wider">
           <thead className="text-xs md:text-sm text-gray-800 uppercase bg-gray-200 ">
@@ -145,7 +154,7 @@ const BillingStatusPage = () => {
                     }
                     name={row._id}
                   >
-                    Pay
+                    {row.unpaid_amount !== 0 ? "Pay" : "Paid"}
                   </button>{" "}
                 </td>
               </tr>

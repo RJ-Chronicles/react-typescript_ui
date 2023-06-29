@@ -37,12 +37,12 @@ const Landingpage = () => {
                 id="navbarSupportedContent"
               ></div>
               <div className="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
-                <Link
+                <a
                   className="text-blue-600 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white"
-                  to="/admin-login"
+                  href="#feature"
                 >
                   Login
-                </Link>
+                </a>
               </div>
             </nav>
           </div>

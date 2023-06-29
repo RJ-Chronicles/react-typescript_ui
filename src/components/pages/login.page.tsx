@@ -62,7 +62,7 @@ const Login = () => {
           alt=""
           className="mx-auto mt-12"
         />
-        {isLoading && <Spinner />}
+        {<Spinner visible={isLoading} height="80" width="80" />}
         {error && <ErrorToast error={error} />}
       </div>
       <hr className="my-6" />

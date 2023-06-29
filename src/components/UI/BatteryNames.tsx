@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import BatteryForm from "../UI/Forms/BatteryForm";
 
 import batteryService from "../../services/BatteryService";
-
+import Spinner from "./Spinner";
 import AuthContext from "../../context/appContext";
 import { Headers, BatteryPayload } from "../../AppModel";
 
@@ -18,7 +18,7 @@ const BatteryNames = () => {
   const authToken = appContext.token;
   const refreshEffect = appContext.refreshEffect;
   const [battery, setBattery] = useState<BatteryPayload>();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
   const [action, setAction] = React.useState("ADD");
@@ -35,8 +35,15 @@ const BatteryNames = () => {
       },
     };
     const fetchBatteryList = async () => {
-      const response = await batteryService.getListOfBatteries(headers);
-      setBattery(response.data);
+      try {
+        setIsLoading(true);
+        const response = await batteryService.getListOfBatteries(headers);
+        setBattery(response.data);
+        setIsLoading(false);
+      } catch (err) {
+        console.log("Error : " + err);
+        setIsLoading(false);
+      }
     };
 
     fetchBatteryList();
@@ -106,6 +113,7 @@ const BatteryNames = () => {
           </svg>
         </button>
       </div>
+      {<Spinner visible={isLoading} height="120" width="120" />}
       <div className="relative  shadow-md sm:rounded-lg m-10">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

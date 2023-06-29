@@ -10,16 +10,18 @@ import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
 import admService from "../../services/AdminService";
 import Heading from "../UI/Heading";
+import Spinner from "../UI/Spinner";
 const UserList = () => {
   const [userList, setUserList] = useState({});
   const appContext = useContext(AuthContext);
   const refreshEffect = appContext.refreshEffect;
-
+  const [isLoading, setIsLoading] = useState(false);
   const authToken = appContext.token;
 
   useEffect(() => {
     const fetchCustomeDetails = async () => {
       try {
+        setIsLoading(true);
         const headers = {
           headers: {
             Authorization: authToken,
@@ -30,7 +32,9 @@ const UserList = () => {
         const data = response.data;
         console.log(data);
         setUserList(data);
+        setIsLoading(false);
       } catch (e) {
+        setIsLoading(false);
         console.log("Error occured");
       }
     };
@@ -71,6 +75,7 @@ const UserList = () => {
       </button>
       {toggleModal && <Modal />}
       {toggleDeleteModal && <DeleteModal />}
+      {<Spinner visible={isLoading} height="120" width="120" />}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         {userList !== undefined && (
           <Table

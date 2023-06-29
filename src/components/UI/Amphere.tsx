@@ -13,6 +13,8 @@ import Modal from "@mui/material/Modal";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import amprService from "../../services/AmphereService";
+
+import Spinner from "./Spinner";
 const Amphere = () => {
   const appContext = useContext(AuthContext);
   const authToken = appContext.token;
@@ -22,6 +24,8 @@ const Amphere = () => {
   const [action, setAction] = React.useState("ADD");
   const [id, setId] = React.useState("");
   const [openModal, setOpenModal] = React.useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
   const [initial_data, setInitialData] = React.useState({
     size: "",
     id: "",
@@ -35,8 +39,15 @@ const Amphere = () => {
     };
 
     const fetchSizeList = async () => {
-      const response = await amprService.getListOfAvailableSize(headers);
-      setAmphere(response.data);
+      try {
+        setIsLoading(true);
+        const response = await amprService.getListOfAvailableSize(headers);
+        setAmphere(response.data);
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        console.log("Error : " + err);
+      }
     };
     fetchSizeList();
   }, [authToken, refreshEffect]);
@@ -104,7 +115,7 @@ const Amphere = () => {
           </svg>
         </button>
       </div>
-
+      {<Spinner visible={isLoading} height="120" width="120" />}
       <div className="relative  shadow-md sm:rounded-lg m-10">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

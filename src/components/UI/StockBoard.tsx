@@ -9,6 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import Modal from "@mui/material/Modal";
 import StockElementForm from "./Forms/StockElementForm";
+import Spinner from "./Spinner";
 interface UpdateRecord {
   battery_name: string;
   product_code: string;
@@ -25,6 +26,7 @@ const StockBoard = () => {
   const [id, setId] = useState("");
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [dataToUpdate, setDataToUpdate] = useState<UpdateRecord>({
     battery_name: "",
     product_code: "",
@@ -41,9 +43,16 @@ const StockBoard = () => {
       },
     };
     const stockData = async () => {
-      const response = await stockService.fetchStockElements(headers);
-      setStockList(response.data);
-      console.log(response.data);
+      try {
+        setIsLoading(true);
+        const response = await stockService.fetchStockElements(headers);
+        setStockList(response.data);
+        console.log(response.data);
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        console.log("Error : " + err);
+      }
     };
     stockData();
   }, [token, refreshEffect]);
@@ -90,6 +99,7 @@ const StockBoard = () => {
   };
   return (
     <div className="relative  shadow-md sm:rounded-lg m-10">
+      {<Spinner visible={isLoading} height="120" width="120" />}
       <table className="w-full text-sm  text-left text-gray-500 dark:text-gray-400">
         <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>

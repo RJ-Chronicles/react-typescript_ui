@@ -11,7 +11,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import Modal from "@mui/material/Modal";
 import DialogTitle from "@mui/material/DialogTitle";
-
+import Spinner from "./Spinner";
 import GstService from "../../services/GSTService";
 const GST = () => {
   const appContext = useContext(AuthContext);
@@ -21,6 +21,7 @@ const GST = () => {
   const [open, setOpen] = React.useState(false);
   const [action, setAction] = React.useState("ADD");
   const [id, setId] = React.useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [openModal, setOpenModal] = React.useState(false);
   const [initial_data, setInitialData] = React.useState({
     gst: "",
@@ -35,9 +36,12 @@ const GST = () => {
 
     const fetchGSTList = async () => {
       try {
+        setIsLoading(true);
         const response = await GstService.getGstList(headers);
         setGSTValue(response.data);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         throw new Error("something went wrong!");
       }
     };
@@ -112,7 +116,7 @@ const GST = () => {
           </svg>
         </button>
       </div>
-
+      {<Spinner visible={isLoading} height="120" width="120" />}
       <div className="relative  shadow-md sm:rounded-lg m-10">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

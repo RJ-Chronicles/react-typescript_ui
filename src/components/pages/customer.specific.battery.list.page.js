@@ -10,6 +10,7 @@ import DeleteModal from "../UI/DeleteModal";
 import CartItems from "../UI/cart/CartItems";
 import { useParams } from "react-router-dom";
 import Heading from "../UI/Heading";
+import Spinner from "../UI/Spinner";
 
 const CustomerSpecificBatteryList = () => {
   let { customerId } = useParams();
@@ -17,6 +18,7 @@ const CustomerSpecificBatteryList = () => {
   const appContext = useContext(AuthContext);
   const [productList, setProductList] = useState({});
   const [shoCartModal, setShowCartModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const token = appContext.token;
   const refreshEffect = appContext.refreshEffect;
 
@@ -26,7 +28,9 @@ const CustomerSpecificBatteryList = () => {
         Authorization: token,
       },
     };
+
     const fetchProductListByCustomerId = async () => {
+      setIsLoading(true);
       try {
         const response = await ProductService.getProductListBasedOnCustomerId(
           customerId,
@@ -34,7 +38,9 @@ const CustomerSpecificBatteryList = () => {
         );
         setProductList(response.data);
         console.log(response.data.soldList);
+        setIsLoading(false);
       } catch (e) {
+        setIsLoading(false);
         console.log("Error occured", e);
       }
     };
@@ -117,6 +123,7 @@ const CustomerSpecificBatteryList = () => {
       </div>
       {toggleModal && <Modal />}
       {toggleDeleteModal && <DeleteModal />}
+      {<Spinner visible={isLoading} height="120" width="120" />}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         {productList.soldList !== undefined && (
           <>
