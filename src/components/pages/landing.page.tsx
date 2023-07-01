@@ -1,5 +1,3 @@
-import logoimg from "../../img/logo.svg";
-// "../../../public/assets/img/logo.svg";
 import hero from "../../img/hero.svg";
 import featureSvg from "../../img/feature/img-1.svg";
 import img1 from "../../img/team/img1.jpg";
@@ -8,183 +6,85 @@ import testimonial from "../../img/testimonial/img1.jpg";
 import Footer from "../UI/landingpage/footer";
 import Contact from "../UI/landingpage/contact";
 import { Link } from "react-router-dom";
+import { ReactComponent as Cloud } from "../svg/cloud.svg";
+import { ReactComponent as Car } from "../svg/car-alt.svg";
+import { ReactComponent as Taxi } from "../svg/taxi.svg";
+import { ReactComponent as Gear } from "../svg/cog.svg";
+import { ReactComponent as World } from "../svg/world.svg";
+import { ReactComponent as Gift } from "../svg/gift.svg";
+import logo from "../../img/logo.png";
 const Landingpage = () => {
   return (
     <div>
-      <header id="header-wrap" className="relative">
-        <div className="navigation fixed top-0 left-0 w-full z-30 duration-300">
-          <div className="container">
-            <nav className="navbar py-2 navbar-expand-lg flex justify-between items-center relative duration-300">
-              <a className="navbar-brand" href="index.html">
-                <img
-                  src="https://do-not-delete-bucket1.s3.ap-south-1.amazonaws.com/logo2.png"
-                  alt="Logo"
-                />
-              </a>
-              <button
-                className="navbar-toggler focus:outline-none block lg:hidden"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="toggler-icon"></span>
-                <span className="toggler-icon"></span>
-                <span className="toggler-icon"></span>
-              </button>
+      <section id="hero">
+        <div className="section-container mb-12">
+          <div
+            id="carouselExampleCaptionsFull"
+            className="carousel slide carousel-fade relative h-screen"
+            data-bs-ride="carousel"
+          >
+            <div className=" absolute z-10 right-0 left-0 max-w-6xl mx-auto">
+              <div className=" md:mt-5">
+                <nav className="py-2 flex justify-between items-center relative duration-300">
+                  <a className="navbar-brand" href="index.html">
+                    <img src={logo} alt="Logo" />
+                  </a>
 
-              <div
-                className="collapse navbar-collapse hidden lg:block duration-300 shadow absolute top-100 left-0 mt-full bg-white z-20 px-5 py-3 w-full lg:static lg:bg-transparent lg:shadow-none"
-                id="navbarSupportedContent"
-              ></div>
-              <div className="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
-                <Link
-                  className="text-blue-600 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white"
-                  to="/admin-login"
+                  <div className="header-btn  sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
+                    <Link
+                      className="text-blue-600 font-bold border-2 border-blue-400 px-10 py-3 rounded-full duration-300 hover:bg-blue-300 hover:text-white"
+                      to="/admin-login"
+                    >
+                      Login
+                    </Link>
+                  </div>
+                </nav>
+              </div>
+            </div>
+
+            <div className="carousel-inner relative w-full overflow-hidden h-screen">
+              <div className="carousel-item active relative float-left w-full h-screen bg-no-repeat bg-cover bg-center">
+                <video
+                  className="min-w-full min-h-full max-w-fit xl:min-w-0 xl:min-h-0"
+                  playsInline
+                  autoPlay
+                  muted
+                  loop
                 >
-                  Login
-                </Link>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      <section id="hero-area" className="bg-blue-100 pt-48 pb-10">
-        <div className="container">
-          <div className="flex justify-between">
-            <div className="w-full text-center">
-              <h2
-                className="text-4xl font-bold leading-snug text-gray-700 mb-10 wow fadeInUp"
-                data-wow-delay="1s"
-              >
-                Kalyankar Batteries.
-              </h2>
-              <p className="text-xl font-normal leading-snug text-gray-700 mb-10 wow fadeInUp">
-                Our thousands of customers assure us that we provide the best
-                ever batteries all over the district.
-              </p>
-              <div
-                className="text-center mb-10 wow fadeInUp"
-                data-wow-delay="1.2s"
-              >
-                <Link to="#" rel="nofollow" className="btn">
-                  Download Now
-                </Link>
-              </div>
-              <div className="text-center wow fadeInUp" data-wow-delay="1.6s">
-                <img className="img-fluid mx-auto" src={hero} alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="services" className="py-24">
-        <div className="container">
-          <div className="text-center">
-            <h2
-              className="mb-12 section-heading wow fadeInDown"
-              data-wow-delay="0.3s"
-            >
-              Our Services
-            </h2>
-          </div>
-          <div className="flex flex-wrap">
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-cog"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">Web Development</h3>
-                  <p className="text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Unde perspiciatis dicta labore nulla beatae quaerat quia
-                    incidunt laborum aspernatur...
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="0.6s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-bar-chart"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">Graphic Design</h3>
-                  <p className="text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Unde perspiciatis dicta labore nulla beatae quaerat quia
-                    incidunt laborum aspernatur...
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="0.9s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-briefcase"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">Business Branding</h3>
-                  <p className="text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Unde perspiciatis dicta labore nulla beatae quaerat quia
-                    incidunt laborum aspernatur...
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="1.2s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-pencil-alt"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">Content Writing</h3>
-                  <p className="text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Unde perspiciatis dicta labore nulla beatae quaerat quia
-                    incidunt laborum aspernatur...
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="1.5s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-mobile"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">App Development</h3>
-                  <p className="text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Unde perspiciatis dicta labore nulla beatae quaerat quia
-                    incidunt laborum aspernatur...
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="1.8s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-layers"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">Digital Marketing</h3>
-                  <p className="text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Unde perspiciatis dicta labore nulla beatae quaerat quia
-                    incidunt laborum aspernatur...
-                  </p>
+                  <source
+                    className=""
+                    src="https://mdbootstrap.com/img/video/Lines.mp4"
+                    type="video/mp4"
+                  />
+                  {/* <!-- https://mdbootstrap.com/img/video/Lines.mp4"  images/videos/landingpage.mp4 --> */}
+                </video>
+                <div
+                  className="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
+                  style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
+                >
+                  <div className="flex justify-center items-center h-full">
+                    <div className="text-white text-center py-8 px-8 md:py-16 md:px-14">
+                      <h2 className="animate-pulse font-bold tracking-wide font-serif text-5xl">
+                        Kalyankar Batteries.
+                      </h2>
+                      <h5 className="text-xl md:text-2xl font-normal mt-12 text-gray-100 mb-6">
+                        Our thousands of customers assure us that we provide the
+                        best ever batteries all over the district.
+                      </h5>
+                      <div className="md:space-x-2 group group:hover:bg-blue-800">
+                        <a
+                          type="button"
+                          className="inline-block px-6 py-2 mb-2 md:mb-0 border-2 border-green-600 text-zinc-100 font-medium text-xs leading-tight uppercase rounded animate-bounce hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out hover:bg-blue-900 hover:text-white"
+                          href="#contact"
+                          role="button"
+                          data-mdb-ripple="true"
+                          data-mdb-ripple-color="light"
+                        >
+                          Contact Us
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -192,7 +92,7 @@ const Landingpage = () => {
         </div>
       </section>
 
-      <div id="feature" className="bg-blue-100 py-24">
+      <div id="feature" className="bg-white py-24">
         <div className="container">
           <div className="flex flex-wrap items-center">
             <div className="w-full lg:w-1/2">
@@ -201,14 +101,14 @@ const Landingpage = () => {
                   className="mb-12 section-heading wow fadeInDown"
                   data-wow-delay="0.3s"
                 >
-                  Learn More About Us
+                  Our Services
                 </h2>
 
                 <div className="flex flex-wrap">
                   <div className="w-full sm:w-1/2 lg:w-1/2">
                     <div className="m-3">
                       <div className="icon text-4xl">
-                        <i className="lni lni-layers"></i>
+                        <Cloud />
                       </div>
                       <div className="features-content">
                         <h4 className="feature-title">
@@ -225,7 +125,7 @@ const Landingpage = () => {
                   <div className="w-full sm:w-1/2 lg:w-1/2">
                     <div className="m-3">
                       <div className="icon text-4xl">
-                        <i className="lni lni-gift"></i>
+                        <Gift />
                       </div>
                       <div className="features-content">
                         <h4 className="feature-title">Free to Use</h4>
@@ -240,7 +140,7 @@ const Landingpage = () => {
                   <div className="w-full sm:w-1/2 lg:w-1/2">
                     <div className="m-3">
                       <div className="icon text-4xl">
-                        <i className="lni lni-laptop-phone"></i>
+                        <Gear />
                       </div>
                       <div className="features-content">
                         <h4 className="feature-title">Fully Responsive</h4>
@@ -255,7 +155,7 @@ const Landingpage = () => {
                   <div className="w-full sm:w-1/2 lg:w-1/2">
                     <div className="m-3">
                       <div className="icon text-4xl">
-                        <i className="lni lni-leaf"></i>
+                        <Car />
                       </div>
                       <div className="features-content">
                         <h4 className="feature-title">Easy to Customize</h4>
@@ -282,7 +182,7 @@ const Landingpage = () => {
         </div>
       </div>
 
-      <section id="team" className="py-24 text-center">
+      <section id="team" className="bg-slate-100 py-24 text-center">
         <div className="container">
           <div className="text-center">
             <h2
@@ -339,7 +239,7 @@ const Landingpage = () => {
         </div>
       </section>
 
-      <section id="testimonial" className="py-24 bg-gray-800">
+      {/* <section id="testimonial" className="py-24 bg-gray-800">
         <div className="container">
           <div className="flex justify-center mx-3">
             <div className="w-full lg:w-7/12">
@@ -415,7 +315,7 @@ const Landingpage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <Contact />
 
