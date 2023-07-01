@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./context/appContext";
 import reportWebVitals from "./reportWebVitals";
 // import Invoice from "./components/UI/Invoice";
-import TestHome from "./components/pages/test.home";
+
 import ReactGA from "react-ga4";
 ReactGA.initialize("G-3N5FD42DM3"); //G-3N5FD42DM3  G-5BQSCWVWBM
 const root = ReactDOM.createRoot(

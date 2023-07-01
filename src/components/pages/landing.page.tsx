@@ -16,7 +16,10 @@ const Landingpage = () => {
           <div className="container">
             <nav className="navbar py-2 navbar-expand-lg flex justify-between items-center relative duration-300">
               <a className="navbar-brand" href="index.html">
-                <img src={logoimg} alt="Logo" />
+                <img
+                  src="https://do-not-delete-bucket1.s3.ap-south-1.amazonaws.com/logo2.png"
+                  alt="Logo"
+                />
               </a>
               <button
                 className="navbar-toggler focus:outline-none block lg:hidden"
@@ -57,9 +60,12 @@ const Landingpage = () => {
                 className="text-4xl font-bold leading-snug text-gray-700 mb-10 wow fadeInUp"
                 data-wow-delay="1s"
               >
-                Startup and SaaS Landing Page
-                <br className="hidden lg:block" /> Built with TailwindCSS
+                Kalyankar Batteries.
               </h2>
+              <p className="text-xl font-normal leading-snug text-gray-700 mb-10 wow fadeInUp">
+                Our thousands of customers assure us that we provide the best
+                ever batteries all over the district.
+              </p>
               <div
                 className="text-center mb-10 wow fadeInUp"
                 data-wow-delay="1.2s"
@@ -426,6 +432,7 @@ const Landingpage = () => {
           </div>
         </div>
       </section>
+
       <Footer />
     </div>
   );
