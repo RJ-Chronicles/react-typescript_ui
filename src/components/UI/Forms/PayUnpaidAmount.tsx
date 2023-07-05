@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import AuthContext from "../../../context/appContext";
 import cstmerService from "../../../services/CustomerService";
+import billingService from "../../../services/BillingService";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -21,6 +22,7 @@ const style = {
 };
 
 const PayUnpaidAmount = (props: any) => {
+  console.log(props);
   const [billStatus, setBillStatus] = React.useState("Paid");
   const [inputFieldAmount, setInputAmount] = React.useState("");
   const { open } = props;
@@ -46,6 +48,7 @@ const PayUnpaidAmount = (props: any) => {
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const inputAmount = e.target.value;
+
     if (parseInt(inputAmount) > props.dataToPassPayBill.unpaid_amount) {
       setInputAmount((prev) => prev);
     } else {
@@ -60,15 +63,27 @@ const PayUnpaidAmount = (props: any) => {
           Authorization: appContext.token,
         },
       };
+      const amount =
+        inputFieldAmount === ""
+          ? "0"
+          : parseInt(props.dataToPassPayBill.unpaid_amount) -
+            parseInt(inputFieldAmount);
 
-      await cstmerService.updateCustomerBillingStatusById(
-        {
-          bill_status: billStatus,
-          unpaid_amount: inputFieldAmount === "" ? "0" : inputFieldAmount,
-        },
+      const response = await billingService.updateBillingById(
+        { bill_status: billStatus, unpaid_amount: amount },
         props.dataToPassPayBill._id,
         headers
       );
+      console.log(response.data);
+      // await cstmerService.updateCustomerBillingStatusById(
+      //   {
+      //     bill_status: billStatus,
+      //     //unpaid_amount: inputFieldAmount === "" ? "0" : inputFieldAmount,
+      //     unpaid_amount: amount,
+      //   },
+      //   props.dataToPassPayBill._id,
+      //   headers
+      // );
 
       appContext.refreshData();
       props.closePaymentOption();
@@ -111,7 +126,7 @@ const PayUnpaidAmount = (props: any) => {
                 value={
                   inputFieldAmount.length > 0
                     ? inputFieldAmount
-                    : props.unpaid_amount
+                    : props.dataToPassPayBill.unpaid_amount
                 }
               />
             )}

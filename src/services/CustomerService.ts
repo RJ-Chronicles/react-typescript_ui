@@ -1,7 +1,7 @@
 import axios from "axios";
-//const CUSTOMER_BASE_URL = "http://localhost:3001/customer/";
-const CUSTOMER_BASE_URL =
-  "https://kallyankar-api-service.onrender.com/customer/";
+const CUSTOMER_BASE_URL = "http://localhost:3001/customer/";
+//const CUSTOMER_BASE_URL =
+//  "https://kallyankar-api-service.onrender.com/customer/";
 class CustomerService {
   getListOfCustomer(headers: any) {
     console.log("inside");
@@ -28,6 +28,14 @@ class CustomerService {
       headers
     );
   }
+  initialCustomerBilling(customer: any, id: string, headers: any) {
+    return axios.patch(
+      CUSTOMER_BASE_URL + "initial-billing/" + id,
+      customer,
+      headers
+    );
+  }
+
   submitCustomerDetails(customer: any, headers: any) {
     return axios.post(CUSTOMER_BASE_URL + "new-customer", customer, headers);
   }

@@ -13,7 +13,6 @@ const BATTERY_TABLE_COLUMN = [
   "TYPE",
   "SERIAL NUMBER",
   "PRICE",
-  "GST",
   "ACTION",
 ];
 

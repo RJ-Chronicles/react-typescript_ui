@@ -74,6 +74,29 @@ export interface GSTPayload {
     }
   ];
 }
+
+export interface BillingPayload {
+  message: string;
+  list: [
+    {
+      total_amount: number;
+      bill_status: string;
+      unpaid_amount: number;
+      gst: number;
+      gst_amount: number;
+      customer: string;
+      _id: string;
+      createdAt: string;
+      updatedAt: string;
+      __v: number;
+    }
+  ];
+}
 export interface GST {
   gst: number;
+}
+
+export interface Billing {
+  bill_status: string;
+  unpaid_amount: string | number;
 }

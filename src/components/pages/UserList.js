@@ -11,6 +11,7 @@ import DeleteModal from "../UI/DeleteModal";
 import admService from "../../services/AdminService";
 import Heading from "../UI/Heading";
 import Spinner from "../UI/Spinner";
+import Header from "../UI/Header";
 const UserList = () => {
   const [userList, setUserList] = useState({});
   const appContext = useContext(AuthContext);
@@ -60,30 +61,29 @@ const UserList = () => {
 
   return (
     <div className="md:min-h-screen  w-full">
-      <Heading>
-        <h1 className="text-center text-2xl font-bold uppercase">
-          User Details 
-        </h1>
-      </Heading>
-
-      <h1 className="text-center my-6 font-bold text-4xl"> </h1>
-      <button
-        onClick={handleModalVisibility}
-        className="flex bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded my-10 w-44"
-      >
-        Add New User
-      </button>
-      {toggleModal && <Modal />}
-      {toggleDeleteModal && <DeleteModal />}
-      {<Spinner visible={isLoading} height="120" width="120" />}
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        {userList !== undefined && (
-          <Table
-            list={userList.userList}
-            column={USER_TABLE_COLUMN}
-            mode={TABLE_SELECTION.USER_TABLE}
-          />
-        )}
+      <Header>
+        <h1 className="text-2xl font-semibold">User Details</h1>
+      </Header>
+      <div className="mx-10">
+        <h1 className="text-center my-6 font-bold text-4xl"> </h1>
+        <button
+          onClick={handleModalVisibility}
+          className="flex bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded my-10 w-44"
+        >
+          Add New User
+        </button>
+        {toggleModal && <Modal />}
+        {toggleDeleteModal && <DeleteModal />}
+        {<Spinner visible={isLoading} height="120" width="120" />}
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          {userList !== undefined && (
+            <Table
+              list={userList.userList}
+              column={USER_TABLE_COLUMN}
+              mode={TABLE_SELECTION.USER_TABLE}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

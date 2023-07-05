@@ -9,6 +9,9 @@ import AppContext from "../../../context/appContext";
 import Button from "@mui/material/Button";
 import cstmerService from "../../../services/CustomerService";
 import ProductService from "../../../services/ProductService";
+
+import billingService from "../../../services/BillingService";
+
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -42,6 +45,8 @@ const CartItems = (props: CIProps) => {
   const [billStatus, setBillStatus] = React.useState("Paid");
   const [totalAmount, setTotalAmount] = React.useState(0);
   const [inputFieldAmount, setInputAmount] = React.useState("");
+  const [totalGSTAmount, setTotalGSTAmount] = React.useState(0);
+
   React.useEffect(() => {
     const fetchCustomerDetails = async () => {
       const headers = {
@@ -76,31 +81,37 @@ const CartItems = (props: CIProps) => {
     );
     appContext.storeCartItems((prev: any) => [...data]);
     if (data.length > 0) {
-      calCulateTotalAmount();
+      calCulateTotalAmountAndInitialBillingStatus();
     } else {
       props.closeCartHandler();
     }
   };
 
   React.useEffect(() => {
-    calCulateTotalAmount();
+    calCulateTotalAmountAndInitialBillingStatus();
   });
 
-  const calCulateTotalAmount = () => {
+  const calCulateTotalAmountAndInitialBillingStatus = () => {
     let price = 0;
     let gstAmount = 0;
+
     appContext.cartItems.forEach((item: any) => {
-      console.log(item);
       gstAmount = (parseInt(item.price) * parseInt(item.GST)) / 100;
       price = price + parseInt(item.price);
     });
+
     price += gstAmount;
     setTotalAmount(price);
+    setTotalGSTAmount(gstAmount);
     console.log(price);
   };
 
   const handleCartItemClose = () => {
     props.closeCartHandler();
+  };
+
+  const netAmount = (price: string, gst: string) => {
+    return parseInt(price) + (parseInt(price) * parseInt(gst)) / 100;
   };
 
   const ItemList = () => (
@@ -110,12 +121,20 @@ const CartItems = (props: CIProps) => {
           <th scope="col" className="px-6 py-3">
             Name
           </th>
+
+          <th scope="col" className="px-6 py-3">
+            Serial Number
+          </th>
           <th scope="col" className="px-6 py-3">
             Price
           </th>
           <th scope="col" className="px-6 py-3">
-            Serial Number
+            GST
           </th>
+          <th scope="col" className="px-6 py-3">
+            Net Amount
+          </th>
+
           <th scope="col" className="px-6 py-3">
             Action
           </th>
@@ -128,9 +147,12 @@ const CartItems = (props: CIProps) => {
               key={index}
               className="bg-white border-b text-sm dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
-              <td className="px-6 py-4">{item.name}</td>
-              <td className="px-6 py-4">{item.price}</td>
-              <td className="px-6 py-4">{item.serial_number}</td>
+              <td className="px-6 py-2">{item.name}</td>
+              <td className="px-6 py-2">{item.serial_number}</td>
+              <td className="px-6 py-2">{item.price}</td>
+              <td className="px-6 py-2">{item.GST + "%"}</td>
+              <td className="px-6 py-2">{netAmount(item.price, item.GST)}</td>
+
               <td className="px-6 py-4">
                 <button
                   name={item.serial_number}
@@ -174,16 +196,49 @@ const CartItems = (props: CIProps) => {
           Authorization: appContext.token,
         },
       };
+      const amount =
+        inputFieldAmount !== "" ? totalAmount - parseInt(inputFieldAmount) : 0;
       appContext.cartItems.forEach(async (product: any) => {
-        await ProductService.submitProductDetails({ ...product }, headers);
-      });
-      if (billStatus === "Unpaid") {
-        await cstmerService.updateCustomerBillingStatusById(
-          { bill_status: "Unpaid", unpaid_amount: inputFieldAmount },
-          customerId,
+        const resp = await ProductService.submitProductDetails(
+          {
+            name: product.name,
+            type: product.type,
+            price: product.price,
+            customer: product.customer,
+            vehicle_name: product.vehicle_name,
+            vehicle_number: product.vehicle_number,
+            serial_number: product.serial_number,
+          },
+          // { ...product },
           headers
         );
-      }
+        console.log(product);
+        console.log(resp.data);
+        // await billingService.submitBillingRecord({total_amount:
+        //   billing_status:
+        //   unpaid_amount:
+        //   gst:
+        //   gst_amount:
+        //   customer:}, headers);
+      });
+      console.log({
+        gst_amount: totalGSTAmount,
+        total_amount: totalAmount,
+        unpaid_amount: amount,
+        bill_status: billStatus,
+        customer: appContext.cartItems[0].customer,
+      });
+      await billingService.submitBillingRecord(
+        {
+          gst_amount: totalGSTAmount,
+          total_amount: totalAmount,
+          unpaid_amount: amount,
+          bill_status: billStatus,
+          customer: appContext.cartItems[0].customer,
+        },
+        headers
+      );
+      appContext.storeCartItems((prev: any) => []);
       appContext.refreshData();
       props.closeCartHandler();
     } catch (err) {
