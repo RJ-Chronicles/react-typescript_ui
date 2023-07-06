@@ -52,7 +52,7 @@ const SideNav = () => {
   return (
     <div
       className={`flex flex-col h-full px-3  text-slate-600 border-r-2 border-slate-300  shadow-4xl ${
-        toggleNavBar ? "w-40" : "w-14"
+        toggleNavBar ? "w-48" : "w-14"
       }`}
     >
       {notificationsModal && (
@@ -62,13 +62,14 @@ const SideNav = () => {
         />
       )}
       <div className="space-y-3">
-        <div className="flex justify-between items-center mt-2 border-b-4 border-slate-400 ">
+        <div className="flex justify-between items-center mt-2 border-b-2 border-slate-400 ">
           <div>
             <img
               src="https://do-not-delete-bucket1.s3.ap-south-1.amazonaws.com/logo2.png"
               className="w-20 h-20 mb-2"
               alt="logo"
             />
+            {/* <h1>Kallyankar</h1> */}
           </div>
           <button onClick={handleToggleNavBar} className="mb-2">
             {!toggleNavBar && <RightSideArrow />}
@@ -78,7 +79,7 @@ const SideNav = () => {
 
         {toggleNavBar && (
           <div className="flex-1">
-            <ul className=" pb-4 space-y-1 text-sm font-semibold">
+            <ul className=" pb-4 space-y-1 text-sm font-medium">
               <li className="rounded-sm">
                 <NavLink
                   to="/admin-dashboard"
@@ -117,7 +118,7 @@ const SideNav = () => {
                   })}
                 >
                   <Currency />
-                  <span>Billing Status</span>
+                  <span>Billing</span>
                 </NavLink>
               </li>
 

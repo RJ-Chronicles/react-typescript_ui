@@ -15,6 +15,7 @@ import Spinner from "./Spinner";
 import GstService from "../../services/GSTService";
 import { ReactComponent as Delete } from "../svg/delete.svg";
 import { ReactComponent as Edit } from "../svg/edit.svg";
+import { ReactComponent as Add } from "../svg/add.svg";
 const GST = () => {
   const appContext = useContext(AuthContext);
   const authToken = appContext.token;
@@ -94,28 +95,15 @@ const GST = () => {
 
   return (
     <div className="md:min-h-screen  w-full">
-      <h1 className="text-center text-2xl font-bold border-b-2 pb-4 m-3">
-        List Of Available GST values{" "}
-      </h1>
-      <div className="flex justify-end items-end mr-10 mt-5">
+      <div className="flex justify-end items-end mr-10 ">
         <button
           onClick={handleOpenModal}
-          className=" bg-slate-200 hover:bg-slate-400 rounded-md shadow-md duration-300 p-1"
+          className="flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10 "
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="blue"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="white"
-            className="w-10 h-10"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
+          <span>
+            <Add />
+          </span>
+          <span>NEW</span>
         </button>
       </div>
       {<Spinner visible={isLoading} height="120" width="120" />}

@@ -13,6 +13,7 @@ import Spinner from "../UI/Spinner";
 import Header from "../UI/Header";
 import { ReactComponent as Delete } from "../svg/delete.svg";
 import { ReactComponent as Edit } from "../svg/edit.svg";
+import { ReactComponent as Add } from "../svg/add.svg";
 const CustomerSpecificBatteryList = () => {
   let { customerId } = useParams();
   customerId = customerId ? customerId : "";
@@ -108,9 +109,12 @@ const CustomerSpecificBatteryList = () => {
         <div className="flex items-center justify-between">
           <button
             onClick={handleModalVisibility}
-            className="flex bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded my-10 w-44"
+            className="flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10 "
           >
-            Add New Product
+            <span>
+              <Add />
+            </span>
+            <span>NEW</span>
           </button>
           {appContext.cartItems.length > 0 && (
             <HeaderCartButton

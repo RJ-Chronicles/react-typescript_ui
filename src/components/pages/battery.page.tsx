@@ -40,18 +40,29 @@ const Battery = () => {
     setValue(newValue);
   };
   return (
-    <div className="w-full mt-10">
+    <div className="w-full">
       <div className="flex flex-col justify-center items-center md:flex-row space-x-10 md:space-x-0">
         <Box sx={{ width: "100%" }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Box
+            sx={{
+              borderBottom: 1,
+              borderColor: "divider",
+              backgroundColor: "#600080",
+              color: "white",
+            }}
+          >
             <Tabs
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="Amphere" {...a11yProps(0)} />
-              <Tab label="Battery List" {...a11yProps(1)} />
-              <Tab label="GST" {...a11yProps(2)} />
+              <Tab sx={{ color: "white" }} label="Amphere" {...a11yProps(0)} />
+              <Tab
+                sx={{ color: "white" }}
+                label="Battery List"
+                {...a11yProps(1)}
+              />
+              <Tab sx={{ color: "white" }} label="GST" {...a11yProps(2)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>

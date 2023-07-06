@@ -46,6 +46,7 @@ function App() {
           />
           <Route path="/admin-dashboard/settings" element={<Settings />} />
         </Route>
+        <Route path="/*" element={<Login />} />
       </Routes>
     </div>
   );

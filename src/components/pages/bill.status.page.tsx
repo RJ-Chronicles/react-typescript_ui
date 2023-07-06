@@ -147,7 +147,7 @@ const BillingStatusPage = () => {
               ).map((row: any, index) => (
                 <tr
                   key={index}
-                  className="bg-white border-b text-sm text-slate-700 font-semibold hover:bg-gray-50"
+                  className="bg-white border-b text-sm text-slate-700 font-normal hover:bg-gray-50"
                 >
                   <td className="px-2 py-4">{row.customer.name}</td>
                   <td className="px-2 py-4">{row.customer.contact}</td>

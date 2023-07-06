@@ -56,15 +56,16 @@ const CustomerTablePartial = (props) => {
           .map((customer, index) => (
             <tr
               key={index}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              className="bg-white border-b text-sm text-slate-700 font-base hover:bg-gray-50"
             >
-              <td className="px-3 py-4 ">
-                {" "}
+              <td className="px-3 py-4">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 mx-2"
+                  className="w-5 h-5 mx-2"
                   onChange={() => handleBatteryListNavigation(customer._id)}
                 />
+              </td>
+              <td className="px-3 py-4 ">
                 {`${customer.name} ${customer.last_name}`}
               </td>
               <td className="px-3 py-4">{customer.address}</td>

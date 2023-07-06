@@ -9,9 +9,10 @@ import { TABLE_SELECTION, USER_OPERATIONS } from "../static/operations";
 import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
 import admService from "../../services/AdminService";
-import Heading from "../UI/Heading";
+
 import Spinner from "../UI/Spinner";
 import Header from "../UI/Header";
+import { ReactComponent as Add } from "../svg/add.svg";
 const UserList = () => {
   const [userList, setUserList] = useState({});
   const appContext = useContext(AuthContext);
@@ -68,9 +69,12 @@ const UserList = () => {
         <h1 className="text-center my-6 font-bold text-4xl"> </h1>
         <button
           onClick={handleModalVisibility}
-          className="flex bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded my-10 w-44"
+          className="flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10 "
         >
-          Add New User
+          <span>
+            <Add />
+          </span>
+          <span>NEW</span>
         </button>
         {toggleModal && <Modal />}
         {toggleDeleteModal && <DeleteModal />}

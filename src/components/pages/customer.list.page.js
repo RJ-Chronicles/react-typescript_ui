@@ -11,7 +11,7 @@ import Table from "../UI/Table";
 import { filteredList } from "../helper/helperFunctions";
 import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
-import Heading from "../UI/Heading";
+import { ReactComponent as Add } from "../svg/add.svg";
 import Header from "../UI/Header";
 const CustomerList = () => {
   const [userList, setUserList] = useState([]);
@@ -108,9 +108,12 @@ const CustomerList = () => {
         <div className="flex justify-between items-center">
           <button
             onClick={handleModalVisibility}
-            className="flex bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded my-10 w-44"
+            className="flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10 "
           >
-            Add Customer
+            <span>
+              <Add />
+            </span>
+            <span>NEW</span>
           </button>
           <div className="flex justify-between items-center">
             <div className="flex">
