@@ -12,7 +12,6 @@ import Battery from "./components/pages/battery.page";
 import AuthContext from "./context/appContext";
 import UserList from "./components/pages/UserList";
 import CustomerSpecificBatteryList from "./components/pages/customer.specific.battery.list.page";
-import Payment from "./components/pages/payment.page";
 import Settings from "./components/pages/setting.page";
 import BillingStatusPage from "./components/pages/bill.status.page";
 
@@ -32,7 +31,7 @@ function App() {
           path="/admin-dashboard"
           element={authContext.isLoggedIn ? <MainHeader /> : <Landingpage />}
         >
-          <Route index element={<Dashboard />} />
+          <Route path="/admin-dashboard" index element={<Dashboard />} />
           <Route path="/admin-dashboard/customers" element={<CustomerList />} />
           <Route path="/admin-dashboard/users" element={<UserList />} />
           <Route

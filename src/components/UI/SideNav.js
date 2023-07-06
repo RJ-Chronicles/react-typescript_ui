@@ -51,8 +51,8 @@ const SideNav = () => {
   };
   return (
     <div
-      className={`flex flex-col h-full px-3  text-blue-800 border-r-2 border-slate-300  shadow-4xl ${
-        toggleNavBar ? "w-40" : "w-10"
+      className={`flex flex-col h-full px-3  text-slate-600 border-r-2 border-slate-300  shadow-4xl ${
+        toggleNavBar ? "w-40" : "w-14"
       }`}
     >
       {notificationsModal && (
@@ -62,8 +62,15 @@ const SideNav = () => {
         />
       )}
       <div className="space-y-3">
-        <div className="flex justify-end items-center mt-10">
-          <button onClick={handleToggleNavBar}>
+        <div className="flex justify-between items-center mt-2 border-b-4 border-slate-400 ">
+          <div>
+            <img
+              src="https://do-not-delete-bucket1.s3.ap-south-1.amazonaws.com/logo2.png"
+              className="w-20 h-20 mb-2"
+              alt="logo"
+            />
+          </div>
+          <button onClick={handleToggleNavBar} className="mb-2">
             {!toggleNavBar && <RightSideArrow />}
             {toggleNavBar && <LeftSideArrow />}
           </button>
@@ -71,21 +78,107 @@ const SideNav = () => {
 
         {toggleNavBar && (
           <div className="flex-1">
-            <ul className="pt-2 pb-4 space-y-1 text-sm font-semibold">
+            <ul className=" pb-4 space-y-1 text-sm font-semibold">
               <li className="rounded-sm">
                 <NavLink
                   to="/admin-dashboard"
                   className="flex items-center p-2 space-x-3 rounded-md"
+                  style={({ isActive }) => ({
+                    color: isActive ? "#fff" : "#545e6f",
+                    background: isActive ? "#7600dc" : "#f0f0f0",
+                  })}
                 >
                   <HomeSvg />
                   <span>Home</span>
                 </NavLink>
               </li>
+
               <li className="rounded-sm">
                 <NavLink
-                  to="#"
+                  to="/admin-dashboard/customers"
                   className="flex items-center p-2 space-x-3 rounded-md"
+                  style={({ isActive }) => ({
+                    color: isActive ? "#fff" : "#545e6f",
+                    background: isActive ? "#7600dc" : "#f0f0f0",
+                  })}
                 >
+                  <CustomerSvg />
+                  <span>Customer</span>
+                </NavLink>
+              </li>
+
+              <li className="rounded-sm">
+                <NavLink
+                  to={`/admin-dashboard/${token}/payment`}
+                  className="flex items-center p-2 space-x-3 rounded-md"
+                  style={({ isActive }) => ({
+                    color: isActive ? "#fff" : "#545e6f",
+                    background: isActive ? "#7600dc" : "#f0f0f0",
+                  })}
+                >
+                  <Currency />
+                  <span>Billing Status</span>
+                </NavLink>
+              </li>
+
+              <li className="rounded-sm">
+                <NavLink
+                  to="/admin-dashboard/stock"
+                  className="flex items-center p-2 space-x-3 rounded-md"
+                  style={({ isActive }) => ({
+                    color: isActive ? "#fff" : "#545e6f",
+                    background: isActive ? "#7600dc" : "#f0f0f0",
+                  })}
+                >
+                  <StockSvg />
+                  <span>Stock</span>
+                </NavLink>
+              </li>
+
+              <li className="rounded-sm">
+                <NavLink
+                  to="/admin-dashboard/battery"
+                  className="flex items-center p-2 space-x-3 rounded-md"
+                  style={({ isActive }) => ({
+                    color: isActive ? "#fff" : "#545e6f",
+                    background: isActive ? "#7600dc" : "#f0f0f0",
+                  })}
+                >
+                  <BatterySvg />
+                  <span>Battery</span>
+                </NavLink>
+              </li>
+
+              <li className="rounded-sm">
+                <NavLink
+                  to="/admin-dashboard/users"
+                  className="flex items-center p-2 space-x-3 rounded-md"
+                  style={({ isActive }) => ({
+                    color: isActive ? "#fff" : "#545e6f",
+                    background: isActive ? "#7600dc" : "#f0f0f0",
+                  })}
+                >
+                  <UserSvg />
+                  <span>Users</span>
+                </NavLink>
+              </li>
+
+              <li className="rounded-sm">
+                <NavLink
+                  to="/admin-dashboard/settings"
+                  className="flex items-center p-2 space-x-3 rounded-md"
+                  style={({ isActive }) => ({
+                    color: isActive ? "#fff" : "#545e6f",
+                    background: isActive ? "#7600dc" : "#f0f0f0",
+                  })}
+                >
+                  <SettingSvg />
+                  <span>Settings</span>
+                </NavLink>
+              </li>
+
+              <li className="rounded-sm">
+                <div className="flex items-center p-2 space-x-3 rounded-md">
                   <InboxSvg />
                   <span>Inbox</span>
                   {notifications && (
@@ -98,66 +191,7 @@ const SideNav = () => {
                       </span>
                     </button>
                   )}
-                </NavLink>
-              </li>
-              <li className="rounded-sm">
-                <NavLink
-                  to="/admin-dashboard/customers"
-                  className="flex items-center p-2 space-x-3 rounded-md"
-                >
-                  <CustomerSvg />
-                  <span>Customer</span>
-                </NavLink>
-              </li>
-
-              <li className="rounded-sm">
-                <NavLink
-                  to={`/admin-dashboard/${token}/payment`}
-                  className="flex items-center p-2 space-x-3 rounded-md"
-                >
-                  <Currency />
-                  <span>Billing Status</span>
-                </NavLink>
-              </li>
-
-              <li className="rounded-sm">
-                <NavLink
-                  to="/admin-dashboard/stock"
-                  className="flex items-center p-2 space-x-3 rounded-md"
-                >
-                  <StockSvg />
-                  <span>Stock</span>
-                </NavLink>
-              </li>
-
-              <li className="rounded-sm">
-                <NavLink
-                  to="/admin-dashboard/battery"
-                  className="flex items-center p-2 space-x-3 rounded-md"
-                >
-                  <BatterySvg />
-                  <span>Battery</span>
-                </NavLink>
-              </li>
-
-              <li className="rounded-sm">
-                <NavLink
-                  to="/admin-dashboard/users"
-                  className="flex items-center p-2 space-x-3 rounded-md"
-                >
-                  <UserSvg />
-                  <span>Users</span>
-                </NavLink>
-              </li>
-
-              <li className="rounded-sm">
-                <NavLink
-                  to="/admin-dashboard/settings"
-                  className="flex items-center p-2 space-x-3 rounded-md"
-                >
-                  <SettingSvg />
-                  <span>Settings</span>
-                </NavLink>
+                </div>
               </li>
               <li className="rounded-sm">
                 <button
