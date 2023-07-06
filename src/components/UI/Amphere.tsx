@@ -13,7 +13,8 @@ import Modal from "@mui/material/Modal";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import amprService from "../../services/AmphereService";
-
+import { ReactComponent as Delete } from "../svg/delete.svg";
+import { ReactComponent as Edit } from "../svg/edit.svg";
 import Spinner from "./Spinner";
 const Amphere = () => {
   const appContext = useContext(AuthContext);
@@ -150,7 +151,7 @@ const Amphere = () => {
                       onClick={updateButtonHandler}
                       className="font-medium text-blue-600 dark:text-red-500 hover:underline mr-1"
                     >
-                      Edit
+                      <Edit />
                     </button>
 
                     <button
@@ -158,7 +159,7 @@ const Amphere = () => {
                       className="font-medium text-red-600 dark:text-red-500 hover:underline md:ml-1"
                       onClick={deleteButtonHandler}
                     >
-                      Delete
+                      <Delete />
                     </button>
                   </td>
                 </tr>

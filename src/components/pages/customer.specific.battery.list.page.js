@@ -9,10 +9,10 @@ import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
 import CartItems from "../UI/cart/CartItems";
 import { useParams } from "react-router-dom";
-import Heading from "../UI/Heading";
 import Spinner from "../UI/Spinner";
 import Header from "../UI/Header";
-
+import { ReactComponent as Delete } from "../svg/delete.svg";
+import { ReactComponent as Edit } from "../svg/edit.svg";
 const CustomerSpecificBatteryList = () => {
   let { customerId } = useParams();
   customerId = customerId ? customerId : "";
@@ -154,13 +154,13 @@ const CustomerSpecificBatteryList = () => {
                       <td className="px-3 py-4">{product.serial_number}</td>
 
                       <td className="px-3 py-4">{product.price}</td>
-                      <td className="flex items-center px-6 py-4 space-x-3">
+                      <td className="flex items-center px-2 py-4 space-x-3">
                         <button
                           onClick={handleAddUpdateFormVisibility}
                           name={product._id}
                           className="font-medium text-blue-600 dark:text-red-500 hover:underline"
                         >
-                          Edit
+                          <Edit />
                         </button>
 
                         <button
@@ -168,7 +168,7 @@ const CustomerSpecificBatteryList = () => {
                           name={product._id}
                           className="font-medium text-red-600 dark:text-red-500 hover:underline"
                         >
-                          Delete
+                          <Delete />
                         </button>
                       </td>
                     </tr>

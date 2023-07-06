@@ -12,7 +12,8 @@ import batteryService from "../../services/BatteryService";
 import Spinner from "./Spinner";
 import AuthContext from "../../context/appContext";
 import { Headers, BatteryPayload } from "../../AppModel";
-
+import { ReactComponent as Delete } from "../svg/delete.svg";
+import { ReactComponent as Edit } from "../svg/edit.svg";
 const BatteryNames = () => {
   const appContext = useContext(AuthContext);
   const authToken = appContext.token;
@@ -148,7 +149,7 @@ const BatteryNames = () => {
                       onClick={updateButtonHandler}
                       className="font-medium text-blue-600 dark:text-red-500 hover:underline mr-1"
                     >
-                      Edit
+                      <Edit />
                     </button>
 
                     <button
@@ -156,7 +157,7 @@ const BatteryNames = () => {
                       className="font-medium text-red-600 dark:text-red-500 hover:underline ml-1"
                       onClick={deleteButtonHandler}
                     >
-                      Delete
+                      <Delete />
                     </button>
                   </td>
                 </tr>

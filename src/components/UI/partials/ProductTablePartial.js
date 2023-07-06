@@ -1,6 +1,8 @@
 import { PRODUCT_OPERATIONS } from "../../static/operations";
 import { useContext } from "react";
 import AuthContext from "../../../context/appContext";
+import { ReactComponent as Delete } from "../../svg/delete.svg";
+import { ReactComponent as Edit } from "../../svg/edit.svg";
 
 const ProductTablePartial = (props) => {
   const { productList } = props;
@@ -42,7 +44,7 @@ const ProductTablePartial = (props) => {
               name={product._id}
               className="font-medium text-blue-600 dark:text-red-500 hover:underline"
             >
-              Edit
+              <Edit />
             </button>
 
             <button
@@ -50,7 +52,7 @@ const ProductTablePartial = (props) => {
               name={product._id}
               className="font-medium text-red-600 dark:text-red-500 hover:underline"
             >
-              Delete
+              <Delete />
             </button>
           </td>
         </tr>

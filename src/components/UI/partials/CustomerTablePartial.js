@@ -5,6 +5,8 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
 import { getFormatedDate } from "../../helper/helperFunctions";
+import { ReactComponent as Delete } from "../../svg/delete.svg";
+import { ReactComponent as Edit } from "../../svg/edit.svg";
 const CustomerTablePartial = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -77,14 +79,14 @@ const CustomerTablePartial = (props) => {
                   name={customer._id}
                   className="font-medium text-blue-600 dark:text-red-500 hover:underline"
                 >
-                  Edit
+                  <Edit />
                 </button>
                 <button
                   onClick={handleDeleteModalVisibility}
                   name={customer._id}
                   className="font-medium text-red-600 dark:text-red-500 hover:underline"
                 >
-                  Delete
+                  <Delete />
                 </button>
               </td>
             </tr>

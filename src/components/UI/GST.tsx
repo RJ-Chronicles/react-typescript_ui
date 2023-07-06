@@ -13,6 +13,8 @@ import Modal from "@mui/material/Modal";
 import DialogTitle from "@mui/material/DialogTitle";
 import Spinner from "./Spinner";
 import GstService from "../../services/GSTService";
+import { ReactComponent as Delete } from "../svg/delete.svg";
+import { ReactComponent as Edit } from "../svg/edit.svg";
 const GST = () => {
   const appContext = useContext(AuthContext);
   const authToken = appContext.token;
@@ -151,7 +153,7 @@ const GST = () => {
                       onClick={updateButtonHandler}
                       className="font-medium text-blue-600 dark:text-red-500 hover:underline mr-1"
                     >
-                      Edit
+                      <Edit />
                     </button>
 
                     <button
@@ -159,7 +161,7 @@ const GST = () => {
                       className="font-medium text-red-600 dark:text-red-500 hover:underline ml-1"
                       onClick={deleteButtonHandler}
                     >
-                      Delete
+                      <Delete />
                     </button>
                   </td>
                 </tr>

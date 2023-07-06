@@ -1,6 +1,8 @@
 import { USER_OPERATIONS } from "../../static/operations";
 import AuthContext from "../../../context/appContext";
 import { useContext } from "react";
+import { ReactComponent as Delete } from "../../svg/delete.svg";
+import { ReactComponent as Edit } from "../../svg/edit.svg";
 const UserTablePartial = (props) => {
   const appContext = useContext(AuthContext);
   const { userList } = props;
@@ -54,7 +56,7 @@ const UserTablePartial = (props) => {
               name={user._id}
               className="font-medium text-blue-600 dark:text-red-500 hover:underline"
             >
-              Edit
+              <Edit />
             </button>
 
             {loggeInUserId !== user._id && (
@@ -63,7 +65,7 @@ const UserTablePartial = (props) => {
                 name={user._id}
                 className="font-medium text-red-600 dark:text-red-500 hover:underline"
               >
-                Delete
+                <Delete />
               </button>
             )}
           </td>
