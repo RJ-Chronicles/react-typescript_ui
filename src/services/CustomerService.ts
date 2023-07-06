@@ -1,7 +1,7 @@
 import axios from "axios";
-const CUSTOMER_BASE_URL = "http://localhost:3001/customer/";
-//const CUSTOMER_BASE_URL =
-//  "https://kallyankar-api-service.onrender.com/customer/";
+//const CUSTOMER_BASE_URL = "http://localhost:3001/customer/";
+const CUSTOMER_BASE_URL =
+  "https://kallyankar-api-service.onrender.com/customer/";
 class CustomerService {
   getListOfCustomer(headers: any) {
     console.log("inside");
