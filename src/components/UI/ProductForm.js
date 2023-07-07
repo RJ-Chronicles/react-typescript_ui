@@ -38,6 +38,17 @@ const ProductForm = () => {
   });
   const formSubmitHandler = async (e) => {
     e.preventDefault();
+    if (
+      product.GST === "DEFAULT" ||
+      product.type === "DEFAULT" ||
+      product.name === "DEFAULT" ||
+      product.GST === "" ||
+      product.type === "" ||
+      product.name === ""
+    ) {
+      return;
+    }
+
     const headers = {
       headers: {
         Authorization: appContext.token,
@@ -173,7 +184,7 @@ const ProductForm = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="role"
             >
-              Battery Name
+              GST
             </label>
             <select
               className="w-full px-9 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -206,7 +217,7 @@ const ProductForm = () => {
             <input
               className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="v_number"
-              type="text"
+              type="number"
               placeholder="Price"
               onChange={(e) =>
                 setProduct((prev) => ({
@@ -268,7 +279,7 @@ const ProductForm = () => {
         </div>
         <div className="mb-6 text-center">
           <button
-            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+            className="w-full text-center space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
             type="submit"
           >
             Add Product

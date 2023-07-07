@@ -1,3 +1,8 @@
+import { toPng } from "html-to-image";
+import { jsPDF } from "jspdf";
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
+
 const ErrorHandler = (e: any, action: string): string => {
   if (action === "CUSTOMER_ADD") {
     const email = e.response.data.keyValue.email;
@@ -91,6 +96,86 @@ const getFormatedDate = (timeStamp: any) => {
   });
   return formatedDate;
 };
+
+const saveToPDF = (name = "unknown", contact = "9999999999") => {
+  const dom = document.getElementById("print")!;
+  toPng(dom)
+    .then((dataUrl) => {
+      const img = new Image();
+      img.crossOrigin = "annoymous";
+      img.src = dataUrl;
+      img.onload = () => {
+        // Initialize the PDF.
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "in",
+          format: [5.5, 8.5],
+        });
+
+        // Define reused data
+        const imgProps = pdf.getImageProperties(img);
+        const imageType = imgProps.fileType;
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+
+        // Calculate the number of pages.
+        const pxFullHeight = imgProps.height;
+        const pxPageHeight = Math.floor((imgProps.width * 8.5) / 5.5);
+        const nPages = Math.ceil(pxFullHeight / pxPageHeight);
+
+        // Define pageHeight separately so it can be trimmed on the final page.
+        let pageHeight = pdf.internal.pageSize.getHeight();
+
+        // Create a one-page canvas to split up the full image.
+        const pageCanvas = document.createElement("canvas")!;
+        const pageCtx = pageCanvas.getContext("2d")!;
+        pageCanvas.width = imgProps.width;
+        pageCanvas.height = pxPageHeight;
+
+        for (let page = 0; page < nPages; page++) {
+          // Trim the final page to reduce file size.
+          if (page === nPages - 1 && pxFullHeight % pxPageHeight !== 0) {
+            pageCanvas.height = pxFullHeight % pxPageHeight;
+            pageHeight = (pageCanvas.height * pdfWidth) / pageCanvas.width;
+          }
+          // Display the page.
+          const w = pageCanvas.width;
+          const h = pageCanvas.height;
+          pageCtx.fillStyle = "white";
+          pageCtx.fillRect(0, 0, w, h);
+          pageCtx.drawImage(img, 0, page * pxPageHeight, w, h, 0, 0, w, h);
+
+          // Add the page to the PDF.
+          if (page) pdf.addPage();
+
+          const imgData = pageCanvas.toDataURL(`image/${imageType}`, 1);
+          pdf.addImage(imgData, imageType, 0, 0, pdfWidth, pageHeight);
+        }
+        // Output / Save
+        pdf.save(`${name}_${contact}_Invoice.pdf`);
+        return "PDF has been saved!";
+      };
+    })
+    .catch((error) => {
+      console.error("oops, something went wrong!", error);
+      return "PDF has not been saved!";
+    });
+};
+
+const exportToCSV = (fileName: string, input_data: any) => {
+  console.log("fileName : " + fileName);
+  console.log(input_data);
+  const csvData = input_data;
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+  const ws = XLSX.utils.json_to_sheet(csvData);
+  const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+  const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  const data = new Blob([excelBuffer], { type: fileType });
+  FileSaver.saveAs(data, fileName + fileExtension);
+};
+
+const todaysDate = () => {};
 export {
   ErrorHandler,
   GreetingMessage,
@@ -98,4 +183,6 @@ export {
   filteredList,
   paginationList,
   getFormatedDate,
+  saveToPDF,
+  exportToCSV,
 };

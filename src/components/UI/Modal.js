@@ -21,7 +21,9 @@ const TestModal = () => {
             <div className="mt-3">
               <div className=" text-center sm:ml-4 sm:text-left">
                 <div className="flex items-start justify-between  border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl italic font-semibold">{title}</h3>
+                  <h3 className="w-full text-white p-4 shadow-md- font-sans rounded-md text-lg font-semibold bg-[#600080]">
+                    {title}
+                  </h3>
                   <button
                     onClick={() => appContext.setModalVisible(false)}
                     type="button"
@@ -63,10 +65,10 @@ const TestModal = () => {
 
                 {mode === PRODUCT_OPERATIONS.UPDATE_PRODUCT && <ProductForm />}
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                <div className="flex items-center justify-end border-t border-solid border-slate-200 rounded-b">
                   <button
                     onClick={() => appContext.setModalVisible(false)}
-                    className="px-5 py-2.5 relative rounded group overflow-hidden font-medium bg-purple-50 text-red-600 inline-block w-32"
+                    className="px-5 py-2 relative rounded group overflow-hidden font-medium bg-purple-50 text-red-600 inline-block w-32"
                   >
                     <span className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-red-600 group-hover:h-full opacity-90"></span>
                     <span className="relative group-hover:text-white">

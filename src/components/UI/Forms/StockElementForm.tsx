@@ -85,7 +85,7 @@ const StockElementForm = (props: propsType) => {
 
   return (
     <div className="w-full mx-auto px-5 rounded-lg -none">
-      <h1 className="text-2xl font-semibold">
+      <h1 className="w-full text-white p-4 shadow-md rounded-md text-lg font-bold bg-[#600080]">
         {action === "ADD" ? "Add new Recoard" : "Update Recoard"}
       </h1>
       <form
@@ -195,7 +195,7 @@ const StockElementForm = (props: propsType) => {
         </div>
         <button
           type="submit"
-          className="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+          className="w-full flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
         >
           Submit
         </button>

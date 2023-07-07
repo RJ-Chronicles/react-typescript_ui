@@ -9,10 +9,11 @@ import cstmerService from "../../../services/CustomerService";
 import ProductService from "../../../services/ProductService";
 import { Dialog, Transition } from "@headlessui/react";
 import billingService from "../../../services/BillingService";
-// import { Dialog, Transition } from '@headlessui/react';
 import { ReactComponent as Delete } from "../../svg/delete.svg";
-import { toPng } from "html-to-image";
-import { jsPDF } from "jspdf";
+
+import InvoiceHeading from "../InvoiceHeading";
+import { saveToPDF } from "../../helper/helperFunctions";
+import Spinner from "../Spinner";
 
 interface CIProps {
   open: boolean;
@@ -36,7 +37,7 @@ const CartItems = (props: CIProps) => {
   const [totalAmount, setTotalAmount] = React.useState(0);
   const [inputFieldAmount, setInputAmount] = React.useState("");
   const [totalGSTAmount, setTotalGSTAmount] = React.useState(0);
-
+  const [isLoading, setIsLoading] = React.useState(false);
   React.useEffect(() => {
     const fetchCustomerDetails = async () => {
       const headers = {
@@ -74,17 +75,22 @@ const CartItems = (props: CIProps) => {
     console.log(data);
     appContext.storeCartItems((prev: any) => [...data]);
     if (data.length > 0) {
-      calCulateTotalAmountAndInitialBillingStatus();
+      calCulateTotalAmount();
     } else {
       props.closeCartHandler();
     }
   };
 
   React.useEffect(() => {
-    calCulateTotalAmountAndInitialBillingStatus();
+    calCulateTotalAmount();
   });
 
-  const calCulateTotalAmountAndInitialBillingStatus = () => {
+  const initialUnpaidAmount = totalAmount.toString();
+  React.useEffect(() => {
+    setInputAmount(initialUnpaidAmount);
+  }, [initialUnpaidAmount]);
+
+  const calCulateTotalAmount = () => {
     let price = 0;
     let gstAmount = 0;
 
@@ -92,7 +98,6 @@ const CartItems = (props: CIProps) => {
       gstAmount = (parseInt(item.price) * parseInt(item.GST)) / 100;
       price = price + parseInt(item.price);
     });
-
     price += gstAmount;
     setTotalAmount(price);
     setTotalGSTAmount(gstAmount);
@@ -164,7 +169,9 @@ const CartItems = (props: CIProps) => {
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const inputAmount = e.target.value;
-    if (parseInt(inputAmount) > totalAmount) {
+    if (inputAmount === "") {
+      setInputAmount(inputAmount);
+    } else if (parseInt(inputAmount) > totalAmount) {
       setInputAmount((prev) => prev);
     } else {
       setInputAmount((prev) => inputAmount);
@@ -182,7 +189,8 @@ const CartItems = (props: CIProps) => {
       <FormControlLabel value="Unpaid" control={<Radio />} label="Unpaid" />
     </RadioGroup>
   );
-  const handlePrintInvoice = async () => {
+  const SaveAsPDFHandler = async () => {
+    setIsLoading(true);
     try {
       const headers = {
         headers: {
@@ -192,7 +200,7 @@ const CartItems = (props: CIProps) => {
       const amount =
         inputFieldAmount !== "" ? totalAmount - parseInt(inputFieldAmount) : 0;
       appContext.cartItems.forEach(async (product: any) => {
-        const resp = await ProductService.submitProductDetails(
+        await ProductService.submitProductDetails(
           {
             name: product.name,
             type: product.type,
@@ -202,25 +210,10 @@ const CartItems = (props: CIProps) => {
             vehicle_number: product.vehicle_number,
             serial_number: product.serial_number,
           },
-          // { ...product },
           headers
         );
-        console.log(product);
-        console.log(resp.data);
-        // await billingService.submitBillingRecord({total_amount:
-        //   billing_status:
-        //   unpaid_amount:
-        //   gst:
-        //   gst_amount:
-        //   customer:}, headers);
       });
-      console.log({
-        gst_amount: totalGSTAmount,
-        total_amount: totalAmount,
-        unpaid_amount: amount,
-        bill_status: billStatus,
-        customer: appContext.cartItems[0].customer,
-      });
+
       await billingService.submitBillingRecord(
         {
           gst_amount: totalGSTAmount,
@@ -231,80 +224,27 @@ const CartItems = (props: CIProps) => {
         },
         headers
       );
+      setIsLoading(false);
       appContext.storeCartItems((prev: any) => []);
       appContext.refreshData();
       props.closeCartHandler();
+      console.log(customer);
+      const resp = saveToPDF(customer?.name, customer?.contact.toString());
+      console.log(resp);
     } catch (err) {
+      setIsLoading(false);
       console.log("eeror while saving record");
     }
   };
 
-  const SaveAsPDFHandler = () => {
-    const dom = document.getElementById("print")!;
-    toPng(dom)
-      .then((dataUrl) => {
-        const img = new Image();
-        img.crossOrigin = "annoymous";
-        img.src = dataUrl;
-        img.onload = () => {
-          // Initialize the PDF.
-          const pdf = new jsPDF({
-            orientation: "portrait",
-            unit: "in",
-            format: [5.5, 8.5],
-          });
-
-          // Define reused data
-          const imgProps = pdf.getImageProperties(img);
-          const imageType = imgProps.fileType;
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-
-          // Calculate the number of pages.
-          const pxFullHeight = imgProps.height;
-          const pxPageHeight = Math.floor((imgProps.width * 8.5) / 5.5);
-          const nPages = Math.ceil(pxFullHeight / pxPageHeight);
-
-          // Define pageHeight separately so it can be trimmed on the final page.
-          let pageHeight = pdf.internal.pageSize.getHeight();
-
-          // Create a one-page canvas to split up the full image.
-          const pageCanvas = document.createElement("canvas")!;
-          const pageCtx = pageCanvas.getContext("2d")!;
-          pageCanvas.width = imgProps.width;
-          pageCanvas.height = pxPageHeight;
-
-          for (let page = 0; page < nPages; page++) {
-            // Trim the final page to reduce file size.
-            if (page === nPages - 1 && pxFullHeight % pxPageHeight !== 0) {
-              pageCanvas.height = pxFullHeight % pxPageHeight;
-              pageHeight = (pageCanvas.height * pdfWidth) / pageCanvas.width;
-            }
-            // Display the page.
-            const w = pageCanvas.width;
-            const h = pageCanvas.height;
-            pageCtx.fillStyle = "white";
-            pageCtx.fillRect(0, 0, w, h);
-            pageCtx.drawImage(img, 0, page * pxPageHeight, w, h, 0, 0, w, h);
-
-            // Add the page to the PDF.
-            if (page) pdf.addPage();
-
-            const imgData = pageCanvas.toDataURL(`image/${imageType}`, 1);
-            pdf.addImage(imgData, imageType, 0, 0, pdfWidth, pageHeight);
-          }
-          // Output / Save
-          pdf.save(`invoice-${"forst"}.pdf`);
-        };
-      })
-      .catch((error) => {
-        console.error("oops, something went wrong!", error);
-      });
-  };
-
-  const addNextInvoiceHandler = () => {};
+  // const SaveAsPDFHandler = () => {
+  //   const resp = saveToPDF(customer?.name, customer?.contact.toString());
+  //   console.log(resp);
+  // };
 
   return (
     <>
+      {isLoading && <Spinner visible={isLoading} height="120" width="120" />}
       <Transition appear show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -342,44 +282,37 @@ const CartItems = (props: CIProps) => {
             >
               <div className="my-8 inline-block w-full max-w-3xl transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
                 <div className="p-4" id="print">
-                  <h1 className="text-center text-lg font-bold text-gray-900">
-                    INVOICE
-                  </h1>
-                  <div className="shadow-lg rounded-lg px-7 py-2 border border-slate-400">
-                    <h2 className="text-center uppercase text-lg font-semibold mb-2 border-b">
-                      Customer Details
-                    </h2>
-                    <div className="text-left flex justify-around">
-                      <p>
-                        <span>Name{"   :"} </span>
-                        <span className="font-bold text-sm text-blue-900 uppercase">
-                          {customer?.name} {customer?.last_name}
-                        </span>
-                      </p>
-                      <p>
-                        <span>Contact{"   :"} </span>
-                        <span className="font-bold text-sm text-blue-900 uppercase">
-                          {customer?.contact}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
+                  <InvoiceHeading customer={customer ? customer : {}} />
                   <div className="flex w-full justify-center items-center">
                     <ItemList />
                   </div>
-                  <div className="mt-4 flex flex-col items-end space-y-2">
+                  <div className="mt-4 flex flex-col items-end space-y-2 border-b-1">
                     <div className="flex w-full justify-between border-t border-black/10 pt-2">
                       <span className="font-bold text-sm">Subtotal:</span>
-                      <span>{2000}</span>
+                      <span>{totalAmount - totalGSTAmount}</span>
                     </div>
 
                     <div className="flex w-full justify-between">
                       <span className="font-bold text-sm">GST</span>
                       <span>{totalGSTAmount}</span>
                     </div>
-                    <div className="flex w-full justify-between border-t border-black/10 py-2">
+                    <div className="flex w-full justify-between  border-y-2 border-black/10 py-2">
                       <span className="font-bold text-sm">Total:</span>
                       <span className="font-bold text-sm">{totalAmount}</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-10">
+                    <div className=" text-sm  w-full   flex justify-end pb-16">
+                      <p className="font-medium text-sm px-8">
+                        For Kalyankar Batteries
+                      </p>
+                    </div>
+
+                    <div className=" p-2 w-full flex  justify-end ">
+                      <p className="font-bold  text-sm border-t-2 border-slate-700 px-8 pt-2">
+                        Authorized Signature
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -394,11 +327,7 @@ const CartItems = (props: CIProps) => {
                         size="small"
                         onChange={handleAmountValueChange}
                         type="number"
-                        value={
-                          inputFieldAmount.length > 0
-                            ? inputFieldAmount
-                            : totalAmount
-                        }
+                        value={inputFieldAmount}
                       />
                     )}
                   </div>
@@ -422,30 +351,10 @@ const CartItems = (props: CIProps) => {
                         d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                       />
                     </svg>
-                    <span>Download</span>
-                  </button>
-                  <button
-                    onClick={addNextInvoiceHandler}
-                    className="flex w-full items-center justify-center space-x-1 rounded-md bg-blue-500 py-2 text-sm text-white shadow-sm hover:bg-blue-600"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                      />
-                    </svg>
-                    <span>Next</span>
+                    <span>Save &amp; Download</span>
                   </button>
                 </div>
-                <div className="flex w-full justify-center align-items-center mt-10 mb-3">
+                {/* <div className="flex w-full justify-center align-items-center mt-10 mb-3">
                   <Button
                     className="w-full"
                     variant="contained"
@@ -454,7 +363,7 @@ const CartItems = (props: CIProps) => {
                   >
                     Print Invoice
                   </Button>
-                </div>
+                </div> */}
                 <div className="flex justify-end items-center">
                   <Button
                     variant="outlined"

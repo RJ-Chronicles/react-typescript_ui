@@ -6,7 +6,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { ReactComponent as Currency } from "../svg/CurrencySvg.svg";
-import Heading from "../UI/Heading";
 import PayUnpaidAmount from "../UI/Forms/PayUnpaidAmount";
 import Spinner from "../UI/Spinner";
 import billingService from "../../services/BillingService";
@@ -14,7 +13,7 @@ import Header from "../UI/Header";
 const BillingStatusPage = () => {
   const appContext = useContext(AuthContext);
   const refreshEffect = appContext.refreshEffect;
-
+  console.log("refreshEffect : " + refreshEffect);
   const [billStatus, setBillStatus] = useState("Unpaid");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -195,7 +194,7 @@ const BillingStatusPage = () => {
             </tfoot>
           </table>
         </div>
-        {dataToPassPayBill && (
+        {showPayModal && (
           <PayUnpaidAmount
             open={showPayModal}
             closePaymentOption={closePaymentOption}

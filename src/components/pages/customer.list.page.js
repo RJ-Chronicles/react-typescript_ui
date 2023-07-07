@@ -13,6 +13,7 @@ import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
 import { ReactComponent as Add } from "../svg/add.svg";
 import Header from "../UI/Header";
+import { exportToCSV } from "../helper/helperFunctions";
 const CustomerList = () => {
   const [userList, setUserList] = useState([]);
   const [globalUserList, setGlobalUserList] = useState([]);
@@ -70,19 +71,20 @@ const CustomerList = () => {
     appContext.setModalVisible(true);
   };
 
-  const exportToCSV = (fileName) => {
-    const csvData = userList;
-    const fileType =
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-    const fileExtension = ".xlsx";
-    const ws = XLSX.utils.json_to_sheet(csvData);
-    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const data = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data, fileName + fileExtension);
-  };
+  // const exportToCSV = (fileName) => {
+  //   const csvData = userList;
+  //   const fileType =
+  //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  //   const fileExtension = ".xlsx";
+  //   const ws = XLSX.utils.json_to_sheet(csvData);
+  //   const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+  //   const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  //   const data = new Blob([excelBuffer], { type: fileType });
+  //   FileSaver.saveAs(data, fileName + fileExtension);
+  // };
   const toggleModal = appContext.isModalVisible;
   const toggleDeleteModal = appContext.isDeleteModalVisible;
+
   return (
     <div className="md:min-h-screen  w-full">
       <Header>
@@ -93,7 +95,7 @@ const CustomerList = () => {
         <div className="flex justify-end items-end ">
           <button
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-            onClick={(e) => exportToCSV("customerList")}
+            onClick={(e) => exportToCSV("customerz_list", userList)}
           >
             <svg
               className="fill-current w-4 h-4 mr-2"

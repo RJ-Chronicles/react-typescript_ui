@@ -45,7 +45,7 @@ const CustomerTablePartial = (props) => {
   };
   const handleBatteryListNavigation = (id) => {
     console.log("Handle Check ", id);
-    navigate("/admin-dashboard/battery/" + id);
+    navigate("/admin-dashboard/customers/" + id);
   };
 
   return (

@@ -7,14 +7,16 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import AuthContext from "../../../context/appContext";
-import cstmerService from "../../../services/CustomerService";
+import { saveToPDF } from "../../helper/helperFunctions";
 import billingService from "../../../services/BillingService";
+import InvoiceHeading from "../InvoiceHeading";
+import Spinner from "../Spinner";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "60%",
+  width: "800px",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -22,11 +24,13 @@ const style = {
 };
 
 const PayUnpaidAmount = (props: any) => {
-  console.log(props);
   const [billStatus, setBillStatus] = React.useState("Paid");
   const [inputFieldAmount, setInputAmount] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const { open } = props;
   const appContext = React.useContext(AuthContext);
+
   const handleCartItemClose = () => {
     props.closePaymentOption();
   };
@@ -48,8 +52,9 @@ const PayUnpaidAmount = (props: any) => {
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const inputAmount = e.target.value;
-
-    if (parseInt(inputAmount) > props.dataToPassPayBill.unpaid_amount) {
+    if (inputAmount === "") {
+      setInputAmount((prev) => "");
+    } else if (parseInt(inputAmount) > props.dataToPassPayBill.unpaid_amount) {
       setInputAmount((prev) => prev);
     } else {
       setInputAmount((prev) => inputAmount);
@@ -57,6 +62,7 @@ const PayUnpaidAmount = (props: any) => {
   };
 
   const handlePrintInvoice = async () => {
+    setIsLoading(true);
     try {
       const headers = {
         headers: {
@@ -69,32 +75,29 @@ const PayUnpaidAmount = (props: any) => {
           : parseInt(props.dataToPassPayBill.unpaid_amount) -
             parseInt(inputFieldAmount);
 
-      const response = await billingService.updateBillingById(
+      await billingService.updateBillingById(
         { bill_status: billStatus, unpaid_amount: amount },
         props.dataToPassPayBill._id,
         headers
       );
-      console.log(response.data);
-      // await cstmerService.updateCustomerBillingStatusById(
-      //   {
-      //     bill_status: billStatus,
-      //     //unpaid_amount: inputFieldAmount === "" ? "0" : inputFieldAmount,
-      //     unpaid_amount: amount,
-      //   },
-      //   props.dataToPassPayBill._id,
-      //   headers
-      // );
 
       appContext.refreshData();
       props.closePaymentOption();
     } catch (err) {
       console.log("eeror while saving record");
     }
-  };
 
+    const resp = saveToPDF(
+      props.dataToPassPayBill.customer.name,
+      props.dataToPassPayBill.customer.contact
+    );
+    console.log(resp);
+    setIsLoading(false);
+  };
+  const initialUnpaidAmount = props.dataToPassPayBill.unpaid_amount;
   React.useEffect(() => {
-    setInputAmount("");
-  }, [open]);
+    setInputAmount(initialUnpaidAmount);
+  }, [open, initialUnpaidAmount]);
   return (
     <Modal
       open={open}
@@ -103,18 +106,40 @@ const PayUnpaidAmount = (props: any) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <h2 className="uppercase text-center font-bold mb-4 text-xl">
-          Your pending Amount
-        </h2>
-        <div className="text-left flex justify-between mt-6">
-          <div className="bg-slate-700 text-white py-4 px-6  font-bold rounded-sm">
-            <span>Total Amount</span>
-            {": "}
-            <span className="border-b-4 border-red-400 px-1">
-              {props.dataToPassPayBill.unpaid_amount}
-            </span>
+        {isLoading && <Spinner visible={isLoading} height="120" width="120" />}
+        <div id="print">
+          <InvoiceHeading customer={props.dataToPassPayBill.customer} />
+          <div className="text-left w-full mt-6">
+            <div className=" text-slate-700 flex justify-end w-full py-1 px-6  font-base rounded-sm">
+              <div className="flex w-1/3 justify-start">
+                <span className="pr-12">Total Amount</span>
+                <span className=" ">
+                  {props.dataToPassPayBill.unpaid_amount}
+                </span>
+              </div>
+            </div>
+            <div className="flex justify-end w-full py-1 px-6 text-slate-700 font-base border-b border-slate-400">
+              <div className="flex w-1/3 justify-start">
+                <span className="pr-12">Paid Amount</span>
+                <span>{inputFieldAmount === "" ? "0" : inputFieldAmount}</span>
+              </div>
+            </div>
+            <div className="flex justify-end  w-full py-1 px-6 text-slate-700 font-semibold">
+              <div className="flex w-1/3 justify-start">
+                <span className="pr-3">Painding Amount</span>
+                <span>
+                  {inputFieldAmount === ""
+                    ? "0"
+                    : parseInt(props.dataToPassPayBill.unpaid_amount) -
+                      parseInt(inputFieldAmount)}
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-between">
+        </div>
+
+        <div className="text-left flex justify-left mt-6">
+          <div className="flex justify-between items-center">
             <PaymentStatus />
             {billStatus === "Unpaid" && (
               <TextField
@@ -123,24 +148,20 @@ const PayUnpaidAmount = (props: any) => {
                 size="small"
                 onChange={handleAmountValueChange}
                 type="number"
-                value={
-                  inputFieldAmount.length > 0
-                    ? inputFieldAmount
-                    : props.dataToPassPayBill.unpaid_amount
-                }
+                value={inputFieldAmount}
               />
             )}
           </div>
         </div>
+
         <div className="flex w-full justify-center align-items-center mt-10 mb-3">
-          <Button
-            className="w-full"
-            variant="contained"
-            color="success"
+          <button
             onClick={handlePrintInvoice}
+            type="submit"
+            className="w-full text-center space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
           >
-            Pay Amount
-          </Button>
+            Submit
+          </button>
         </div>
         <div className="flex justify-end items-center">
           <Button

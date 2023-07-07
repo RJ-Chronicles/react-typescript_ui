@@ -15,6 +15,7 @@ import { ReactComponent as SettingSvg } from "../svg/settingSvg.svg";
 import { ReactComponent as LogoutSvg } from "../svg/LogoutSvg.svg";
 import { ReactComponent as LeftSideArrow } from "../svg/arrow-left-circle.svg";
 import { ReactComponent as RightSideArrow } from "../svg/arrow-right-circle.svg";
+import logoImage from "../../img/logo_sideNav.png";
 const SideNav = () => {
   const authContext = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
@@ -64,11 +65,7 @@ const SideNav = () => {
       <div className="space-y-3">
         <div className="flex justify-between items-center mt-2 border-b-2 border-slate-400 ">
           <div>
-            <img
-              src="https://do-not-delete-bucket1.s3.ap-south-1.amazonaws.com/logo2.png"
-              className="w-20 h-20 mb-2"
-              alt="logo"
-            />
+            <img src={logoImage} className="w-20 h-20 mb-2" alt="logo" />
             {/* <h1>Kallyankar</h1> */}
           </div>
           <button onClick={handleToggleNavBar} className="mb-2">

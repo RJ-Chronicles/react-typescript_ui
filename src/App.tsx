@@ -35,7 +35,7 @@ function App() {
           <Route path="/admin-dashboard/customers" element={<CustomerList />} />
           <Route path="/admin-dashboard/users" element={<UserList />} />
           <Route
-            path="/admin-dashboard/battery/:customerId"
+            path="/admin-dashboard/customers/:customerId"
             element={<CustomerSpecificBatteryList />}
           />
           <Route path="/admin-dashboard/stock" element={<Stock />} />

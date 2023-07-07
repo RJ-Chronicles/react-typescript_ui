@@ -192,11 +192,8 @@ const StockBoard = () => {
       >
         <div className="min-h-screen  mx-auto max-w-2xl">
           <div className="bg-white">
-            <div className="flex justify-end pr-10 pt-10 ">
-              <button
-                className="hover:bg-slate-100 p-2"
-                onClick={handleCloseModal}
-              >
+            <div className="flex justify-end">
+              <button className="hover:bg-slate-100" onClick={handleCloseModal}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -218,7 +215,7 @@ const StockBoard = () => {
               closeModal={handleCloseModal}
               action={"UPDATE"}
             />
-            <div className="flex justify-end pr-10 pb-10">
+            <div className="flex justify-end pr-10 pb-4">
               <Button
                 variant="outlined"
                 color="error"
