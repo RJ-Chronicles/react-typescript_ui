@@ -20,6 +20,9 @@ class ProductService {
       headers
     );
   }
+  productListToExport(headers: any) {
+    return axios.get(PRODUCT_BASE_URL + "list-to-export", headers);
+  }
 }
 
 const prdctService = new ProductService();

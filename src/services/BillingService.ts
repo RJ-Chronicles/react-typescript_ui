@@ -3,7 +3,7 @@ import { Headers, Billing } from "../AppModel";
 //const BILLING_BASE_URL = "http://localhost:3001/billing/";
 const BILLING_BASE_URL = "https://kallyankar-api-service.onrender.com/billing/";
 class BillingService {
-  getBillingList(headers: any) {
+  getBillingListToExport(headers: any) {
     return axios.get(BILLING_BASE_URL + "get-list", headers);
   }
   getBillingListByStatus(billing_status: string, headers: any) {

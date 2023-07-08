@@ -15,6 +15,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import cstmerService from "../../services/CustomerService";
 import { exportToCSV } from "../helper/helperFunctions";
 import Spinner from "../UI/Spinner";
+import prdctService from "../../services/ProductService";
+import billingService from "../../services/BillingService";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -86,38 +88,42 @@ const Settings = () => {
   };
 
   const downlaodProductsRecords = async () => {
+    setIsLoading(true);
+
     try {
-      try {
-        const headers = {
-          headers: {
-            Authorization: authToken,
-          },
-        };
-        const responses = await cstmerService.getListOfCustomer(headers);
-        const data = responses.data.customerList;
-        exportToCSV("name", data);
-      } catch (e) {
-        setIsLoading(false);
-        console.log("Error occured", e);
-      }
-    } catch (e) {}
+      const headers = {
+        headers: {
+          Authorization: authToken,
+        },
+      };
+
+      const responses = await prdctService.productListToExport(headers);
+      const data = responses.data.soldList;
+      console.log(data);
+      exportToCSV("product_data_" + date, data);
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+      console.log("Error occured", e);
+    }
   };
   const downlaodBillingsRecords = async () => {
+    setIsLoading(true);
     try {
-      try {
-        const headers = {
-          headers: {
-            Authorization: authToken,
-          },
-        };
-        const responses = await cstmerService.getListOfCustomer(headers);
-        const data = responses.data.customerList;
-        exportToCSV("name", data);
-      } catch (e) {
-        setIsLoading(false);
-        console.log("Error occured", e);
-      }
-    } catch (e) {}
+      const headers = {
+        headers: {
+          Authorization: authToken,
+        },
+      };
+
+      const responses = await billingService.getBillingListToExport(headers);
+      const data = responses.data.billingList;
+      exportToCSV("billing_data_" + date, data);
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+      console.log("Error occured", e);
+    }
   };
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
