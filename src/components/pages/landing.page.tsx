@@ -1,29 +1,26 @@
-import hero from "../../img/hero.svg";
-import featureSvg from "../../img/feature/img-1.svg";
 import img1 from "../../img/team/img1.jpg";
-import img3 from "../../img/team/img3.jpg";
-import testimonial from "../../img/testimonial/img1.jpg";
+import landing_page_battery from "../../img/battery_landing_page.jpg";
 import Footer from "../UI/landingpage/footer";
 import Contact from "../UI/landingpage/contact";
 import { Link } from "react-router-dom";
 import { ReactComponent as Cloud } from "../svg/cloud.svg";
 import { ReactComponent as Car } from "../svg/car-alt.svg";
-import { ReactComponent as Taxi } from "../svg/taxi.svg";
+
 import { ReactComponent as Gear } from "../svg/cog.svg";
-import { ReactComponent as World } from "../svg/world.svg";
+
 import { ReactComponent as Gift } from "../svg/gift.svg";
 import logo from "../../img/logo.png";
 const Landingpage = () => {
   return (
     <div>
       <section id="hero">
-        <div className="section-container mb-12">
+        <div className=" mb-12">
           <div
             id="carouselExampleCaptionsFull"
             className="carousel slide carousel-fade relative h-screen"
             data-bs-ride="carousel"
           >
-            <div className=" absolute z-10 right-0 left-0 max-w-6xl mx-auto">
+            <div className=" px-6  absolute z-10 right-0 left-0 md:px-16 mx-auto">
               <div className=" md:mt-5">
                 <nav className="py-2 flex justify-between items-center relative duration-300">
                   <a className="navbar-brand" href="index.html">
@@ -63,11 +60,11 @@ const Landingpage = () => {
                   style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
                 >
                   <div className="flex justify-center items-center h-full">
-                    <div className="text-white text-center py-8 px-8 md:py-16 md:px-14">
-                      <h2 className="animate-pulse font-bold tracking-wide font-serif text-5xl">
-                        Kalyankar Batteries.
+                    <div className="text-slate-200 text-center py-8 px-8 md:py-16 md:px-14">
+                      <h2 className="animate-pulse font-bold tracking-wide font-mono text-5xl">
+                        Kalyankar Battery
                       </h2>
-                      <h5 className="text-xl md:text-2xl font-normal mt-12 text-gray-100 mb-6">
+                      <h5 className="text-xl md:text-2xl font-normal mt-12 md:max-w-3xl text-gray-400 mb-6">
                         Our thousands of customers assure us that we provide the
                         best ever batteries all over the district.
                       </h5>
@@ -175,7 +172,7 @@ const Landingpage = () => {
                 className="mx-3 lg:mr-0 lg:ml-3 wow fadeInRight"
                 data-wow-delay="0.3s"
               >
-                <img src={featureSvg} alt="" />
+                <img src={landing_page_battery} alt="" />
               </div>
             </div>
           </div>
@@ -220,7 +217,7 @@ const Landingpage = () => {
             <div className="max-w-sm sm:w-1/2 md:w-1/2 lg:w-1/3">
               <div className="team-item">
                 <div className="team-img relative">
-                  <img className="img-fluid" src={img3} alt="" />
+                  <img className="img-fluid" src={img1} alt="" />
                   <div className="team-overlay">
                     <ul className="flex justify-center">
                       <li className="mx-1"></li>
@@ -239,99 +236,7 @@ const Landingpage = () => {
         </div>
       </section>
 
-      {/* <section id="testimonial" className="py-24 bg-gray-800">
-        <div className="container">
-          <div className="flex justify-center mx-3">
-            <div className="w-full lg:w-7/12">
-              <div id="testimonials" className="testimonials">
-                <div className="item focus:outline-none">
-                  <div className="text-center py-10 px-8 md:px-10 rounded border border-gray-900">
-                    <div className="text-center">
-                      <p className="text-gray-600 leading-loose">
-                        Holisticly empower leveraged ROI whereas effective
-                        web-readiness. Completely enable emerging meta-services
-                        with cross-platform web services. Quickly initiate
-                        inexpensive total linkage rather than extensible
-                        scenarios. Holisticly empower leveraged ROI whereas
-                        effective web-readiness.{" "}
-                      </p>
-                    </div>
-                    <div className="my-3 mx-auto w-24 h-24 shadow-md rounded-full">
-                      <img
-                        className="rounded-full p-2 w-full"
-                        src={testimonial}
-                        alt=""
-                      />
-                    </div>
-                    <div className="mb-2">
-                      <h2 className="font-bold text-lg uppercase text-blue-600 mb-2">
-                        Fajar
-                      </h2>
-                      <h3 className="font-medium text-white text-sm">
-                        Euphoriya
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="Subscribes" className="text-center py-20 bg-blue-100">
-        <div className="container">
-          <div className="flex justify-center mx-3">
-            <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
-              <h4
-                className="mb-3 section-heading wow fadeInUp"
-                data-wow-delay="0.3s"
-              >
-                Start For Free
-              </h4>
-              <p
-                className="mb-4 text-gray-600 leading-loose text-sm wow fadeInUp"
-                data-wow-delay="0.6s"
-              >
-                Existing customized ideas through client-based deliverables.{" "}
-                <br /> Compellingly unleash fully tested outsourcing
-              </p>
-              <form>
-                <div className="wow fadeInDown" data-wow-delay="0.3s">
-                  <input
-                    type="Email"
-                    className="w-full mb-5 bg-white border border-blue-300 rounded-full px-5 py-3 duration-300 focus:border-blue-600 outline-none"
-                    name="email"
-                    placeholder="Email Address"
-                  />
-                  <button
-                    className="border-0 bg-blue-600 text-white rounded-full w-40 h-12 duration-300 hover:opacity-75"
-                    type="submit"
-                  >
-                    Send
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section> */}
-
       <Contact />
-
-      <section id="google-map-area">
-        <div className="mx-6 mb-6">
-          <div className="flex">
-            <div className="w-full">
-              <object
-                aria-label="text"
-                style={{ border: 0, height: "450px", width: "100%" }}
-                data="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3102.7887109309127!2d-77.44196278417968!3d38.95165507956235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDU3JzA2LjAiTiA3N8KwMjYnMjMuMiJX!5e0!3m2!1sen!2sbd!4v1545420879707"
-              ></object>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <Footer />
     </div>

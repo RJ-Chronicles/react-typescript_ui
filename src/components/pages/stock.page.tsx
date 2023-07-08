@@ -58,52 +58,21 @@ const Stock = () => {
         </Button>
       </div> */}
 
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div className="min-h-screen  mx-auto max-w-2xl">
-          <div className="bg-white">
-            <div className="flex justify-end pr-10 pt-10 ">
-              <button className="hover:bg-slate-100 p-2" onClick={handleClose}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-8 h-8"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </button>
-            </div>
-            <StockElementForm
-              initialData={{
-                battery_name: "",
-                product_code: "",
-                amphere_size: "",
-                quantity: "0",
-                mrp: "0",
-                id: "",
-              }}
-              closeModal={handleClose}
-              action={"ADD"}
-            />
-            <div className="flex justify-end pr-10 pb-10">
-              <Button variant="outlined" color="error" onClick={handleClose}>
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Modal>
+      {open && (
+        <StockElementForm
+          initialData={{
+            battery_name: "",
+            product_code: "",
+            amphere_size: "",
+            quantity: "0",
+            mrp: "0",
+            id: "",
+          }}
+          closeModal={handleClose}
+          action={"ADD"}
+          open={open}
+        />
+      )}
 
       <StockBoard />
     </div>
