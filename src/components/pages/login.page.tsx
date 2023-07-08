@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "../UI/Spinner";
 import ErrorToast from "../UI/ErrorToast";
 import AdminService from "../../services/AdminService";
-
+import NewLogo from "../../img/new_logo.png";
 type setErrorType = string | undefined;
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -55,69 +55,83 @@ const Login = () => {
     }
   }, [isLoggedIn, navigate]);
   return (
-    <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm min-h-screen my-4 mx-auto">
-      <div>
-        <img
-          src="https://do-not-delete-bucket1.s3.ap-south-1.amazonaws.com/logo2.png"
-          alt=""
-          className="mx-auto mt-12"
-        />
-        {<Spinner visible={isLoading} height="80" width="80" />}
-        {error && <ErrorToast error={error} />}
-      </div>
-      <hr className="my-6" />
-      <form onSubmit={loginSubmitHandler}>
-        {/* (event) => AdminLogin(event, username, password) */}
-        <div className="form-group mb-6">
-          <label
-            htmlFor="exampleInputEmail2"
-            className="form-label inline-block mb-2 text-gray-700"
-          >
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            id="exampleInputEmail2"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-            onChange={(event) => setUsername(event.target.value)}
-            onFocus={hideErrorMessage}
-          />
-        </div>
-        <div className="form-group mb-6">
-          <label
-            htmlFor="exampleInputPassword2"
-            className="form-label inline-block mb-2 text-gray-700"
-          >
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            id="exampleInputPassword2"
-            placeholder="Password"
-            onChange={(event) => setPassword(event.target.value)}
-            onFocus={hideErrorMessage}
-          />
-        </div>
+    <section className="min-h-screen">
+      <div className="h-full">
+        <div className="g-6 flex h-full flex-wrap items-center justify-center ">
+          <div className="shrink-1 hidden md:block mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
+            <img
+              src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+              className="w-full"
+              alt="Sample "
+            />
+          </div>
 
-        <button
-          type="submit"
-          className="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-        >
-          Sign in
-        </button>
-        <div className="flex justify-end my-6">
-          <NavLink
-            to="/validate-email"
-            className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out"
-          >
-            Forgot password?
-          </NavLink>
+          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 ">
+            <div className="flex flex-col justify-center md:w-2/3">
+              <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0  mx-auto">
+                <img src={NewLogo} className="w-full" alt="Sample " />
+              </div>
+              {<Spinner visible={isLoading} height="80" width="80" />}
+              {error && <ErrorToast error={error} />}
+              <form
+                className="w-full px-4  md:mx-0 "
+                onSubmit={loginSubmitHandler}
+              >
+                {/* (event) => AdminLogin(event, username, password) */}
+                <div className="form-group mb-6">
+                  <label
+                    htmlFor="exampleInputEmail2"
+                    className="form-label inline-block mb-2 text-gray-700"
+                  >
+                    Email address
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    id="exampleInputEmail2"
+                    aria-describedby="emailHelp"
+                    placeholder="Enter email"
+                    onChange={(event) => setUsername(event.target.value)}
+                    onFocus={hideErrorMessage}
+                  />
+                </div>
+                <div className="form-group mb-6">
+                  <label
+                    htmlFor="exampleInputPassword2"
+                    className="form-label inline-block mb-2 text-gray-700"
+                  >
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    id="exampleInputPassword2"
+                    placeholder="Password"
+                    onChange={(event) => setPassword(event.target.value)}
+                    onFocus={hideErrorMessage}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                >
+                  Sign in
+                </button>
+                <div className="flex justify-end my-6">
+                  <NavLink
+                    to="/validate-email"
+                    className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out"
+                  >
+                    Forgot password?
+                  </NavLink>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </section>
   );
 };
 export default Login;

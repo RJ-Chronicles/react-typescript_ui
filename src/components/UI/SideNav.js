@@ -53,7 +53,7 @@ const SideNav = () => {
   return (
     <div
       className={`flex flex-col h-full px-3  text-slate-600 border-r-2 border-slate-300  shadow-4xl ${
-        toggleNavBar ? "w-48" : "w-14"
+        toggleNavBar ? "w-52" : "w-14"
       }`}
     >
       {notificationsModal && (

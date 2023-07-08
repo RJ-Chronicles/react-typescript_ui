@@ -175,7 +175,13 @@ const exportToCSV = (fileName: string, input_data: any) => {
   FileSaver.saveAs(data, fileName + fileExtension);
 };
 
-const todaysDate = () => {};
+const todaysDate = () => {
+  return new Date()
+    .toISOString()
+    .replace("-", "/")
+    .split("T")[0]
+    .replace("-", "/");
+};
 export {
   ErrorHandler,
   GreetingMessage,

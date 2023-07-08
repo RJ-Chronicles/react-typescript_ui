@@ -4,8 +4,7 @@ import AuthContext from "../../context/appContext";
 
 import { CUSTOMER_TABLE_COLUMN } from "../static/table_headers";
 import { CUSTOMER_OPERATIONS, TABLE_SELECTION } from "../static/operations";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
+
 import cstmerService from "../../services/CustomerService";
 import Table from "../UI/Table";
 import { filteredList } from "../helper/helperFunctions";
@@ -38,7 +37,6 @@ const CustomerList = () => {
         const data = responses.data.customerList;
         setUserList(data);
         setGlobalUserList(data);
-        console.log(data);
         setIsLoading(false);
       } catch (e) {
         setIsLoading(false);
@@ -160,7 +158,7 @@ const CustomerList = () => {
 
         {toggleModal && <Modal />}
         {toggleDeleteModal && <DeleteModal />}
-        {<Spinner visible={isLoading} height="120" width="120" />}
+        {<Spinner visible={isLoading} />}
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           {userList !== undefined && (
             <Table
