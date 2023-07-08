@@ -3,9 +3,14 @@ import { Headers, Billing } from "../AppModel";
 //const BILLING_BASE_URL = "http://localhost:3001/billing/";
 const BILLING_BASE_URL = "https://kallyankar-api-service.onrender.com/billing/";
 class BillingService {
+  getBillingList(headers: any) {
+    return axios.get(BILLING_BASE_URL + "get-list", headers);
+  }
   getBillingListByStatus(billing_status: string, headers: any) {
-    console.log(billing_status);
-    return axios.get(BILLING_BASE_URL + "get-list/" + billing_status, headers);
+    return axios.get(
+      BILLING_BASE_URL + "get-list-by-status/" + billing_status,
+      headers
+    );
   }
 
   getBillingById(id: string, headers: Headers) {
