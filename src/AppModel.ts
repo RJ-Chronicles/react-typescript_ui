@@ -38,8 +38,7 @@ export interface Stock {
   battery_name: string;
   product_code: string;
   amphere_size: string;
-  quantity: number;
-  mrp: number;
+  available: number;
 }
 export interface StockElementsPayload {
   message: string;

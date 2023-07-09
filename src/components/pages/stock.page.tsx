@@ -1,11 +1,7 @@
-import Modal from "@mui/material/Modal";
 import * as React from "react";
-
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import Button from "@mui/material/Button";
-
 import StockElementForm from "../UI/Forms/StockElementForm";
 import StockBoard from "../UI/StockBoard";
+import { ReactComponent as Add } from "../svg/add.svg";
 const Stock = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -45,18 +41,18 @@ const Stock = () => {
             required
           />
         </div>
-        <div className=" flex items-end justify-end md:pb-8 pb-6 ">
-          <Button onClick={handleOpen}>
-            <AddCircleIcon sx={{ width: 40, height: 40 }} />
-          </Button>
+        <div className=" flex items-end justify-start md:pb-4 pb-6 md:mx-10">
+          <button
+            onClick={handleOpen}
+            className="flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10 "
+          >
+            <span>
+              <Add />
+            </span>
+            <span>NEW</span>
+          </button>
         </div>
       </div>
-
-      {/* <div className="-translate-y-10 flex items-end justify-end">
-        <Button onClick={handleOpen}>
-          <AddCircleIcon />
-        </Button>
-      </div> */}
 
       {open && (
         <StockElementForm
@@ -64,8 +60,7 @@ const Stock = () => {
             battery_name: "",
             product_code: "",
             amphere_size: "",
-            quantity: "0",
-            mrp: "0",
+            available: "0",
             id: "",
           }}
           closeModal={handleClose}

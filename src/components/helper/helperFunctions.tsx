@@ -88,15 +88,6 @@ const paginationList = (list: any, start: number, itemsPerPage: number) => {
   return list.slice(start, itemsPerPage);
 };
 
-const getFormatedDate = (timeStamp: any) => {
-  const formatedDate = new Date(timeStamp).toLocaleString("en-US", {
-    month: "short",
-    day: "2-digit",
-    year: "numeric",
-  });
-  return formatedDate;
-};
-
 const saveToPDF = (name = "unknown", contact = "9999999999") => {
   const dom = document.getElementById("print")!;
   toPng(dom)
@@ -175,13 +166,15 @@ const exportToCSV = (fileName: string, input_data: any) => {
   FileSaver.saveAs(data, fileName + fileExtension);
 };
 
-const todaysDate = () => {
-  return new Date()
-    .toISOString()
-    .replace("-", "/")
-    .split("T")[0]
-    .replace("-", "/");
+const getFormatedDate = (timeStamp: any) => {
+  const formatedDate = new Date(timeStamp).toLocaleString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  });
+  return formatedDate;
 };
+
 export {
   ErrorHandler,
   GreetingMessage,

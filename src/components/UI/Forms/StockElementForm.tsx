@@ -21,8 +21,7 @@ interface propsType {
     battery_name: string;
     product_code: string;
     amphere_size: string;
-    quantity: string;
-    mrp: string;
+    available: string;
     id: string;
   };
   closeModal: () => void;
@@ -43,19 +42,17 @@ const StockElementForm = (props: propsType) => {
   const [batteryName, setBatteryName] = useState(initialData.battery_name);
   const [productCode, setProductCode] = useState(initialData.product_code);
   const [amphereSize, setAmphereSize] = useState(initialData.amphere_size);
-  const [quantity, setQuantity] = useState(initialData.quantity);
-  const [MRP, setMRP] = useState(initialData.mrp);
   const [batteryList, setBatteryList] = useState<BatteryPayload>();
   const [amphere, setAmphere] = useState<AmpherePayload>();
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("initialData.available : " + initialData.available);
     const stockElementDetails: Stock = {
       battery_name: batteryName,
       product_code: productCode,
       amphere_size: amphereSize,
-      quantity: parseInt(quantity),
-      mrp: parseInt(MRP),
+      available: parseInt(initialData.available),
     };
     console.log(stockElementDetails);
     if (action === "ADD") {
@@ -180,7 +177,7 @@ const StockElementForm = (props: propsType) => {
                 className="w-full text-center space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
                 type="submit"
               >
-                Add Stock
+                {action === "ADD" ? "Add Stock" : "Update Stock"}
               </button>
             </div>
           </form>

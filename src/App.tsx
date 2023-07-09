@@ -14,6 +14,7 @@ import UserList from "./components/pages/UserList";
 import CustomerSpecificBatteryList from "./components/pages/customer.specific.battery.list.page";
 import Settings from "./components/pages/setting.page";
 import BillingStatusPage from "./components/pages/bill.status.page";
+import StockItemPage from "./components/pages/stock-items-page";
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -38,7 +39,12 @@ function App() {
             path="/admin-dashboard/customers/:customerId"
             element={<CustomerSpecificBatteryList />}
           />
+
           <Route path="/admin-dashboard/stock" element={<Stock />} />
+          <Route
+            path="/admin-dashboard/stock/:stock_id"
+            element={<StockItemPage />}
+          />
           <Route path="/admin-dashboard/battery" element={<Battery />} />
           <Route
             path={`/admin-dashboard/${token}/payment`}

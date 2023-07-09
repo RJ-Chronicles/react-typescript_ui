@@ -12,7 +12,7 @@ import Modal from "../UI/Modal";
 import DeleteModal from "../UI/DeleteModal";
 import { ReactComponent as Add } from "../svg/add.svg";
 import Header from "../UI/Header";
-import { exportToCSV } from "../helper/helperFunctions";
+
 const CustomerList = () => {
   const [userList, setUserList] = useState([]);
   const [globalUserList, setGlobalUserList] = useState([]);
@@ -90,21 +90,6 @@ const CustomerList = () => {
       </Header>
 
       <div className="mx-10">
-        <div className="flex justify-end items-end ">
-          <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-            onClick={(e) => exportToCSV("customerz_list", userList)}
-          >
-            <svg
-              className="fill-current w-4 h-4 mr-2"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-            </svg>
-            <span>Export to Excel</span>
-          </button>
-        </div>
         <div className="flex justify-between items-center">
           <button
             onClick={handleModalVisibility}

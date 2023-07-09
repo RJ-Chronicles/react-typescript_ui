@@ -16,7 +16,7 @@ import { ReactComponent as Edit } from "../svg/edit.svg";
 import { ReactComponent as Add } from "../svg/add.svg";
 const CustomerSpecificBatteryList = () => {
   let { customerId } = useParams();
-  customerId = customerId ? customerId : "";
+
   const appContext = useContext(AuthContext);
   const [productList, setProductList] = useState({});
   const [shoCartModal, setShowCartModal] = useState(false);
@@ -34,14 +34,15 @@ const CustomerSpecificBatteryList = () => {
     const fetchProductListByCustomerId = async () => {
       setIsLoading(true);
       try {
-        const response = await ProductService.getProductListBasedOnCustomerId(
-          customerId,
-          headers
-        );
-        setProductList(response.data);
-        console.log(response.data);
-        console.log(response.data.soldList);
-        setIsLoading(false);
+        if (customerId) {
+          const response = await ProductService.getProductListBasedOnCustomerId(
+            customerId,
+            headers
+          );
+          setProductList(response.data);
+          console.log("Calling Effect");
+          setIsLoading(false);
+        }
       } catch (e) {
         setIsLoading(false);
         console.log("Error occured", e);
@@ -49,7 +50,7 @@ const CustomerSpecificBatteryList = () => {
     };
 
     fetchProductListByCustomerId();
-  }, [token, refreshEffect]);
+  }, [token, refreshEffect, customerId]);
 
   const handleModalVisibility = useCallback(() => {
     const initial_data = {
