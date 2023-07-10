@@ -1,3 +1,4 @@
+import { getFormatedDate } from "../helper/helperFunctions";
 import { ReactComponent as Logo } from "../svg/logo.svg";
 const InvoiceHeading = (props: any) => {
   return (
@@ -43,7 +44,7 @@ const InvoiceHeading = (props: any) => {
                   Invoice date:
                 </dt>
                 <dd className="col-span-2 text-gray-500">
-                  {new Date().toLocaleDateString()}
+                  {getFormatedDate(new Date())}
                 </dd>
               </dl>
             </div>
