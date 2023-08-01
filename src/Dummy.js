@@ -1,4 +1,6 @@
 import { useState } from "react";
+import BatteryLineChart from "./BatteryLineChart";
+import BatteryPieChart from "./BatteryPieChart";
 
 import BarChart from "./components/UI/BarChart";
 import PieChart from "./components/UI/PieChart";
@@ -57,12 +59,10 @@ const Dummy = () => {
   });
 
   return (
-    <div className="p-3 px-5 bg-gray-50 flex justify-between items-center">
-      <div className="mx-20">
-        <PieChart chartData={chartData} />
-      </div>
-      <div className="mx-20">
-        <BarChart chartData={chartData} />
+    <div className="p-3  bg-gray-50 flex md:flex-row justify-between items-center">
+      <div className="w-full"></div>
+      <div className="w-full">
+        <BatteryPieChart />
       </div>
     </div>
   );

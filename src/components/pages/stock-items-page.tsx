@@ -112,7 +112,7 @@ const StockItemPage = () => {
   };
   return (
     <div className="md:min-h-screen  w-full">
-      {isLoading && <Spinner visible={isLoading} height="120" width="120" />}
+      {isLoading && <Spinner open={isLoading} />}
 
       <Header>
         <h1 className="text-xl font-semibold font-sans">Stock Items Entries</h1>

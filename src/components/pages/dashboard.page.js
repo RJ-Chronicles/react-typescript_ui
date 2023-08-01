@@ -1,8 +1,8 @@
 import Dummy from "../../Dummy";
-import LineChart from "../chars/LineChart";
 import AuthContext from "../../context/appContext";
 import Header from "../UI/Header";
 import { useContext } from "react";
+import BatteryLineChart from "../../BatteryLineChart";
 export default function Dashboard() {
   const appContext = useContext(AuthContext);
   return (
@@ -99,15 +99,12 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div>
-          <div className="shadow-lg rounded-lg overflow-hidden">
-            <div className="py-3 px-5 bg-gray-50 flex justify-between items-center">
-              <Dummy />
-            </div>
+
+        <div className="shadow-lg rounded-lg overflow-hidden">
+          <div className="py-3 bg-gray-50 flex justify-between items-center">
+            <Dummy />
           </div>
-          <div style={{ position: "relative", margin: "auto", width: "80vw" }}>
-            <LineChart />
-          </div>
+          <BatteryLineChart />
         </div>
       </div>
     </div>

@@ -127,7 +127,7 @@ const StockBoard = () => {
   };
   return (
     <div className="relative  shadow-md sm:rounded-lg m-10">
-      {<Spinner visible={isLoading} height="120" width="120" />}
+      {<Spinner open={isLoading} />}
 
       <div className="relative  shadow-md sm:rounded-lg ">
         <table className="w-full text-sm text-left text-gray-700 tracking-wider">

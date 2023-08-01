@@ -102,7 +102,7 @@ const BatteryNames = () => {
           <span>NEW</span>
         </button>
       </div>
-      {<Spinner visible={isLoading} height="120" width="120" />}
+      {<Spinner open={isLoading} />}
       <div className="relative  shadow-md sm:rounded-lg m-10">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

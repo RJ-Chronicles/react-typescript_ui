@@ -106,7 +106,7 @@ const PayUnpaidAmount = (props: any) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        {isLoading && <Spinner visible={isLoading} height="120" width="120" />}
+        {isLoading && <Spinner open={isLoading} />}
         <div id="print">
           <InvoiceHeading customer={props.dataToPassPayBill.customer} />
           <div className="text-left w-full mt-6">

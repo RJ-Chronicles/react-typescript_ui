@@ -6,7 +6,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 
 import DialogTitle from "@mui/material/DialogTitle";
-
+import { ReactComponent as WhatsApp } from "../../svg/whatsapp.svg";
 const Contact = () => {
   const [contact, setContact] = useState("");
   const [message, setMessage] = useState("");
@@ -101,23 +101,63 @@ const Contact = () => {
                 scrolling="no"
                 marginHeight={0}
                 marginWidth={0}
-                src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Kolhapur+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d15316.444992372923!2d74.142921!3d16.317259!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1688978645117!5m2!1sen!2sin"
               ></iframe>
             </div>
 
             <div className="w-full flex-col items-center my-6">
-              <p className="text-left text-base font-alata">
-                <span className="text-slate-500 text- font-extrabold">
-                  Address:
+              <p className="text-left text-base font-alata flex">
+                <span className="text-slate-800 text- font-extrabold mr-6">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                    />
+                  </svg>
                 </span>
-                45 BC, a Latin professor at Hampden-Sydney College in Virginia
+                Shinde complex, main-road Gargoti Bhudargad, Kolhapur, PIN
+                416209
               </p>
-              <p className="text-left text-base font-alata">
-                <span className="text-slate-500 text- font-extrabold">
-                  Email:{" "}
-                </span>
-                sangramnaik@prabhasfilms.com
-              </p>
+              <div className="text-left text-base font-alata flex space-x-4">
+                <div className="flex text-slate-500">
+                  <span className="text-slate-800 text- font-extrabold mr-6">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                      />
+                    </svg>
+                  </span>
+                  siddhesh@kalyankar.com
+                </div>
+                <div className="flex text-slate-500">
+                  <span className="text-slate-500 text- font-extrabold mr-6">
+                    <WhatsApp />
+                  </span>
+                  9359163465
+                </div>
+              </div>
             </div>
           </div>
         </div>

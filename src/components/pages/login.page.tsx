@@ -71,7 +71,7 @@ const Login = () => {
               <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0  mx-auto">
                 <img src={NewLogo} className="w-full" alt="Sample " />
               </div>
-              {<Spinner visible={isLoading} height="80" width="80" />}
+              {<Spinner open={isLoading} />}
               {error && <ErrorToast error={error} />}
               <form
                 className="w-full px-4  md:mx-0 "

@@ -10,13 +10,15 @@ const InvoiceHeading = (props: any) => {
           </div>
           <div className="text-right">
             <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-200">
-              Invoice #
+              Invoice
             </h2>
-
+            <p>GSTN-27ARIPK2620F1Z2</p>
             <address className="mt-4 not-italic text-gray-800 dark:text-gray-200">
               Shinde complex, main-road Gargoti
               <br />
               Bhudargad, Kolhapur, PIN: 416209
+              <br />
+              contact &nbsp; 9420007273,7745047273
               <br />
             </address>
           </div>

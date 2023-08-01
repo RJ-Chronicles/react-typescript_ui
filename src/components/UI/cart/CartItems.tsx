@@ -34,7 +34,7 @@ const CartItems = (props: CIProps) => {
   const token = appContext.token;
   const [customer, setCustomer] = React.useState<CDProps>();
   const [billStatus, setBillStatus] = React.useState("Paid");
-  const [totalAmount, setTotalAmount] = React.useState(0);
+  const [totalAmountExcludeGST, setTotalAmountExcludeGST] = React.useState(0);
   const [inputFieldAmount, setInputAmount] = React.useState("");
   const [totalGSTAmount, setTotalGSTAmount] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -85,7 +85,11 @@ const CartItems = (props: CIProps) => {
     calCulateTotalAmount();
   });
 
-  const initialUnpaidAmount = totalAmount.toString();
+  const initialUnpaidAmount = (
+    totalAmountExcludeGST +
+    totalGSTAmount -
+    1
+  ).toString();
   React.useEffect(() => {
     setInputAmount(initialUnpaidAmount);
   }, [initialUnpaidAmount]);
@@ -95,11 +99,14 @@ const CartItems = (props: CIProps) => {
     let gstAmount = 0;
 
     appContext.cartItems.forEach((item: any) => {
-      gstAmount = (parseInt(item.price) * parseInt(item.GST)) / 100;
-      price = price + parseInt(item.price);
+      const tempGstAmount = (parseInt(item.price) * parseInt(item.GST)) / 100;
+      console.log("gstAmount : " + tempGstAmount);
+      price = price + parseInt(item.price) - tempGstAmount;
+      gstAmount += tempGstAmount;
     });
-    price += gstAmount;
-    setTotalAmount(price);
+    //price -= gstAmount;
+    console.log("outside : " + gstAmount);
+    setTotalAmountExcludeGST(price);
     setTotalGSTAmount(gstAmount);
     console.log(price);
   };
@@ -109,7 +116,7 @@ const CartItems = (props: CIProps) => {
   };
 
   const netAmount = (price: string, gst: string) => {
-    return parseInt(price) + (parseInt(price) * parseInt(gst)) / 100;
+    return parseInt(price) - (parseInt(price) * parseInt(gst)) / 100;
   };
 
   const ItemList = () => (
@@ -147,9 +154,9 @@ const CartItems = (props: CIProps) => {
             >
               <td className="px-6 py-2">{item.name}</td>
               <td className="px-6 py-2">{item.serial_number}</td>
-              <td className="px-6 py-2">{item.price}</td>
-              <td className="px-6 py-2">{item.GST + "%"}</td>
               <td className="px-6 py-2">{netAmount(item.price, item.GST)}</td>
+              <td className="px-6 py-2">{item.GST + "%"}</td>
+              <td className="px-6 py-2">{item.price}</td>
 
               <td className="px-6 py-4">
                 <button
@@ -171,7 +178,10 @@ const CartItems = (props: CIProps) => {
     const inputAmount = e.target.value;
     if (inputAmount === "") {
       setInputAmount(inputAmount);
-    } else if (parseInt(inputAmount) > totalAmount) {
+    } else if (
+      parseInt(inputAmount) >
+      totalAmountExcludeGST + totalGSTAmount - 1
+    ) {
       setInputAmount((prev) => prev);
     } else {
       setInputAmount((prev) => inputAmount);
@@ -197,8 +207,12 @@ const CartItems = (props: CIProps) => {
           Authorization: appContext.token,
         },
       };
-      const amount =
-        inputFieldAmount !== "" ? totalAmount - parseInt(inputFieldAmount) : 0;
+      let amount =
+        inputFieldAmount !== ""
+          ? totalAmountExcludeGST + totalGSTAmount - parseInt(inputFieldAmount)
+          : 0;
+      amount = billStatus === "Paid" ? 0 : amount;
+      console.log("Amount : " + amount);
       appContext.cartItems.forEach(async (product: any) => {
         await ProductService.submitProductDetails(
           {
@@ -217,7 +231,7 @@ const CartItems = (props: CIProps) => {
       await billingService.submitBillingRecord(
         {
           gst_amount: totalGSTAmount,
-          total_amount: totalAmount,
+          total_amount: totalAmountExcludeGST + totalGSTAmount,
           unpaid_amount: amount,
           bill_status: billStatus,
           customer: appContext.cartItems[0].customer,
@@ -244,7 +258,7 @@ const CartItems = (props: CIProps) => {
 
   return (
     <>
-      {isLoading && <Spinner visible={isLoading} height="120" width="120" />}
+      {isLoading && <Spinner open={isLoading} />}
       <Transition appear show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -288,8 +302,8 @@ const CartItems = (props: CIProps) => {
                   </div>
                   <div className="mt-4 flex flex-col items-end space-y-2 border-b-1">
                     <div className="flex w-full justify-between border-t border-black/10 pt-2">
-                      <span className="font-bold text-sm">Subtotal:</span>
-                      <span>{totalAmount - totalGSTAmount}</span>
+                      <span className="font-bold text-sm">Subtotal</span>
+                      <span>{totalAmountExcludeGST}</span>
                     </div>
 
                     <div className="flex w-full justify-between">
@@ -297,8 +311,10 @@ const CartItems = (props: CIProps) => {
                       <span>{totalGSTAmount}</span>
                     </div>
                     <div className="flex w-full justify-between  border-y-2 border-black/10 py-2">
-                      <span className="font-bold text-sm">Total:</span>
-                      <span className="font-bold text-sm">{totalAmount}</span>
+                      <span className="font-bold text-sm">Total</span>
+                      <span className="font-bold text-sm">
+                        {totalAmountExcludeGST + totalGSTAmount}
+                      </span>
                     </div>
                   </div>
 

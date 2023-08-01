@@ -105,7 +105,7 @@ const BillingStatusPage = () => {
 
       <div className="mx-10">
         <PaymentStatus />
-        {<Spinner visible={isLoading} height="120" width="120" />}
+        {<Spinner open={isLoading} />}
         <div className="relative  shadow-md sm:rounded-lg ">
           <table className="w-full text-sm text-left text-gray-700 tracking-wider">
             <thead className="text-xs md:text-sm text-gray-800 uppercase bg-gray-200 ">

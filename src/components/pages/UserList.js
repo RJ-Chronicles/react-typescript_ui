@@ -78,7 +78,7 @@ const UserList = () => {
         </button>
         {toggleModal && <Modal />}
         {toggleDeleteModal && <DeleteModal />}
-        {<Spinner visible={isLoading} height="120" width="120" />}
+        {<Spinner open={isLoading} />}
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           {userList !== undefined && (
             <Table

@@ -10,6 +10,7 @@ import { ReactComponent as CustomerIcon } from "../svg/slideshare.svg";
 import { ReactComponent as RupeeIcon } from "../svg/rupee.svg";
 import { ReactComponent as BatteryIcon } from "../svg/package.svg";
 import { ReactComponent as CloudDownloadIcon } from "../svg/cloud-download.svg";
+import { ReactComponent as StockIcon } from "../svg/layout.svg";
 import AuthContext from "../../context/appContext";
 import CloseIcon from "@mui/icons-material/Close";
 import cstmerService from "../../services/CustomerService";
@@ -146,7 +147,7 @@ const Settings = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      {isLoading && <Spinner height="120" width="120" visible={isLoading} />}
+      {isLoading && <Spinner open={isLoading} />}
       <Box
         sx={{
           borderBottom: 1,
@@ -258,7 +259,7 @@ const Settings = () => {
               <p className="text-slate-700 font-semibold text-xl font-serif text-center">
                 Export Customer Data
               </p>
-              <div className="flex justify-end items-end h-full mx-6">
+              <div className="flex justify-center items-center h-full mx-6">
                 <button
                   className="text-center flex align-bottom bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
                   type="button"
@@ -277,7 +278,7 @@ const Settings = () => {
               <p className="text-slate-700 font-semibold text-xl font-serif text-center">
                 Export Billing Data
               </p>
-              <div className="flex justify-end items-end h-full mx-6">
+              <div className="flex justify-center items-center h-full mx-6">
                 <button
                   className="text-center flex align-bottom bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
                   type="button"
@@ -296,7 +297,26 @@ const Settings = () => {
               <p className="text-slate-700 font-semibold text-xl font-serif text-center upper">
                 Export Products Data
               </p>
-              <div className="flex justify-end items-end h-full mx-6">
+              <div className="flex  justify-center items-center h-full mx-6">
+                <button
+                  className="text-center flex align-bottom bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
+                  type="button"
+                  onClick={downlaodProductsRecords}
+                >
+                  <CloudDownloadIcon />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="w-full ">
+            <div className="bg-slate-200 m-4  rounded-sm text-[#EEA47F] pt-5 px-5">
+              <div className="w-full flex justify-center items-center ">
+                <StockIcon />
+              </div>
+              <p className="text-slate-700 font-semibold text-xl font-serif text-center upper">
+                Export Stock Data
+              </p>
+              <div className="flex justify-center items-center h-full mx-6">
                 <button
                   className="text-center flex align-bottom bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
                   type="button"
