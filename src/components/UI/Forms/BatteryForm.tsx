@@ -27,17 +27,10 @@ const BatteryForm = (props: propsType) => {
       name,
     };
     if (action === "ADD") {
-      const response = await batteryService.submitBatteryDetails(
-        battery,
-        headers
-      );
+      await batteryService.submitBatteryDetails(battery, headers);
     }
     if (action === "UPDATE") {
-      const response = await batteryService.updateCustomerById(
-        battery,
-        initialData.id,
-        headers
-      );
+      await batteryService.updateCustomerById(battery, initialData.id, headers);
     }
     appContext.refreshData();
     closeModal();
