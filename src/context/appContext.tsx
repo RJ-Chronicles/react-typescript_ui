@@ -130,7 +130,7 @@ export const AuthContextProvider = (props: any) => {
     setDeleteModalVisible: setDeleteModalVisibleHandler,
     setDeleteModalFormProps: setDeleteModalFormProps,
   };
-
+  console.log(contextValue);
   return (
     <AuthContext.Provider value={contextValue}>
       {props.children}

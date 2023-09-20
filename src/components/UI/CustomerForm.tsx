@@ -14,7 +14,8 @@ const CustomerForm = () => {
 
   const { mode, initial_data } = appContext.formProps;
 
-  const { last_name, email, address, name, contact, _id } = initial_data;
+  const { last_name, email, address, name, contact, _id, gst_number } =
+    initial_data;
 
   const [alreadyRegistered, setAlreadyRegistred] = useState<registeredType>();
 
@@ -24,6 +25,7 @@ const CustomerForm = () => {
     email: email,
     contact: contact,
     address: address,
+    gst_number: gst_number,
   });
   const [fieldValidator, setFieldValidator] = useState({
     emailError: false,
@@ -60,12 +62,12 @@ const CustomerForm = () => {
     }
   };
 
-  const emailBlurHandler = () => {
-    setFieldValidator((prev) => ({
-      ...prev,
-      emailError: !validator.isEmail(customer.email),
-    }));
-  };
+  // const emailBlurHandler = () => {
+  //   setFieldValidator((prev) => ({
+  //     ...prev,
+  //     emailError: !validator.isEmail(customer.email),
+  //   }));
+  // };
   const contactBlurHandler = () => {
     setFieldValidator((prev) => ({
       ...prev,
@@ -177,8 +179,8 @@ const CustomerForm = () => {
                   email: e.target.value,
                 }))
               }
-              onBlur={emailBlurHandler}
-              onFocus={resetValidatorHandler}
+              // onBlur={emailBlurHandler}
+              // onFocus={resetValidatorHandler}
               value={customer.email}
             />
             {fieldValidator.emailError && (
@@ -210,6 +212,28 @@ const CustomerForm = () => {
             {fieldValidator.contactError && (
               <FormError title={"Please provide valid contact number!"} />
             )}
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="gst_num"
+            >
+              GST Number
+            </label>
+            <input
+              className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="gst_num"
+              type="text"
+              placeholder="Customer GST Number"
+              onChange={(e) =>
+                updateCustomer((prev) => ({
+                  ...prev,
+                  gst_number: e.target.value,
+                }))
+              }
+              value={customer.gst_number}
+            />
           </div>
 
           <div className="mb-6 text-center">

@@ -69,8 +69,14 @@ const CustomerTablePartial = (props) => {
                 {`${customer.name} ${customer.last_name}`}
               </td>
               <td className="px-3 py-4">{customer.address}</td>
-              <td className="px-3 py-4">{customer.email}</td>
+              <td className="px-3 py-4">
+                {" "}
+                {customer.email === "" ? "-" : customer.email}
+              </td>
               <td className="px-3 py-4">{customer.contact}</td>
+              <td className="px-3 py-4">
+                {customer.gst_number === "" ? "-" : customer.gst_number}
+              </td>
               <td className="px-3 py-4">
                 {getFormatedDate(customer.createdAt)}
               </td>

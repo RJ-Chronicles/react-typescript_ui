@@ -3,8 +3,12 @@ import AuthContext from "../../context/appContext";
 import Header from "../UI/Header";
 import { useContext } from "react";
 import BatteryLineChart from "../../BatteryLineChart";
+import AppContext from "../../store/AppContext";
+
 export default function Dashboard() {
   const appContext = useContext(AuthContext);
+  const { state } = useContext(AppContext);
+  console.log(state);
   return (
     <div className=" bg-[#F9FAFB] w-full">
       <Header>

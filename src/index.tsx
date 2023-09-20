@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./context/appContext";
 import reportWebVitals from "./reportWebVitals";
 // import Invoice from "./components/UI/Invoice";
-
+import { AppProvider } from "./store/AppContext";
 import ReactGA from "react-ga4";
 ReactGA.initialize("G-3N5FD42DM3"); //G-3N5FD42DM3  G-5BQSCWVWBM
 const root = ReactDOM.createRoot(
@@ -15,11 +15,13 @@ const root = ReactDOM.createRoot(
 console.log("ReactGA");
 root.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AuthContextProvider>
+    <AppProvider>
+      <AuthContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AuthContextProvider>
+    </AppProvider>
   </React.StrictMode>
 );
 

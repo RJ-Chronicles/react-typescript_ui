@@ -7,6 +7,7 @@ interface propsType {
   initialData: {
     gst: string;
     id: string;
+    ratio: string;
   };
   closeModal: () => void;
   action: string;
@@ -22,11 +23,13 @@ const GSTForm = (props: propsType) => {
   };
 
   const [gstValue, setGST] = useState(initialData.gst);
+  const [ratioValue, setRatio] = useState(initialData.ratio);
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const gst = parseInt(gstValue);
     const gstData: GST = {
       gst,
+      ratio: ratioValue,
     };
 
     if (action === "ADD") {
@@ -43,6 +46,7 @@ const GSTForm = (props: propsType) => {
         throw new Error("Something wend wrong!");
       }
     }
+    console.log("before model close");
     appContext.refreshData();
     closeModal();
   };
@@ -70,6 +74,24 @@ const GSTForm = (props: propsType) => {
             id="name"
             placeholder="GST"
             value={gstValue}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            className="block mb-2 text-sm font-bold text-gray-700"
+            htmlFor="ratio"
+          >
+            Ratio
+          </label>
+          <input
+            className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            type="text"
+            required
+            onChange={(e) => setRatio(e.target.value)}
+            id="ratio"
+            placeholder="Ratio"
+            value={ratioValue}
           />
         </div>
         <button

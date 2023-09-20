@@ -7,6 +7,7 @@ import Spinner from "../UI/Spinner";
 import ErrorToast from "../UI/ErrorToast";
 import AdminService from "../../services/AdminService";
 import NewLogo from "../../img/new_logo.png";
+import AppContext from "../../store/AppContext";
 type setErrorType = string | undefined;
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -15,11 +16,14 @@ const Login = () => {
   const [error, setError] = useState<setErrorType>();
 
   const authContext = useContext(AuthContext);
+  const { state, dispatch } = useContext(AppContext);
+  console.log(state);
   const navigate = useNavigate();
 
   const loginSubmitHandler = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<any> => {
+    dispatch({ type: "SET_LOADING", payload: true });
     setIsLoading(true);
     event.preventDefault();
 
@@ -30,17 +34,29 @@ const Login = () => {
         const expirationTime = new Date(
           new Date().getTime() + response.data.expiresIn * 1000
         );
+        const expiration = expirationTime.toISOString();
         //authContext.sessionUserData(response.data.user);
+        const { token, user } = response.data;
+        dispatch({
+          type: "USER_LOG_IN",
+          payload: { token, expiration: expiration, user },
+        });
         authContext.login(
           response.data.token,
           expirationTime.toISOString(),
           response.data.user
         );
         setIsLoading(false);
+        dispatch({ type: "SET_LOADING", payload: false });
         navigate("/admin-dashboard");
       }
     } catch (e) {
       setIsLoading(false);
+      dispatch({ type: "SET_LOADING", payload: false });
+      dispatch({
+        type: "SET_ERROR",
+        payload: { hasError: true, message: "Faild During LoggedIn" },
+      });
       setError(`Please provide valid credentials`);
     }
   };

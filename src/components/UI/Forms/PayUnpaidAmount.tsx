@@ -126,7 +126,7 @@ const PayUnpaidAmount = (props: any) => {
             </div>
             <div className="flex justify-end  w-full py-1 px-6 text-slate-700 font-semibold">
               <div className="flex w-1/3 justify-start">
-                <span className="pr-3">Painding Amount</span>
+                <span className="pr-3">Pending Amount</span>
                 <span>
                   {inputFieldAmount === ""
                     ? "0"

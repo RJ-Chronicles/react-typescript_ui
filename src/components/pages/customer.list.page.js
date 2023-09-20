@@ -26,6 +26,7 @@ const CustomerList = () => {
   const authToken = appContext.token;
   useEffect(() => {
     setIsLoading(true);
+    console.log("inside the customer now");
     const fetchCustomeDetails = async () => {
       try {
         const headers = {
@@ -62,6 +63,7 @@ const CustomerList = () => {
       contact: "",
       email: "",
       last_name: "",
+      gst_number: "",
     };
     const mode = CUSTOMER_OPERATIONS.ADD_CUSTOMER;
     const title = "Fill Customer Details";
@@ -69,17 +71,6 @@ const CustomerList = () => {
     appContext.setModalVisible(true);
   };
 
-  // const exportToCSV = (fileName) => {
-  //   const csvData = userList;
-  //   const fileType =
-  //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-  //   const fileExtension = ".xlsx";
-  //   const ws = XLSX.utils.json_to_sheet(csvData);
-  //   const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-  //   const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-  //   const data = new Blob([excelBuffer], { type: fileType });
-  //   FileSaver.saveAs(data, fileName + fileExtension);
-  // };
   const toggleModal = appContext.isModalVisible;
   const toggleDeleteModal = appContext.isDeleteModalVisible;
 
@@ -143,7 +134,7 @@ const CustomerList = () => {
 
         {toggleModal && <Modal />}
         {toggleDeleteModal && <DeleteModal />}
-        {<Spinner visible={isLoading} />}
+        {<Spinner open={isLoading} />}
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           {userList !== undefined && (
             <Table
