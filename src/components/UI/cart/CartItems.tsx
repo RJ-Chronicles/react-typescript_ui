@@ -38,6 +38,7 @@ const CartItems = (props: CIProps) => {
   const [inputFieldAmount, setInputAmount] = React.useState("");
   const [totalGSTAmount, setTotalGSTAmount] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [hideDeleteColumn, setHideDelteColumn] = React.useState(false);
   React.useEffect(() => {
     const fetchCustomerDetails = async () => {
       const headers = {
@@ -99,24 +100,34 @@ const CartItems = (props: CIProps) => {
     let gstAmount = 0;
 
     appContext.cartItems.forEach((item: any) => {
-      const tempGstAmount = (parseInt(item.price) * parseInt(item.GST)) / 100;
-      console.log("gstAmount : " + tempGstAmount);
-      price = price + parseInt(item.price) - tempGstAmount;
-      gstAmount += tempGstAmount;
+      const { itemGST, itemPrice } = calculateNetAmountAndGST(
+        item.price,
+        item.GST
+      );
+      console.log(itemGST + "    " + itemPrice);
+
+      price += itemPrice;
+      gstAmount += itemGST;
     });
-    //price -= gstAmount;
-    console.log("outside : " + gstAmount);
     setTotalAmountExcludeGST(price);
     setTotalGSTAmount(gstAmount);
-    console.log(price);
   };
 
   const handleCartItemClose = () => {
     props.closeCartHandler();
   };
 
+  const calculateNetAmountAndGST = (price: string, GST: string) => {
+    const itemGST = Math.round(
+      (parseInt(price) * (1 + (parseInt(GST) * 2) / 100) * parseInt(GST)) / 100
+    );
+    const itemPrice = parseInt(price) - itemGST;
+    return { itemGST, itemPrice };
+  };
+
   const netAmount = (price: string, gst: string) => {
-    return parseInt(price) - (parseInt(price) * parseInt(gst)) / 100;
+    const { itemPrice } = calculateNetAmountAndGST(price, gst);
+    return itemPrice;
   };
 
   const ItemList = () => (
@@ -139,10 +150,11 @@ const CartItems = (props: CIProps) => {
           <th scope="col" className="px-6 py-3">
             Net Amount
           </th>
-
-          <th scope="col" className="px-6 py-3">
-            Action
-          </th>
+          {!hideDeleteColumn && (
+            <th scope="col" className="px-6 py-3">
+              Action
+            </th>
+          )}
         </tr>
       </thead>
       <tbody>
@@ -157,15 +169,16 @@ const CartItems = (props: CIProps) => {
               <td className="px-6 py-2">{netAmount(item.price, item.GST)}</td>
               <td className="px-6 py-2">{item.GST + "%"}</td>
               <td className="px-6 py-2">{item.price}</td>
-
-              <td className="px-6 py-4">
-                <button
-                  name={item.serial_number}
-                  onClick={handleCartRemoveItem}
-                >
-                  <Delete />
-                </button>
-              </td>
+              {!hideDeleteColumn && (
+                <td className="px-6 py-4">
+                  <button
+                    name={item.serial_number}
+                    onClick={handleCartRemoveItem}
+                  >
+                    <Delete />
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
       </tbody>
@@ -200,6 +213,7 @@ const CartItems = (props: CIProps) => {
     </RadioGroup>
   );
   const SaveAsPDFHandler = async () => {
+    setHideDelteColumn(true);
     setIsLoading(true);
     try {
       const headers = {
@@ -251,11 +265,6 @@ const CartItems = (props: CIProps) => {
     }
   };
 
-  // const SaveAsPDFHandler = () => {
-  //   const resp = saveToPDF(customer?.name, customer?.contact.toString());
-  //   console.log(resp);
-  // };
-
   return (
     <>
       {isLoading && <Spinner open={isLoading} />}
@@ -301,20 +310,42 @@ const CartItems = (props: CIProps) => {
                     <ItemList />
                   </div>
                   <div className="mt-4 flex flex-col items-end space-y-2 border-b-1">
-                    <div className="flex w-full justify-between border-t border-black/10 pt-2">
-                      <span className="font-bold text-sm">Subtotal</span>
-                      <span>{totalAmountExcludeGST}</span>
-                    </div>
+                    <div className="flex justify-end flex-col w-full text-gray-600">
+                      <div className="flex justify-between w-full border border-slate-300 ">
+                        <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
+                          Total
+                        </span>
+                        <span className="px-10 w-48 py-2  border-slate-300 font-bold text-sm">
+                          {totalAmountExcludeGST + totalGSTAmount}
+                        </span>
+                      </div>
 
-                    <div className="flex w-full justify-between">
-                      <span className="font-bold text-sm">GST</span>
-                      <span>{totalGSTAmount}</span>
-                    </div>
-                    <div className="flex w-full justify-between  border-y-2 border-black/10 py-2">
-                      <span className="font-bold text-sm">Total</span>
-                      <span className="font-bold text-sm">
-                        {totalAmountExcludeGST + totalGSTAmount}
-                      </span>
+                      <div className="flex justify-between w-full border border-slate-300">
+                        <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
+                          CGST
+                        </span>
+                        <span className="px-10 w-48 py-2  border-slate-300 font-bold text-sm">
+                          {totalGSTAmount / 2}
+                        </span>
+                      </div>
+
+                      <div className="flex justify-between w-full border border-slate-300">
+                        <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
+                          GGST
+                        </span>
+                        <span className="px-10 w-48 py-2  border-slate-300 font-bold text-sm">
+                          {totalGSTAmount / 2}
+                        </span>
+                      </div>
+
+                      <div className="flex justify-between w-full border border-slate-300">
+                        <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
+                          Subtotal
+                        </span>
+                        <span className=" w-48 px-10 py-2  border-slate-300 font-bold text-sm">
+                          {totalAmountExcludeGST}
+                        </span>
+                      </div>
                     </div>
                   </div>
 

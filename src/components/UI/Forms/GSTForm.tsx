@@ -7,7 +7,6 @@ interface propsType {
   initialData: {
     gst: string;
     id: string;
-    ratio: string;
   };
   closeModal: () => void;
   action: string;
@@ -23,13 +22,12 @@ const GSTForm = (props: propsType) => {
   };
 
   const [gstValue, setGST] = useState(initialData.gst);
-  const [ratioValue, setRatio] = useState(initialData.ratio);
+
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const gst = parseInt(gstValue);
     const gstData: GST = {
       gst,
-      ratio: ratioValue,
     };
 
     if (action === "ADD") {
@@ -77,29 +75,14 @@ const GSTForm = (props: propsType) => {
           />
         </div>
 
-        <div className="mb-4">
-          <label
-            className="block mb-2 text-sm font-bold text-gray-700"
-            htmlFor="ratio"
+        <div className="mb-6 text-center">
+          <button
+            className="w-full text-center  bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
+            type="submit"
           >
-            Ratio
-          </label>
-          <input
-            className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-            type="text"
-            required
-            onChange={(e) => setRatio(e.target.value)}
-            id="ratio"
-            placeholder="Ratio"
-            value={ratioValue}
-          />
+            Submit
+          </button>
         </div>
-        <button
-          type="submit"
-          className="w-full flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
-        >
-          Submit
-        </button>
       </form>
     </div>
   );

@@ -8,7 +8,6 @@ interface CartProps {
 }
 const HeaderCartButton = (props: CartProps) => {
   const [btnIsHighLighted, setButtonIsHighLighted] = useState(false);
-  console.log("Caing button");
   const { numberOfCartItems } = props;
   const btnClasses = `${classes.button} ${
     btnIsHighLighted ? classes.bump : ""

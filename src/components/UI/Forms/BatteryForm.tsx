@@ -61,12 +61,14 @@ const BatteryForm = (props: propsType) => {
             value={name}
           />
         </div>
-        <button
-          type="submit"
-          className="w-full flex space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
-        >
-          Submit
-        </button>
+        <div className="mb-6 text-center">
+          <button
+            className="w-full text-center  bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -29,7 +29,6 @@ const GST = () => {
   const [initial_data, setInitialData] = React.useState({
     gst: "",
     id: "",
-    ratio: "",
   });
   useEffect(() => {
     const headers: Headers = {
@@ -80,7 +79,7 @@ const GST = () => {
   const handleCloseModal = () => setOpenModal(false);
   const handleOpenModal = () => {
     setAction("ADD");
-    setInitialData({ gst: "", id: "", ratio: "" });
+    setInitialData({ gst: "", id: "" });
     setOpenModal(true);
   };
 
@@ -90,8 +89,7 @@ const GST = () => {
     let gst = gstVal?.gst || "";
     gst = typeof gst === "number" ? gst.toString() : "";
 
-    let ratio = gstVal?.ratio || "";
-    setInitialData({ gst, id, ratio });
+    setInitialData({ gst, id });
     setAction("UPDATE");
     setOpenModal(true);
   };
@@ -118,9 +116,6 @@ const GST = () => {
                 GST
               </th>
               <th scope="col" className="px-6 py-3">
-                Ratio
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Created At
               </th>
               <th scope="col" className="px-6 py-3">
@@ -138,7 +133,6 @@ const GST = () => {
                   <td className="px-6 py-4   text-gray-900 whitespace-nowrap dark:text-white">
                     {obj.gst} {" %"}
                   </td>
-                  <td className="px-6 py-4">{obj.ratio}</td>
                   <td className="px-6 py-4">
                     {getFormatedDate(obj.createdAt)}
                   </td>
@@ -217,7 +211,6 @@ const GST = () => {
               initialData={{
                 gst: initial_data.gst,
                 id: initial_data.id,
-                ratio: initial_data.ratio,
               }}
               closeModal={handleCloseModal}
               action={action}

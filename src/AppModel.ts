@@ -67,7 +67,6 @@ export interface GSTPayload {
     {
       gst: number;
       _id: string;
-      ratio: string;
       createdAt: string;
       updatedAt: string;
       __v: number;
@@ -94,7 +93,6 @@ export interface BillingPayload {
 }
 export interface GST {
   gst: number;
-  ratio?: string;
 }
 
 export interface Billing {
