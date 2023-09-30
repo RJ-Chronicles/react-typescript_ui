@@ -118,9 +118,11 @@ const CartItems = (props: CIProps) => {
   };
 
   const calculateNetAmountAndGST = (price: string, GST: string) => {
-    const itemGST = Math.round(
-      (parseInt(price) * (1 + (parseInt(GST) * 2) / 100) * parseInt(GST)) / 100
-    );
+    const itemGST =
+      Math.round(
+        ((parseInt(price) / (1 + (parseInt(GST) * 2) / 100)) * parseInt(GST)) /
+          100
+      ) * 2;
     const itemPrice = parseInt(price) - itemGST;
     return { itemGST, itemPrice };
   };
@@ -311,15 +313,14 @@ const CartItems = (props: CIProps) => {
                   </div>
                   <div className="mt-4 flex flex-col items-end space-y-2 border-b-1">
                     <div className="flex justify-end flex-col w-full text-gray-600">
-                      <div className="flex justify-between w-full border border-slate-300 ">
+                      <div className="flex justify-between w-full border border-slate-300">
                         <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
-                          Total
+                          Subtotal
                         </span>
-                        <span className="px-10 w-48 py-2  border-slate-300 font-bold text-sm">
-                          {totalAmountExcludeGST + totalGSTAmount}
+                        <span className=" w-48 px-10 py-2  border-slate-300 font-bold text-sm">
+                          {totalAmountExcludeGST}
                         </span>
                       </div>
-
                       <div className="flex justify-between w-full border border-slate-300">
                         <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
                           CGST
@@ -338,12 +339,12 @@ const CartItems = (props: CIProps) => {
                         </span>
                       </div>
 
-                      <div className="flex justify-between w-full border border-slate-300">
-                        <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
-                          Subtotal
+                      <div className="flex justify-between w-full border-2 border-slate-700 ">
+                        <span className=" w-full border-x-2 border-slate-700  px-2 py-2 font-bold text-sm">
+                          Total
                         </span>
-                        <span className=" w-48 px-10 py-2  border-slate-300 font-bold text-sm">
-                          {totalAmountExcludeGST}
+                        <span className="px-10 w-48 py-2  border-slate-700 font-bold text-sm">
+                          {totalAmountExcludeGST + totalGSTAmount}
                         </span>
                       </div>
                     </div>
@@ -401,16 +402,6 @@ const CartItems = (props: CIProps) => {
                     <span>Save &amp; Download</span>
                   </button>
                 </div>
-                {/* <div className="flex w-full justify-center align-items-center mt-10 mb-3">
-                  <Button
-                    className="w-full"
-                    variant="contained"
-                    color="success"
-                    onClick={handlePrintInvoice}
-                  >
-                    Print Invoice
-                  </Button>
-                </div> */}
                 <div className="flex justify-end items-center">
                   <Button
                     variant="outlined"
