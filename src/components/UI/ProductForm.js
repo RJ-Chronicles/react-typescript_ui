@@ -6,6 +6,11 @@ import amprService from "../../services/AmphereService";
 import btryService from "../../services/BatteryService";
 import GstService from "../../services/GSTService";
 
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+
 const ProductForm = () => {
   const appContext = useContext(AuthContext);
   const authToken = appContext.token;
@@ -14,7 +19,8 @@ const ProductForm = () => {
   const [batteryList, setBatteryList] = useState();
   const [amphere, setAmphere] = useState();
   const [gstList, setGstList] = useState();
-
+  const [isVehicleRequired, setIsVehicleRequired] = useState("vehicle");
+  console.log(isVehicleRequired);
   const {
     name,
     type,
@@ -93,6 +99,29 @@ const ProductForm = () => {
   }, [authToken]);
   return (
     <div className="w-full  bg-white px-5 rounded-lg lg:rounded-l-none">
+      <div className="flex justify-center items-center">
+        <FormControl>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+            value={isVehicleRequired}
+            defaultValue={""}
+            onChange={(e) => setIsVehicleRequired(e.target.value)}
+          >
+            <FormControlLabel
+              value="vehicle"
+              control={<Radio />}
+              label="Vehicle Battery"
+            />
+            <FormControlLabel
+              value="inverter Battery"
+              control={<Radio />}
+              label="Inverter"
+            />
+          </RadioGroup>
+        </FormControl>
+      </div>
       <form
         className="px-8 pt-6 pb-4 bg-white rounded"
         onSubmit={formSubmitHandler}
@@ -230,53 +259,54 @@ const ProductForm = () => {
             />
           </div>
         </div>
-
-        <div className="mb-4 md:flex md:justify-between">
-          <div className="mb-4 md:mr-2 md:mb-0">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="vehicle_name"
-            >
-              Vehicle Name
-            </label>
-            <input
-              className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="vehicle_name"
-              type="text"
-              placeholder="Vehicle Name"
-              onChange={(e) =>
-                setProduct((prev) => ({
-                  ...prev,
-                  vehicle_name: e.target.value,
-                }))
-              }
-              value={product.vehicle_name}
-              required
-            />
+        {isVehicleRequired === "vehicle" && (
+          <div className="mb-4 md:flex md:justify-between">
+            <div className="mb-4 md:mr-2 md:mb-0">
+              <label
+                className="block mb-2 text-sm font-bold text-gray-700"
+                htmlFor="vehicle_name"
+              >
+                Vehicle Name
+              </label>
+              <input
+                className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                id="vehicle_name"
+                type="text"
+                placeholder="Vehicle Name"
+                onChange={(e) =>
+                  setProduct((prev) => ({
+                    ...prev,
+                    vehicle_name: e.target.value,
+                  }))
+                }
+                value={product.vehicle_name}
+                required
+              />
+            </div>
+            <div className="md:ml-2">
+              <label
+                className="block mb-2 text-sm font-bold text-gray-700"
+                htmlFor="v_number"
+              >
+                Vehicle Number
+              </label>
+              <input
+                className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                id="v_number"
+                type="text"
+                placeholder="Vehicle Number"
+                onChange={(e) =>
+                  setProduct((prev) => ({
+                    ...prev,
+                    vehicle_number: e.target.value,
+                  }))
+                }
+                value={product.vehicle_number}
+                required
+              />
+            </div>
           </div>
-          <div className="md:ml-2">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="v_number"
-            >
-              Vehicle Number
-            </label>
-            <input
-              className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="v_number"
-              type="text"
-              placeholder="Vehicle Number"
-              onChange={(e) =>
-                setProduct((prev) => ({
-                  ...prev,
-                  vehicle_number: e.target.value,
-                }))
-              }
-              value={product.vehicle_number}
-              required
-            />
-          </div>
-        </div>
+        )}
         <div className="mb-6 text-center">
           <button
             className="w-full text-center space-x-2 bg-[#600080] hover:bg-[#8031a7] text-sm text-white font-medium py-2 px-10 border-b-4 border-[#8031a7] rounded-full my-10"

@@ -57,6 +57,7 @@ const CartItems = (props: CIProps) => {
           contact: response.data.customer.contact,
           email: response.data.customer.email,
           last_name: response.data.customer.last_name,
+          customer_gst: response.data.customer.gst_number,
         };
         setCustomer(data);
       } catch (err) {
