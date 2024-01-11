@@ -21,7 +21,7 @@ export interface FormProps {
   title: string;
 }
 
-export interface DeleteModalFormProps {
+export interface DeleteModalProps {
   id: string;
   mode: string;
   title: string;
@@ -64,7 +64,7 @@ export interface State {
   batteryNames: BatteryNameValues[];
   amphere: AmphareSize[];
   storedCartItems: StoredCartItemsProps;
-  deleteModalFormProps: DeleteModalFormProps;
+  deleteModalFormProps: DeleteModalProps;
   formProps: FormProps;
   refreshEffect: boolean;
   isLoggedIn: boolean;
@@ -93,7 +93,7 @@ export const initialFormProps: FormProps = {
   title: "",
 };
 
-export const initialDeleteFormProps: DeleteModalFormProps = {
+export const initialDeleteFormProps: DeleteModalProps = {
   id: "",
   mode: "",
   title: "",

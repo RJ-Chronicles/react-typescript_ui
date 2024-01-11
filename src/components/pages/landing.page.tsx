@@ -3,11 +3,10 @@ import landing_page_battery from "../../img/battery_landing_page.jpg";
 import Footer from "../UI/landingpage/footer";
 import Contact from "../UI/landingpage/contact";
 import { Link } from "react-router-dom";
+
 import { ReactComponent as Cloud } from "../svg/cloud.svg";
 import { ReactComponent as Car } from "../svg/car-alt.svg";
-
 import { ReactComponent as Gear } from "../svg/cog.svg";
-
 import { ReactComponent as Gift } from "../svg/gift.svg";
 import logo from "../../img/logo.png";
 const Landingpage = () => {
