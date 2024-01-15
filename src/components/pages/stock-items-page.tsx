@@ -127,7 +127,7 @@ const StockItemPage = () => {
               <span>
                 <Add />
               </span>
-              <span>NEW</span>
+              <span>NEW1</span>
             </button>
           </div>
           <div className="flex justify-start w-full">

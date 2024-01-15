@@ -4,7 +4,7 @@ import {
   AmphareSize,
   BatteryNameValues,
   StoredCartItemsProps,
-  DeleteModalFormProps,
+  DeleteModalProps,
   State,
   FormProps,
   UserLoggedIn,
@@ -17,7 +17,7 @@ export type Action =
   | { type: "ADD_AMPHERE_VALUES"; payload: AmphareSize[] }
   | { type: "ADD_BATTERY_NAMES"; payload: BatteryNameValues[] }
   | { type: "ADD_STORED_CART_ITEMS"; payload: StoredCartItemsProps }
-  | { type: "ADD_DELETE_FORM_PROPS"; payload: DeleteModalFormProps }
+  | { type: "ADD_DELETE_FORM_PROPS"; payload: DeleteModalProps }
   | { type: "ADD_FORM_PROPS"; payload: FormProps }
   | { type: "REFRESH_EFFECT"; payload: boolean }
   | { type: "SET_LOGGED_IN"; payload: boolean }

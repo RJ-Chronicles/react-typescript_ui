@@ -23,11 +23,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Landingpage />}></Route>
-        {/* <Route path="/validate-email" element={<ResetEmail />}></Route>
-        <Route path="/new-password" element={<NewPassword />}></Route> */}
-
         <Route path="/admin-login" element={<Login />} />
-
         <Route
           path="/admin-dashboard"
           element={authContext.isLoggedIn ? <MainHeader /> : <Landingpage />}
@@ -39,7 +35,6 @@ function App() {
             path="/admin-dashboard/customers/:customerId"
             element={<CustomerSpecificBatteryList />}
           />
-
           <Route path="/admin-dashboard/stock" element={<Stock />} />
           <Route
             path="/admin-dashboard/stock/:stock_id"
