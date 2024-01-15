@@ -134,7 +134,7 @@ const CartItems = (props: CIProps) => {
   };
 
   const ItemList = () => (
-    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" className="px-6 py-3">
@@ -312,7 +312,41 @@ const CartItems = (props: CIProps) => {
                   <div className="flex w-full justify-center items-center">
                     <ItemList />
                   </div>
-                  <div className="mt-4 flex flex-col items-end space-y-2 border-b-1">
+
+                  <div className="mt-5 sm:mt-10">
+                    <h4 className="text-xs font-semibold uppercase text-gray-800 dark:text-gray-200">
+                      Summary
+                    </h4>
+
+                    <ul className="mt-3 flex flex-col">
+                      <li className="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-gray-700 dark:text-gray-200">
+                        <div className="flex items-center justify-between w-full">
+                          <span>Subtotal</span>
+                          <span> {totalAmountExcludeGST}</span>
+                        </div>
+                      </li>
+                      <li className="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-gray-700 dark:text-gray-200">
+                        <div className="flex items-center justify-between w-full">
+                          <span>CGST</span>
+                          <span>{totalGSTAmount / 2}</span>
+                        </div>
+                      </li>
+                      <li className="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-gray-700 dark:text-gray-200">
+                        <div className="flex items-center justify-between w-full">
+                          <span>SGST</span>
+                          <span>{totalGSTAmount / 2}</span>
+                        </div>
+                      </li>
+                      <li className="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-semibold bg-gray-50 border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-slate-800 dark:border-gray-700 dark:text-gray-200">
+                        <div className="flex items-center justify-between w-full">
+                          <span>Amount to paid</span>
+                          <span>{totalAmountExcludeGST + totalGSTAmount}</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* <div className="mt-4 flex flex-col items-end space-y-2 border-b-1">
                     <div className="flex justify-end flex-col w-full text-gray-600">
                       <div className="flex justify-between w-full border border-slate-300">
                         <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
@@ -349,7 +383,16 @@ const CartItems = (props: CIProps) => {
                         </span>
                       </div>
                     </div>
-                  </div>
+
+                    <div className="flex">
+                      <div className="w-1/2 p-2">Title 1</div>
+                      <div className="w-1/2 p-2">Value 1</div>
+                    </div>
+                    <div className="flex">
+                      <div className="w-1/2 p-2">Title 2</div>
+                      <div className="w-1/2 p-2">Value 2</div>
+                    </div>
+                  </div> */}
 
                   <div className="mt-10">
                     <div className=" text-sm  w-full   flex justify-end pb-16">

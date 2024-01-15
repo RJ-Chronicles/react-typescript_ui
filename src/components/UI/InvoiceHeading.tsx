@@ -1,5 +1,5 @@
 import { getFormatedDate } from "../helper/helperFunctions";
-import { ReactComponent as Logo } from "../svg/logo.svg";
+import { ReactComponent as Logo } from "../svg/InvoiceLogo.svg";
 const InvoiceHeading = ({ customer }: any) => {
   console.log(customer);
   return (
@@ -9,7 +9,7 @@ const InvoiceHeading = ({ customer }: any) => {
           <div>
             <Logo />
           </div>
-          <div className="text-right">
+          <div className="text-right h-full mt-20">
             <h2 className="text-xl md:text-xl font-semibold text-gray-800 dark:text-gray-200">
               GSTN-27ARIPK2620F1Z2
             </h2>
