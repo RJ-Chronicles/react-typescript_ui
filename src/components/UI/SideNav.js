@@ -16,6 +16,7 @@ import { ReactComponent as LogoutSvg } from "../svg/LogoutSvg.svg";
 import { ReactComponent as LeftSideArrow } from "../svg/arrow-left-circle.svg";
 import { ReactComponent as RightSideArrow } from "../svg/arrow-right-circle.svg";
 import logoImage from "../../img/logo_sideNav.png";
+import admService from "../../services/AdminService";
 const SideNav = () => {
   const authContext = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
@@ -42,7 +43,17 @@ const SideNav = () => {
 
   console.log(notifications);
   const userLogoutHandler = () => {
+    admService.logoutUser(
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+      token,
+      authContext.user.email
+    );
     authContext.logout();
+    console.log("handle logout");
   };
   const notificationsTableHandler = () => {
     setNotificationsModal(!notificationsModal);

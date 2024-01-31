@@ -14,11 +14,14 @@ class AdminServices {
     return axios.patch(ADMIN_BASE_URL + "sign-up", user, headers);
   }
   deleteUserById(id: string, headers: any) {
-    console.log("inside the delete");
     return axios.delete(ADMIN_BASE_URL + "delete/" + id, headers);
   }
   getUserList(headers: any) {
     return axios.get(ADMIN_BASE_URL + "user_list", headers);
+  }
+  logoutUser(headers: any, token: string, email: string) {
+    console.log(email, token);
+    return axios.post(ADMIN_BASE_URL + "logout", { email, token }, headers);
   }
 }
 const admService = new AdminServices();
