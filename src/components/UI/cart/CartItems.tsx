@@ -346,54 +346,6 @@ const CartItems = (props: CIProps) => {
                     </ul>
                   </div>
 
-                  {/* <div className="mt-4 flex flex-col items-end space-y-2 border-b-1">
-                    <div className="flex justify-end flex-col w-full text-gray-600">
-                      <div className="flex justify-between w-full border border-slate-300">
-                        <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
-                          Subtotal
-                        </span>
-                        <span className=" w-48 px-10 py-2  border-slate-300 font-bold text-sm">
-                          {totalAmountExcludeGST}
-                        </span>
-                      </div>
-                      <div className="flex justify-between w-full border border-slate-300">
-                        <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
-                          CGST
-                        </span>
-                        <span className="px-10 w-48 py-2  border-slate-300 font-bold text-sm">
-                          {totalGSTAmount / 2}
-                        </span>
-                      </div>
-
-                      <div className="flex justify-between w-full border border-slate-300">
-                        <span className=" w-full border-x-2 border-slate-300  px-2 py-2 font-bold text-sm">
-                          GGST
-                        </span>
-                        <span className="px-10 w-48 py-2  border-slate-300 font-bold text-sm">
-                          {totalGSTAmount / 2}
-                        </span>
-                      </div>
-
-                      <div className="flex justify-between w-full border-2 border-slate-700 ">
-                        <span className=" w-full border-x-2 border-slate-700  px-2 py-2 font-bold text-sm">
-                          Total
-                        </span>
-                        <span className="px-10 w-48 py-2  border-slate-700 font-bold text-sm">
-                          {totalAmountExcludeGST + totalGSTAmount}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex">
-                      <div className="w-1/2 p-2">Title 1</div>
-                      <div className="w-1/2 p-2">Value 1</div>
-                    </div>
-                    <div className="flex">
-                      <div className="w-1/2 p-2">Title 2</div>
-                      <div className="w-1/2 p-2">Value 2</div>
-                    </div>
-                  </div> */}
-
                   <div className="mt-10">
                     <div className=" text-sm  w-full   flex justify-end pb-16">
                       <p className="font-medium text-sm px-8">
