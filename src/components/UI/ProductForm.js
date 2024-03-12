@@ -280,7 +280,6 @@ const ProductForm = () => {
                   }))
                 }
                 value={product.vehicle_name}
-                required
               />
             </div>
             <div className="md:ml-2">
@@ -302,7 +301,6 @@ const ProductForm = () => {
                   }))
                 }
                 value={product.vehicle_number}
-                required
               />
             </div>
           </div>
