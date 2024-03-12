@@ -137,24 +137,30 @@ const CartItems = (props: CIProps) => {
     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 border">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" className="px-6 py-3">
+          <th scope="col" className="px-6 py-3 border border-slate-900">
             Name
           </th>
 
-          <th scope="col" className="px-6 py-3">
+          <th scope="col" className="px-6 py-3 border border-slate-900">
             Serial Number
           </th>
-          <th scope="col" className="px-6 py-3">
+          <th scope="col" className="px-6 py-3 border border-slate-900">
             Price
           </th>
-          <th scope="col" className="px-6 py-3">
+          <th
+            scope="col"
+            className="px-6 py-3 border-spacing-6 border border-slate-900"
+          >
             GST
           </th>
-          <th scope="col" className="px-6 py-3">
+          <th
+            scope="col"
+            className="px-6 py-3 border-spacing-8 border border-slate-900"
+          >
             Net Amount
           </th>
           {!hideDeleteColumn && (
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 border border-slate-900">
               Action
             </th>
           )}
@@ -167,16 +173,25 @@ const CartItems = (props: CIProps) => {
               key={index}
               className="bg-white border-b text-sm dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
-              <td className="px-6 py-2">{item.name}</td>
-              <td className="px-6 py-2">{item.serial_number}</td>
-              <td className="px-6 py-2">{netAmount(item.price, item.GST)}</td>
-              <td className="px-6 py-2">{item.GST + "%"}</td>
-              <td className="px-6 py-2">{item.price}</td>
+              <td className="px-6 py-2 border border-slate-900">{item.name}</td>
+              <td className="px-6 py-2 border border-slate-900">
+                {item.serial_number}
+              </td>
+              <td className="px-6 py-2 border border-slate-900">
+                {netAmount(item.price, item.GST)}
+              </td>
+              <td className="px-6 py-2 border border-slate-900">
+                {item.GST + "%"}
+              </td>
+              <td className="px-6 py-2 border border-slate-900">
+                {item.price}
+              </td>
               {!hideDeleteColumn && (
-                <td className="px-6 py-4">
+                <td className="px-6 py-2 border border-slate-900">
                   <button
                     name={item.serial_number}
                     onClick={handleCartRemoveItem}
+                    className="w-full "
                   >
                     <Delete />
                   </button>

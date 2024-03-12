@@ -43,15 +43,6 @@ const SideNav = () => {
 
   console.log(notifications);
   const userLogoutHandler = () => {
-    admService.logoutUser(
-      {
-        headers: {
-          Authorization: token,
-        },
-      },
-      token,
-      authContext.user.email
-    );
     authContext.logout();
     console.log("handle logout");
   };

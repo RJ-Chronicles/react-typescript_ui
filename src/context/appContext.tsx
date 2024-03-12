@@ -1,7 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
+import admService from "../services/AdminService";
 
 let logoutTimer: any;
-
+type USER = {
+  createdBy: string;
+  email: string;
+  last_name: string;
+  name: string;
+  role: string;
+};
+const user_value: USER = {
+  createdBy: "",
+  email: "",
+  last_name: "",
+  name: "",
+  role: "",
+};
 const AuthContext = React.createContext<any | null>({
   refreshEffect: false,
   token: "",
@@ -16,7 +30,7 @@ const AuthContext = React.createContext<any | null>({
   setFormProps: () => {},
   storeCartItems: () => {},
   setDeleteModalFormProps: () => {},
-  user: {},
+  user: user_value,
   login: () => {},
   logout: () => {},
   refreshData: () => {},
@@ -33,10 +47,16 @@ const reriveStoredToken = () => {
   const storedToken = localStorage.getItem("token");
   const storedExpirationDate = localStorage.getItem("expirationTime");
   const storedUser = localStorage.getItem("user");
-  let parsedStoredUser = "";
+  let parsedStoredUser = user_value;
   if (storedUser) {
     if (JSON.parse(storedUser)) {
-      parsedStoredUser = JSON.parse(storedUser);
+      const { createdBy, email, last_name, name, role } =
+        JSON.parse(storedUser);
+      parsedStoredUser.createdBy = createdBy;
+      parsedStoredUser.email = email;
+      parsedStoredUser.last_name = last_name;
+      parsedStoredUser.role = role;
+      parsedStoredUser.name = name;
     }
   }
 
@@ -56,10 +76,10 @@ const reriveStoredToken = () => {
 export const AuthContextProvider = (props: any) => {
   const tokenData = reriveStoredToken();
   let initialToken;
-  let initialUser = {};
+  let initialUser = user_value;
   if (tokenData) {
     initialToken = tokenData.token;
-    initialUser = tokenData.user || "";
+    initialUser = tokenData.user || user_value;
   }
   const [token, setToken] = useState(initialToken);
   const [user, setUser] = useState(initialUser);
@@ -71,6 +91,17 @@ export const AuthContextProvider = (props: any) => {
 
   const userIsLoggedIn = !!token;
   const logoutHandler = useCallback(() => {
+    const jwt_token = token ? token : "";
+    let user_email = user.email;
+    admService.logoutUser(
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+      jwt_token,
+      user_email
+    );
     setToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("expirationTime");
@@ -78,7 +109,7 @@ export const AuthContextProvider = (props: any) => {
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }
-  }, []);
+  }, [token, user]);
 
   const loginHandler = (token: string, expirationTime: any, user: any) => {
     setToken(token);
