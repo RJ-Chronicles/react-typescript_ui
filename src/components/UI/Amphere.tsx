@@ -1,8 +1,6 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 
 import AuthContext from "../../context/appContext";
-import { Headers, AmpherePayload } from "../../AppModel";
-
 import AmphereForm from "../UI/Forms/AmpereForm";
 import { getFormatedDate } from "../helper/helperFunctions";
 import * as React from "react";
@@ -12,47 +10,28 @@ import DialogActions from "@mui/material/DialogActions";
 import Modal from "@mui/material/Modal";
 import DialogTitle from "@mui/material/DialogTitle";
 
-import amprService from "../../services/AmphereService";
 import { ReactComponent as Delete } from "../svg/delete.svg";
 import { ReactComponent as Edit } from "../svg/edit.svg";
 import { ReactComponent as Add } from "../svg/add.svg";
-import Spinner from "./Spinner";
+
+import useApiCall from "../../hooks/useFetchAxios";
+import { deleteAmphereById, getAmphereList } from "../../backend/amphere";
 const Amphere = () => {
   const appContext = useContext(AuthContext);
-  const authToken = appContext.token;
   const refreshEffect = appContext.refreshEffect;
-  const [amphere, setAmphere] = useState<AmpherePayload>();
   const [open, setOpen] = React.useState(false);
   const [action, setAction] = React.useState("ADD");
   const [id, setId] = React.useState("");
   const [openModal, setOpenModal] = React.useState(false);
-
-  const [isLoading, setIsLoading] = useState(false);
   const [initial_data, setInitialData] = React.useState({
     size: "",
     id: "",
   });
 
-  useEffect(() => {
-    const headers: Headers = {
-      headers: {
-        Authorization: authToken,
-      },
-    };
-
-    const fetchSizeList = async () => {
-      try {
-        setIsLoading(true);
-        const response = await amprService.getListOfAvailableSize(headers);
-        setAmphere(response.data);
-        setIsLoading(false);
-      } catch (err) {
-        setIsLoading(false);
-        console.log("Error : " + err);
-      }
-    };
-    fetchSizeList();
-  }, [authToken, refreshEffect]);
+  const params = React.useMemo(() => {
+    return { refreshEffect };
+  }, [refreshEffect]);
+  const { data } = useApiCall(getAmphereList, params);
 
   const handleClose = () => {
     setOpen(false);
@@ -63,15 +42,8 @@ const Amphere = () => {
     setId(id);
   };
   const itemDeleteHandler = async () => {
-    if (id.length > 0) {
-      const headers: Headers = {
-        headers: {
-          Authorization: authToken,
-        },
-      };
-      await amprService.deleteSizeById(id, headers);
-      appContext.refreshData();
-    }
+    deleteAmphereById(id);
+    appContext.refreshData();
     setOpen(false);
   };
 
@@ -84,8 +56,8 @@ const Amphere = () => {
 
   const updateButtonHandler = (e: any) => {
     const id = e.target.name;
-    const ampr = amphere?.list.find((el) => el._id === id);
-    const size = ampr?.size || "";
+    const ampr = data?.find((el) => el._id === id);
+    const size = (ampr?.size || 0).toString();
     setInitialData({ size, id });
     setAction("UPDATE");
     setOpenModal(true);
@@ -104,7 +76,7 @@ const Amphere = () => {
           <span>NEW</span>
         </button>
       </div>
-      {<Spinner open={isLoading} />}
+
       <div className="relative  shadow-md sm:rounded-lg m-10">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -121,38 +93,39 @@ const Amphere = () => {
             </tr>
           </thead>
           <tbody className="overflow-y-scroll w-full max-h-60">
-            {amphere?.list.map((obj, index) => {
-              return (
-                <tr
-                  key={index}
-                  className="bg-white border-b text-sm dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                >
-                  <td className="px-6 py-4   text-gray-900 whitespace-nowrap dark:text-white">
-                    {obj.size}
-                  </td>
-                  <td className="px-6 py-4">
-                    {getFormatedDate(obj.createdAt)}
-                  </td>
-                  <td className="px-6 py-4 text-left">
-                    <button
-                      name={obj._id}
-                      onClick={updateButtonHandler}
-                      className="font-medium text-blue-600 dark:text-red-500 hover:underline mr-1"
-                    >
-                      <Edit />
-                    </button>
+            {data &&
+              data?.map((obj, index) => {
+                return (
+                  <tr
+                    key={index}
+                    className="bg-white border-b text-sm dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  >
+                    <td className="px-6 py-4   text-gray-900 whitespace-nowrap dark:text-white">
+                      {obj.size}
+                    </td>
+                    <td className="px-6 py-4">
+                      {getFormatedDate(obj.createdAt)}
+                    </td>
+                    <td className="px-6 py-4 text-left">
+                      <button
+                        name={obj._id}
+                        onClick={updateButtonHandler}
+                        className="font-medium text-blue-600 dark:text-red-500 hover:underline mr-1"
+                      >
+                        <Edit />
+                      </button>
 
-                    <button
-                      name={obj._id}
-                      className="font-medium text-red-600 dark:text-red-500 hover:underline md:ml-1"
-                      onClick={deleteButtonHandler}
-                    >
-                      <Delete />
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+                      <button
+                        name={obj._id}
+                        className="font-medium text-red-600 dark:text-red-500 hover:underline md:ml-1"
+                        onClick={deleteButtonHandler}
+                      >
+                        <Delete />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
