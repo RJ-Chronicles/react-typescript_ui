@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useCallback } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -83,10 +83,6 @@ const CartItems = (props: CIProps) => {
     }
   };
 
-  React.useEffect(() => {
-    calCulateTotalAmount();
-  });
-
   const initialUnpaidAmount = (
     totalAmountExcludeGST +
     totalGSTAmount -
@@ -96,7 +92,7 @@ const CartItems = (props: CIProps) => {
     setInputAmount(initialUnpaidAmount);
   }, [initialUnpaidAmount]);
 
-  const calCulateTotalAmount = () => {
+  const calCulateTotalAmount = useCallback(() => {
     let price = 0;
     let gstAmount = 0;
 
@@ -112,7 +108,11 @@ const CartItems = (props: CIProps) => {
     });
     setTotalAmountExcludeGST(price);
     setTotalGSTAmount(gstAmount);
-  };
+  }, [appContext]);
+
+  React.useEffect(() => {
+    calCulateTotalAmount();
+  }, [calCulateTotalAmount]);
 
   const handleCartItemClose = () => {
     props.closeCartHandler();

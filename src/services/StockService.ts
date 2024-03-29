@@ -20,6 +20,9 @@ class StockService {
   submiSizeDetails(stock: Stock, headers: Headers) {
     return axios.post(STOCK_BASE_URL + "add", stock, headers);
   }
+  checkStockAvailability(name: string, type: string, headers: Headers) {
+    return axios.post(STOCK_BASE_URL, { name, type }, headers);
+  }
 }
 
 const stockService = new StockService();

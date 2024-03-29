@@ -39,12 +39,12 @@ export interface StoredCartItemsProps {
 }
 
 export interface AmphareSize {
-  _id: string;
+  _id?: string;
   size: number;
-  createdAt: string;
+  createdAt?: string;
 }
 
-export interface BatteryNameValues {
+export interface BatteryName {
   _id: string;
   name: number;
   createdAt: string;
@@ -61,7 +61,7 @@ export interface State {
   user: User;
   loggedIn: UserLoggedIn;
   GST: GSTValues[];
-  batteryNames: BatteryNameValues[];
+  batteryNames: BatteryName[];
   amphere: AmphareSize[];
   storedCartItems: StoredCartItemsProps;
   deleteModalFormProps: DeleteModalProps;
@@ -118,7 +118,7 @@ export const initialAmphere: AmphareSize[] = [
   },
 ];
 
-export const initialBatteryNames: BatteryNameValues[] = [
+export const initialBatteryNames: BatteryName[] = [
   {
     _id: "",
     name: 0,

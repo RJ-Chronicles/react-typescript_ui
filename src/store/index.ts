@@ -2,7 +2,7 @@ import {
   GSTValues,
   User,
   AmphareSize,
-  BatteryNameValues,
+  BatteryName,
   StoredCartItemsProps,
   DeleteModalProps,
   State,
@@ -15,7 +15,7 @@ export type Action =
   | { type: "ADD_USER"; payload: User }
   | { type: "ADD_GST_VALUES"; payload: GSTValues[] }
   | { type: "ADD_AMPHERE_VALUES"; payload: AmphareSize[] }
-  | { type: "ADD_BATTERY_NAMES"; payload: BatteryNameValues[] }
+  | { type: "ADD_BATTERY_NAMES"; payload: BatteryName[] }
   | { type: "ADD_STORED_CART_ITEMS"; payload: StoredCartItemsProps }
   | { type: "ADD_DELETE_FORM_PROPS"; payload: DeleteModalProps }
   | { type: "ADD_FORM_PROPS"; payload: FormProps }
