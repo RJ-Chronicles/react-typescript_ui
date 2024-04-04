@@ -98,7 +98,7 @@ const CustomerSpecificBatteryList = () => {
   }, []);
   const toggleModal = appContext.isModalVisible;
   const toggleDeleteModal = appContext.isDeleteModalVisible;
-  console.log(productList);
+
   return (
     <div className="md:min-h-screen  w-full ">
       <Header>
