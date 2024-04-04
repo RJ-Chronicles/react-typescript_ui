@@ -174,7 +174,7 @@ const ProductForm = () => {
               value={product.type}
             >
               <option value="DEFAULT">Choose battery size</option>
-              {amphere?.list.map((data, index) => {
+              {amphere?.map((data, index) => {
                 return (
                   <option key={index} value={data.size}>
                     {data.size}
