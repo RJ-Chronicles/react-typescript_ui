@@ -133,7 +133,7 @@ const CustomerSpecificBatteryList = () => {
         {toggleDeleteModal && <DeleteModal />}
         {<Spinner open={isLoading} />}
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
-          {productList.soldList !== undefined && (
+          {productList !== undefined && (
             <>
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -146,7 +146,7 @@ const CustomerSpecificBatteryList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {productList.soldList.map((product, index) => (
+                  {productList.map((product, index) => (
                     <tr
                       key={index}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
