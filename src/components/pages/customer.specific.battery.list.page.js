@@ -18,7 +18,7 @@ const CustomerSpecificBatteryList = () => {
   let { customerId } = useParams();
 
   const appContext = useContext(AuthContext);
-  const [productList, setProductList] = useState({});
+  const [productList, setProductList] = useState([]);
   const [shoCartModal, setShowCartModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const token = appContext.token;
@@ -98,6 +98,7 @@ const CustomerSpecificBatteryList = () => {
   }, []);
   const toggleModal = appContext.isModalVisible;
   const toggleDeleteModal = appContext.isDeleteModalVisible;
+
   return (
     <div className="md:min-h-screen  w-full ">
       <Header>
@@ -187,7 +188,7 @@ const CustomerSpecificBatteryList = () => {
                 /> */}
             </>
           )}
-          {productList.soldList === undefined && (
+          {productList === undefined && (
             <h1 className="text-center font-bold">
               No Record For Given Customer
             </h1>
