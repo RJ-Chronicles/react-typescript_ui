@@ -35,7 +35,7 @@ const CustomerList = () => {
           },
         };
         const responses = await cstmerService.getListOfCustomer(headers);
-        const data = responses.data.customerList;
+        const data = responses.data;
         setUserList(data);
         setGlobalUserList(data);
         setIsLoading(false);

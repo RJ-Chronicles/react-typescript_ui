@@ -5,7 +5,7 @@ const baseURL = "https://kallyankar-api-service.onrender.com/"; // Your API base
 // Create Axios instance with base URL
 const api: AxiosInstance = axios.create({
   baseURL: baseURL,
-  timeout: 10000, // Adjust timeout as per your requirement
+  timeout: 50000, // Adjust timeout as per your requirement
 });
 
 api.interceptors.request.use((config) => {
