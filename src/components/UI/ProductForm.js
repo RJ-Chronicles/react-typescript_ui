@@ -146,7 +146,7 @@ const ProductForm = () => {
               id="role"
             >
               <option value="DEFAULT">Choose battery name</option>
-              {batteryList?.list.map((data, index) => {
+              {batteryList?.map((data, index) => {
                 return (
                   <option key={index} value={data.name}>
                     {data.name}
@@ -227,7 +227,7 @@ const ProductForm = () => {
               id="role"
             >
               <option value="DEFAULT">Choose GST value</option>
-              {gstList?.list.map((data, index) => {
+              {gstList?.map((data, index) => {
                 return (
                   <option key={index} value={data.gst}>
                     {data.gst}
